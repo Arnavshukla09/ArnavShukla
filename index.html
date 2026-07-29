@@ -559,8 +559,8 @@
     <p>Backend, full-stack, or applied-AI roles — happy to talk through any of the systems above in more depth.</p>
     <div class="contact-actions">
       <a class="btn btn-primary" href="mailto:arnavshukla0925@gmail.com">Email me</a>
-      <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/Arnavshukla09" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnavshukla09" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </section>
 
@@ -575,11 +575,31 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <script>
-  VanillaTilt.init(document.querySelectorAll(".project, .loop-card, .skill-block"), {
-    max: 4,
-    speed: 400,
+  // Project Cards: Subtle tilt, slow smooth movement, slight pop out, high glare
+  VanillaTilt.init(document.querySelectorAll(".project"), {
+    max: 3,
+    speed: 1000,
+    glare: true,
+    "max-glare": 0.25,
+    scale: 1.02,
+    easing: "cubic-bezier(.03,.98,.52,.99)"
+  });
+
+  // Loop Diagram: Deeper tilt, fast response to emphasize the 3D depth of the SVG
+  VanillaTilt.init(document.querySelectorAll(".loop-card"), {
+    max: 8,
+    speed: 300,
     glare: true,
     "max-glare": 0.1,
+    scale: 1.0
+  });
+
+  // Skill Blocks: Bouncy, highly reactive tilt with noticeable scaling
+  VanillaTilt.init(document.querySelectorAll(".skill-block"), {
+    max: 12,
+    speed: 600,
+    glare: false,
+    scale: 1.05
   });
 </script>
 </body>
