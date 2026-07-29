@@ -41,9 +41,14 @@
     padding:0 28px;
   }
 
-  /* ---------- background grid ---------- */
-  .bg-grid{
+  /* ---------- background grid & orbs ---------- */
+  .bg-container {
     position:fixed; inset:0; z-index:-1;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .bg-grid{
+    position:absolute; inset:0;
     background-image:
       linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
@@ -51,13 +56,29 @@
     opacity:0.12;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
   }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    animation: float 20s infinite ease-in-out;
+  }
+  .orb-1 { width: 400px; height: 400px; background: var(--teal); top: -10%; left: -10%; animation-delay: 0s; }
+  .orb-2 { width: 500px; height: 500px; background: var(--blue); bottom: -20%; right: -10%; animation-delay: -5s; }
+  .orb-3 { width: 300px; height: 300px; background: var(--amber); top: 40%; left: 40%; animation-delay: -10s; opacity:0.15;}
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -60px) scale(1.1); }
+    66% { transform: translate(-30px, 30px) scale(0.9); }
+  }
 
   /* ---------- top bar ---------- */
   header.topbar{
     position:sticky; top:0; z-index:50;
-    background:rgba(10,15,20,0.85);
-    backdrop-filter: blur(8px);
-    border-bottom:1px solid var(--line);
+    background:rgba(10,15,20,0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom:1px solid rgba(255,255,255,0.05);
   }
   .topbar-inner{
     display:flex; align-items:center; justify-content:space-between;
@@ -147,12 +168,15 @@
 
   /* ---------- signature: control loop diagram ---------- */
   .loop-card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:6px;
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius:12px;
     padding:26px;
     position:relative;
     overflow:hidden;
+    transform-style: preserve-3d;
   }
   .loop-card::before{
     content:'AGENT_LOOP.SVC';
@@ -160,6 +184,7 @@
     font-family:'JetBrains Mono',monospace;
     font-size:10.5px; letter-spacing:0.1em;
     color:var(--text-dim);
+    transform: translateZ(30px);
   }
   .loop-card::after{
     content:'STATUS: ACTIVE';
@@ -167,8 +192,9 @@
     font-family:'JetBrains Mono',monospace;
     font-size:10px; letter-spacing:0.06em;
     color:var(--teal);
+    transform: translateZ(30px);
   }
-  .loop-svg{ width:100%; height:auto; margin-top:26px; display:block; }
+  .loop-svg{ width:100%; height:auto; margin-top:26px; display:block; transform: translateZ(40px); }
   .loop-node-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--text); }
   .loop-node-sub{ font-family:'IBM Plex Mono',monospace; font-size:9px; fill:var(--text-dim); }
 
@@ -192,14 +218,21 @@
 
   /* ---------- projects ---------- */
   .project{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:6px;
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius:12px;
     padding:26px 28px;
     margin-bottom:18px;
     transition:border-color .15s, transform .15s;
+    transform-style: preserve-3d;
   }
   .project:hover{ border-color:var(--teal); }
+  .project-top { transform: translateZ(30px); }
+  .project-desc { transform: translateZ(20px); }
+  .project-bullets { transform: translateZ(20px); }
+  .stack { transform: translateZ(25px); }
   .project-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
   .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:#F2F5F7; }
   .project-score{
@@ -226,18 +259,30 @@
   /* ---------- skills ---------- */
   .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
   @media (max-width:700px){ .skills-grid{ grid-template-columns:1fr; } }
-  .skill-block{ background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px 22px; }
-  .skill-block h4{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; }
-  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-block{
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius:12px; padding:20px 22px;
+    transform-style: preserve-3d;
+  }
+  .skill-block h4{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; transform: translateZ(20px); }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; transform: translateZ(30px); }
 
   /* ---------- certifications ---------- */
-  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; }
   .cert-row{
     display:flex; justify-content:space-between; align-items:center;
-    padding:15px 20px; background:var(--panel);
-    border-bottom:1px solid var(--line);
+    padding:15px 20px; 
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom:1px solid rgba(255, 255, 255, 0.08);
     font-size:14px;
+    transition: background 0.2s ease;
   }
+  .cert-row:hover { background: rgba(255, 255, 255, 0.05); }
   .cert-row:last-child{ border-bottom:none; }
   .cert-row .name{ color:var(--text); }
   .cert-row .issuer{ color:var(--text-dim); font-size:12.5px; margin-left:8px; }
@@ -256,7 +301,12 @@
 </head>
 <body>
 
-<div class="bg-grid"></div>
+<div class="bg-container">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="bg-grid"></div>
+</div>
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -523,5 +573,14 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script>
+  VanillaTilt.init(document.querySelectorAll(".project, .loop-card, .skill-block"), {
+    max: 4,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.1,
+  });
+</script>
 </body>
 </html>
