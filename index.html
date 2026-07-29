@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arnav Shukla — Systems &amp; AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0F14;
+    --panel: #10171F;
+    --panel-2: #141D26;
+    --line: #223040;
+    --text: #DCE3E8;
+    --text-dim: #7C8A97;
+    --amber: #FFB454;
+    --teal: #5FD9C4;
+    --blue: #7AA2F7;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--amber); color:#0A0F14; }
+
+  a{ color:inherit; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  .data{ font-family:'IBM Plex Mono',monospace; }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- background grid ---------- */
+  .bg-grid{
+    position:fixed; inset:0; z-index:-1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.12;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  /* ---------- top bar ---------- */
+  header.topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,15,20,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+    max-width:1040px; margin:0 auto;
+  }
+  .brand{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 8px var(--teal);
+    animation:blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+  nav.toplinks{ display:flex; gap:26px; font-family:'JetBrains Mono',monospace; font-size:12.5px; }
+  nav.toplinks a{ color:var(--text-dim); text-decoration:none; text-transform:uppercase; letter-spacing:0.08em; transition:color .15s; }
+  nav.toplinks a:hover{ color:var(--amber); }
+
+  @media (max-width:640px){ nav.toplinks{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 72px;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+  }
+  @media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:56px 0 40px; } }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{ content:'//'; color:var(--text-dim); }
+
+  h1{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:800;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    color:#F2F5F7;
+  }
+  h1 .accent{ color:var(--amber); }
+
+  .hero-sub{
+    margin-top:22px;
+    font-size:16.5px;
+    color:var(--text-dim);
+    max-width:52ch;
+  }
+  .hero-sub strong{ color:var(--text); font-weight:600; }
+
+  .hero-actions{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    padding:12px 20px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:all .15s;
+    border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--amber); color:#0A0F14; }
+  .btn-primary:hover{ background:#ffc57a; }
+  .btn-ghost{ border-color:var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); }
+
+  .status-row{ display:flex; gap:22px; margin-top:40px; flex-wrap:wrap; }
+  .status-item{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); }
+  .status-item b{ color:var(--text); display:block; font-size:18px; font-family:'JetBrains Mono',monospace; }
+
+  /* ---------- signature: control loop diagram ---------- */
+  .loop-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px;
+    position:relative;
+    overflow:hidden;
+  }
+  .loop-card::before{
+    content:'AGENT_LOOP.SVC';
+    position:absolute; top:14px; left:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px; letter-spacing:0.1em;
+    color:var(--text-dim);
+  }
+  .loop-card::after{
+    content:'STATUS: ACTIVE';
+    position:absolute; top:14px; right:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:0.06em;
+    color:var(--teal);
+  }
+  .loop-svg{ width:100%; height:auto; margin-top:26px; display:block; }
+  .loop-node-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--text); }
+  .loop-node-sub{ font-family:'IBM Plex Mono',monospace; font-size:9px; fill:var(--text-dim); }
+
+  .loop-dash{ stroke-dasharray:6 6; animation:dash 3.2s linear infinite; }
+  @keyframes dash{ to{ stroke-dashoffset:-120; } }
+
+  .pulse-dot{ animation:pulseDot 2.4s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ opacity:0.4; r:3.5;} 50%{ opacity:1; r:5;} }
+
+  @media (prefers-reduced-motion: reduce){
+    .loop-dash, .pulse-dot, .brand .dot{ animation:none !important; }
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding:64px 0; border-top:1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
+  .section-num{ font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px; }
+  .section-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:22px; color:#F2F5F7; }
+  .section-note{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-left:auto; }
+  @media (max-width:640px){ .section-note{ display:none; } }
+
+  /* ---------- projects ---------- */
+  .project{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 28px;
+    margin-bottom:18px;
+    transition:border-color .15s, transform .15s;
+  }
+  .project:hover{ border-color:var(--teal); }
+  .project-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:#F2F5F7; }
+  .project-score{
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--teal); border:1px solid var(--line); border-radius:20px;
+    padding:4px 12px; white-space:nowrap;
+  }
+  .project-role{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
+  .project-desc{ margin-top:14px; color:var(--text); font-size:14.5px; max-width:70ch; }
+  .project-bullets{ margin-top:14px; list-style:none; }
+  .project-bullets li{ position:relative; padding-left:18px; font-size:13.5px; color:var(--text-dim); margin-bottom:7px; }
+  .project-bullets li::before{ content:'▸'; position:absolute; left:0; color:var(--amber); }
+  .stack{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    background:var(--panel-2); color:var(--text-dim);
+    border:1px solid var(--line); border-radius:20px;
+    padding:4px 11px;
+  }
+  .project-links{ margin-top:16px; display:flex; gap:16px; }
+  .project-links a{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--blue); text-decoration:none; }
+  .project-links a:hover{ color:var(--amber); }
+
+  /* ---------- skills ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  @media (max-width:700px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-block{ background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px 22px; }
+  .skill-block h4{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+
+  /* ---------- certifications ---------- */
+  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .cert-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:15px 20px; background:var(--panel);
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .cert-row:last-child{ border-bottom:none; }
+  .cert-row .name{ color:var(--text); }
+  .cert-row .issuer{ color:var(--text-dim); font-size:12.5px; margin-left:8px; }
+  .cert-row .date{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); white-space:nowrap; }
+
+  /* ---------- contact / footer ---------- */
+  .contact-section{ text-align:center; padding:80px 0; }
+  .contact-section h2{ font-family:'JetBrains Mono',monospace; font-size:clamp(26px,4vw,38px); color:#F2F5F7; }
+  .contact-section p{ color:var(--text-dim); margin-top:14px; max-width:48ch; margin-left:auto; margin-right:auto; }
+  .contact-actions{ display:flex; justify-content:center; gap:14px; margin-top:32px; flex-wrap:wrap; }
+
+  footer{ border-top:1px solid var(--line); padding:26px 0; }
+  .footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .footer-inner span{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-dim); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span>ARNAV.SHUKLA</div>
+    <nav class="toplinks">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Stack</a>
+      <a href="#certs">Certs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none; padding-top:96px;">
+    <div>
+      <div class="eyebrow">systems &amp; AI engineer · Bhopal, India</div>
+      <h1>I build closed-loop<br>systems that <span class="accent">decide</span>,<br>not just respond.</h1>
+      <p class="hero-sub">
+        CS undergrad at <strong>VIT Bhopal</strong> building full-stack platforms and autonomous
+        AI agents — from a local-LLM HVAC controller with a physics simulation in the loop, to
+        row-level-secured healthcare infrastructure, to an ATS engine that explains its own scoring.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">View projects ↓</a>
+        <a class="btn btn-ghost" href="mailto:arnavshukla0925@gmail.com">arnavshukla0925@gmail.com</a>
+      </div>
+      <div class="status-row">
+        <div class="status-item"><b>4</b>flagship projects</div>
+        <div class="status-item"><b>8.57</b>CGPA</div>
+        <div class="status-item"><b>2027</b>expected grad</div>
+        <div class="status-item"><b>AWS</b>cloud certified</div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE: agent control loop diagram -->
+    <div class="loop-card">
+      <svg class="loop-svg" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- loop path -->
+        <path d="M 190 60 A 100 100 0 1 1 189.9 60" fill="none" stroke="#223040" stroke-width="1.5"/>
+        <path class="loop-dash" d="M 190 60 A 100 100 0 1 1 189.9 60" fill="none" stroke="#5FD9C4" stroke-width="1.5" stroke-opacity="0.7"/>
+
+        <!-- SENSE node (top) -->
+        <circle cx="190" cy="60" r="30" fill="#141D26" stroke="#223040"/>
+        <circle class="pulse-dot" cx="190" cy="60" r="4" fill="#5FD9C4"/>
+        <text x="190" y="102" text-anchor="middle" class="loop-node-label">SENSE</text>
+        <text x="190" y="114" text-anchor="middle" class="loop-node-sub">occupancy · vitals · JD</text>
+
+        <!-- DECIDE node (right) -->
+        <circle cx="288" cy="180" r="30" fill="#141D26" stroke="#223040"/>
+        <circle class="pulse-dot" cx="288" cy="180" r="4" fill="#FFB454" style="animation-delay:0.8s"/>
+        <text x="288" y="222" text-anchor="middle" class="loop-node-label">DECIDE</text>
+        <text x="288" y="234" text-anchor="middle" class="loop-node-sub">LLM + rule fallback</text>
+
+        <!-- ACT node (left) -->
+        <circle cx="92" cy="180" r="30" fill="#141D26" stroke="#223040"/>
+        <circle class="pulse-dot" cx="92" cy="180" r="4" fill="#7AA2F7" style="animation-delay:1.6s"/>
+        <text x="92" y="222" text-anchor="middle" class="loop-node-label">ACT</text>
+        <text x="92" y="234" text-anchor="middle" class="loop-node-sub">setpoint · alert · score</text>
+
+        <!-- center label -->
+        <text x="190" y="184" text-anchor="middle" class="loop-node-sub" fill="#7C8A97" font-size="9">every 30s</text>
+        <text x="190" y="196" text-anchor="middle" class="loop-node-label" font-size="10">fault-tolerant</text>
+      </svg>
+      <div style="margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); border-top:1px solid var(--line); padding-top:14px;">
+        The pattern behind Eco-Loop's HVAC agent, the healthcare triage engine,
+        and TalentMatch's scoring pipeline: sense → decide → act, with a deterministic
+        fallback whenever the model can't be trusted.
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-title">Projects</span>
+      <span class="section-note">ordered by engineering depth</span>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div>
+          <div class="project-title">Rural Healthcare Platform</div>
+          <div class="project-role">Full-stack + AI · telehealth for underserved regions</div>
+        </div>
+        <div class="project-score">9.6 / 10 engineering</div>
+      </div>
+      <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
+        Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
+        to end with PostgreSQL row-level security.</p>
+      <ul class="project-bullets">
+        <li>Row-Level Security policies guarantee a patient's queries can only ever return their own records, even if the API layer is compromised</li>
+        <li>Gemini-powered triage returns structured, urgency-ranked JSON with a deterministic rule-based fallback</li>
+        <li>PostGIS <span class="data">ST_DWithin</span> queries return the nearest facilities without shipping thousands of rows to the client</li>
+        <li>Upstash Redis rate-limiting on AI endpoints, Playwright E2E coverage on critical flows</li>
+      </ul>
+      <div class="stack">
+        <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">Supabase / PostgreSQL</span>
+        <span class="chip">PostGIS</span><span class="chip">Google Gemini</span><span class="chip">Playwright</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div>
+          <div class="project-title">Eco-Loop — Autonomous Building AI</div>
+          <div class="project-role">Honeywell Hackathon 2024 · agentic systems</div>
+        </div>
+        <div class="project-score">9.6 / 10 engineering</div>
+      </div>
+      <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
+        time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
+        simulation, exposed to any MCP client as a set of controllable tools.</p>
+      <ul class="project-bullets">
+        <li>Locally-hosted Qwen2.5 (via Ollama) makes setpoint decisions every 30 seconds against a physics-accurate thermal simulation</li>
+        <li>Built a FastMCP server exposing 10 sensor/actuator tools — the building becomes a standard MCP-controllable device</li>
+        <li>If the LLM call fails or hallucinates invalid JSON, control silently falls back to a deterministic rule-based controller</li>
+        <li>Live telemetry streamed to a React dashboard over WebSockets — Temperature, Energy, PMV/PPD comfort</li>
+      </ul>
+      <div class="stack">
+        <span class="chip">Python / FastAPI</span><span class="chip">Ollama + Qwen2.5</span><span class="chip">FastMCP</span>
+        <span class="chip">EnergyPlus</span><span class="chip">React + WebSockets</span><span class="chip">Docker</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div>
+          <div class="project-title">TalentMatch AI</div>
+          <div class="project-role">ATS scoring engine · hybrid ML + LLM pipeline</div>
+        </div>
+        <div class="project-score">8.9 / 10 engineering</div>
+      </div>
+      <p class="project-desc">Opens up the resume-screening black box: scores a resume against a job
+        description and explains exactly why, using cheap deterministic math where possible and an
+        LLM only where reasoning is actually needed.</p>
+      <ul class="project-bullets">
+        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
+        <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
+        <li>Stateless-by-design pipeline: files are processed in a temp directory and explicitly deleted afterward</li>
+        <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
+      </ul>
+      <div class="stack">
+        <span class="chip">Python / FastAPI</span><span class="chip">scikit-learn</span><span class="chip">Groq API</span>
+        <span class="chip">PyMuPDF</span><span class="chip">Docker</span><span class="chip">Vite</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <div>
+          <div class="project-title">CampusCart</div>
+          <div class="project-role">Multi-vendor campus marketplace · backend developer</div>
+        </div>
+        <div class="project-score">7.3 / 10 engineering</div>
+      </div>
+      <p class="project-desc">A localized marketplace that replaces cash and queues for on-campus
+        groceries, stationery, and document printing — with distinct role-based experiences for
+        students, vendors, and administrators.</p>
+      <ul class="project-bullets">
+        <li>Flask Blueprints cleanly isolate Student, Vendor, and Admin logic and routing</li>
+        <li>Relational schema in SQLAlchemy with strict foreign keys and role-based access decorators</li>
+        <li>Secure multipart uploads for print-shop orders, a simulated campus wallet, and in-app notifications</li>
+      </ul>
+      <div class="stack">
+        <span class="chip">Flask</span><span class="chip">SQLAlchemy</span><span class="chip">Flask-Login / Bcrypt</span>
+        <span class="chip">SQLite</span><span class="chip">Render + Gunicorn</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <span class="section-title">Stack</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <h4>Backend &amp; APIs</h4>
+        <div class="skill-tags">
+          <span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Django</span>
+          <span class="chip">Node.js</span><span class="chip">Celery</span><span class="chip">WebSockets</span>
+          <span class="chip">MCP</span><span class="chip">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <h4>Frontend</h4>
+        <div class="skill-tags">
+          <span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Vue.js</span>
+          <span class="chip">TailwindCSS</span><span class="chip">Bootstrap</span><span class="chip">Figma</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <h4>Data &amp; Cloud</h4>
+        <div class="skill-tags">
+          <span class="chip">PostgreSQL</span><span class="chip">PostGIS</span><span class="chip">Supabase</span>
+          <span class="chip">MySQL</span><span class="chip">SQLite</span><span class="chip">Redis</span>
+          <span class="chip">AWS (EC2/S3/RDS/Lambda)</span><span class="chip">Docker</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <h4>AI / ML</h4>
+        <div class="skill-tags">
+          <span class="chip">Gemini</span><span class="chip">Groq</span><span class="chip">Ollama</span>
+          <span class="chip">Hugging Face</span><span class="chip">scikit-learn</span><span class="chip">Whisper</span>
+          <span class="chip">Tesseract OCR</span><span class="chip">spaCy</span><span class="chip">RAG</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <span class="section-title">Certifications</span>
+    </div>
+    <div class="cert-list">
+      <div class="cert-row">
+        <div><span class="name">AWS Academy Graduate, Cloud Architecting</span><span class="issuer">Amazon Web Services</span></div>
+        <div class="date">JUN 2026</div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">Front End Development Libraries (300 Hrs)</span><span class="issuer">freeCodeCamp</span></div>
+        <div class="date">SEP 2025</div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">Marketing Analytics (Elite Gold, 93%)</span><span class="issuer">NPTEL</span></div>
+        <div class="date">APR 2026</div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">AI Knowledge Challenge Participant</span><span class="issuer">IBM · Generative AI, RAG, Prompt Engineering</span></div>
+        <div class="date">2024</div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">Python (Basic)</span><span class="issuer">HackerRank</span></div>
+        <div class="date">MAR 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="eyebrow" style="justify-content:center;">open to opportunities</div>
+    <h2>Let's build something<br>that has to work.</h2>
+    <p>Backend, full-stack, or applied-AI roles — happy to talk through any of the systems above in more depth.</p>
+    <div class="contact-actions">
+      <a class="btn btn-primary" href="mailto:arnavshukla0925@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 ARNAV SHUKLA — BUILT WITH HTML/CSS/JS, NO FRAMEWORK</span>
+    <span>VIT BHOPAL · CSE · EXPECTED 2027</span>
+  </div>
+</footer>
+
+</body>
+</html>
