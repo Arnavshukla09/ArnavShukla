@@ -247,8 +247,31 @@
     margin-bottom:18px;
     transition:border-color .2s, box-shadow .2s, transform .15s;
     transform-style: preserve-3d;
+    position: relative;
   }
   .project:hover{ border-color:var(--teal); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 40px rgba(255,107,0,0.15); }
+  
+  .project-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+    z-index: -1;
+    filter: blur(12px) brightness(0.3) saturate(1.2);
+    transform: scale(1.05) translateZ(-10px);
+    pointer-events: none;
+    border-radius: 16px;
+    mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  }
+  .project:hover .project-bg {
+    opacity: 0.2;
+    filter: blur(5px) brightness(0.6) saturate(1.4);
+    transform: scale(1) translateZ(-10px);
+  }
   .project-top { transform: translateZ(30px); }
   .project-desc { transform: translateZ(20px); }
   .project-bullets { transform: translateZ(20px); }
@@ -419,6 +442,7 @@
     </div>
 
     <div class="project">
+      <img src="assets/ruralhealth.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
           <div class="project-title">Rural Healthcare Platform</div>
@@ -446,6 +470,7 @@
     </div>
 
     <div class="project">
+      <img src="assets/eco-loop.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
           <div class="project-title">Eco-Loop — Autonomous Building AI</div>
@@ -473,6 +498,7 @@
     </div>
 
     <div class="project">
+      <img src="assets/talentmatch.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
           <div class="project-title">TalentMatch AI</div>
@@ -500,6 +526,7 @@
     </div>
 
     <div class="project">
+      <img src="assets/campuscart.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
           <div class="project-title">CampusCart</div>
