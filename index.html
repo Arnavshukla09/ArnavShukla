@@ -232,18 +232,26 @@
   .loop-card:hover::before {
     color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.5);
   }
-  .loop-card::after{
-    content:'STATUS: ACTIVE';
+  .loop-status {
     position:absolute; top:14px; right:20px;
     font-family:'JetBrains Mono',monospace;
     font-size:10px; letter-spacing:0.06em;
-    color:var(--amber);
+    color:var(--text-dim);
     transform: translateZ(30px);
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
+    display: flex; align-items: center; gap: 6px;
   }
-  .loop-card:hover::after {
+  .loop-card:hover .loop-status {
     color: #FFFFFF;
-    text-shadow: 0 0 15px rgba(255,107,0,0.9);
+  }
+  .loop-status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  .loop-card:hover .loop-status-dot {
+    box-shadow: 0 0 15px var(--teal);
     animation: blink 0.5s ease-in-out infinite;
   }
   
@@ -432,9 +440,9 @@
   }
   .cert-row::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0;
-    background: var(--amber); transition: width 0.3s ease, box-shadow 0.3s ease;
+    background: var(--teal); transition: width 0.3s ease, box-shadow 0.3s ease;
   }
-  .cert-row:hover::before { width: 6px; box-shadow: 0 0 25px var(--amber); }
+  .cert-row:hover::before { width: 6px; box-shadow: 0 0 25px var(--teal); }
   .cert-row .name, .cert-row .issuer, .cert-row .date { transition: color 0.3s, text-shadow 0.3s; }
   .cert-row:hover .name { color: #FFFFFF; text-shadow: 0 0 15px rgba(255,107,0,0.9); }
   .cert-row:hover .issuer, .cert-row:hover .date { color: #FFFFFF; text-shadow: 0 0 8px rgba(255,255,255,0.5); }
@@ -502,6 +510,7 @@
 
     <!-- SIGNATURE: agent control loop diagram -->
     <div class="loop-card">
+      <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
       <canvas id="loop-canvas" style="width:100%; height:auto; margin-top:26px; display:none; min-height:250px; transform: translateZ(40px);"></canvas>
       <svg id="loop-svg-fallback" class="loop-svg" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <!-- loop path -->
