@@ -35,7 +35,9 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    padding-left: 260px;
   }
+  @media (max-width: 900px) { body { padding-left: 0; padding-bottom: 70px; } }
   ::selection{ background:var(--teal); color:#FFFFFF; text-shadow:none; }
 
   a{ color:inherit; }
@@ -54,6 +56,10 @@
     background: var(--bg);
     overflow: hidden;
   }
+  #animus-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0.6;
+  }
   .bg-grid{
     position:absolute; inset:0;
     background-image:
@@ -71,84 +77,87 @@
     background-size:16px 16px;
     opacity:0.1;
   }
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.3;
-    animation: float 20s infinite ease-in-out;
-  }
-  .orb-1 { width: 400px; height: 400px; background: var(--blue); top: -10%; left: -10%; animation-delay: 0s; opacity: 0.05; }
-  .orb-2 { width: 500px; height: 500px; background: var(--amber); bottom: -20%; right: -10%; animation-delay: -5s; opacity: 0.08; }
-  .orb-3 { width: 300px; height: 300px; background: var(--teal); top: 40%; left: 40%; animation-delay: -10s; opacity: 0.04;}
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(40px, -60px) scale(1.1); }
-    66% { transform: translate(-30px, 30px) scale(0.9); }
-  }
 
-  /* ---------- top bar ---------- */
-  header.topbar{
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    width: 100%; max-width: 2000px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(15,23,42,0.08);
-    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.5), 0 10px 30px rgba(15,23,42,0.05);
-    transition: max-width 0.5s cubic-bezier(0.2, 1, 0.2, 1), 
-                top 0.5s cubic-bezier(0.2, 1, 0.2, 1), 
-                border-radius 0.5s cubic-bezier(0.2, 1, 0.2, 1),
-                border 0.5s ease, background 0.5s ease;
+  /* ---------- sidebar ---------- */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
+    width: 260px;
+    background: linear-gradient(180deg, var(--blue), #0B1120);
+    border-right: 1px solid var(--amber);
+    box-shadow: 10px 0 30px rgba(15,23,42,0.3);
+    display: flex; flex-direction: column;
+    padding: 60px 40px;
   }
-  header.topbar.scrolled {
-    top: 24px;
-    max-width: 740px; /* Shrinks into a tight hovering rectangle */
-    border-radius: 40px;
-    border: 1px solid rgba(15,23,42,0.1);
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,247,250,0.9));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 20px 40px rgba(15,23,42,0.1), 0 0 25px rgba(220,38,38,0.1);
+  .sidebar .brand {
+    font-family:'JetBrains Mono',monospace; font-weight:800; font-size: 16px; color: var(--amber); 
+    margin-bottom: 80px; display:flex; align-items:center; gap:10px;
   }
-  .topbar-inner{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 28px;
-    max-width:1040px; margin:0 auto;
-    transition: padding 0.5s cubic-bezier(0.2, 1, 0.2, 1);
-  }
-  header.topbar.scrolled .topbar-inner {
-    padding: 12px 28px; /* Tighter vertical padding when floating */
-  }
-  .brand{
-    font-family:'JetBrains Mono',monospace;
-    font-weight:700;
-    font-size:15px;
-    letter-spacing:0.02em;
-    display:flex; align-items:center; gap:10px;
-  }
-  .brand .dot{
-    width:8px; height:8px; border-radius:50%;
-    background:var(--teal);
-    box-shadow:0 0 8px var(--teal);
+  .sidebar .brand .dot { 
+    width:8px; height:8px; border-radius:50%; background: var(--amber); box-shadow: 0 0 12px var(--amber); 
     animation:blink 2.4s ease-in-out infinite;
   }
   @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
 
-  nav.toplinks{ display:flex; gap:26px; font-family:'JetBrains Mono',monospace; font-size:12.5px; }
-  nav.toplinks a{ color:var(--text-dim); text-decoration:none; text-transform:uppercase; letter-spacing:0.08em; transition:color .15s; }
-  nav.toplinks a:hover{ color:var(--teal); }
+  nav.sidebar-links { display: flex; flex-direction: column; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  nav.sidebar-links a { 
+    color: #94A3B8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
+    transition: color 0.3s, transform 0.3s; display: flex; align-items: center; gap: 12px; font-weight:600;
+  }
+  nav.sidebar-links a::before { content: ''; width: 0; height: 2px; background: var(--teal); transition: width 0.3s; }
+  nav.sidebar-links a:hover { color: var(--amber); transform: translateX(8px); }
+  nav.sidebar-links a:hover::before { width: 16px; background: var(--amber); }
 
-  @media (max-width:640px){ nav.toplinks{ display:none; } }
+  @media (max-width: 900px) {
+    .sidebar { 
+      top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 70px; 
+      flex-direction: row; padding: 0 20px; align-items: center; justify-content: space-between;
+      border-right: none; border-top: 1px solid var(--amber);
+    }
+    .sidebar .brand { margin-bottom: 0; font-size: 14px; }
+    nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; }
+    nav.sidebar-links a::before { display: none; }
+    nav.sidebar-links a:hover { transform: none; }
+  }
 
-  /* ---------- hero ---------- */
+  /* ---------- hero & 3d relic ---------- */
   .hero{
     padding:96px 0 72px;
     display:grid;
-    grid-template-columns:1.05fr 0.95fr;
+    grid-template-columns:1fr 1fr;
     gap:48px;
     align-items:center;
   }
   @media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:56px 0 40px; } }
+  
+  .hero-relic-container {
+    perspective: 1000px;
+    display: flex; justify-content: center; align-items: center;
+    height: 300px;
+  }
+  .relic {
+    width: 120px; height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spinRelic 14s infinite linear;
+  }
+  .relic .face {
+    position: absolute; width: 120px; height: 120px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid var(--amber);
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.3), inset 0 0 20px rgba(255,255,255,0.8);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .relic .front  { transform: translateZ(60px); }
+  .relic .back   { transform: rotateY(180deg) translateZ(60px); }
+  .relic .left   { transform: rotateY(-90deg) translateZ(60px); }
+  .relic .right  { transform: rotateY(90deg) translateZ(60px); }
+  .relic .top    { transform: rotateX(90deg) translateZ(60px); }
+  .relic .bottom { transform: rotateX(-90deg) translateZ(60px); }
+  @keyframes spinRelic {
+    from { transform: rotateX(0) rotateY(0) rotateZ(0); }
+    to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+  }
+  @media (max-width: 860px) { .hero-relic-container { display: none; } }
 
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
@@ -302,21 +311,46 @@
   .section-note{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-left:auto; }
   @media (max-width:640px){ .section-note{ display:none; } }
 
-  /* ---------- projects ---------- */
+  /* ---------- projects & isometric plane ---------- */
+  .isometric-plane {
+    transform-style: preserve-3d;
+    transform: rotateX(55deg) rotateZ(-40deg) scale(0.95);
+    transition: transform 0.5s cubic-bezier(0.2,1,0.2,1);
+    padding: 60px 40px;
+  }
+  @media (max-width: 1000px) {
+    .isometric-plane { transform: none; padding: 0; }
+  }
+  
   .project{
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
     backdrop-filter: blur(24px) saturate(150%);
     -webkit-backdrop-filter: blur(24px) saturate(150%);
     border: 1px solid rgba(15, 23, 42, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(15,23,42,0.1);
+    box-shadow: -20px 20px 30px rgba(15,23,42,0.15), inset 0 1px 0 rgba(255,255,255,1);
     border-radius:16px;
     padding:26px 28px;
-    margin-bottom:18px;
-    transition:border-color .2s, box-shadow .2s, transform .15s;
+    margin-bottom:40px;
+    transition:transform 0.5s cubic-bezier(0.2,1,0.2,1), box-shadow 0.5s, opacity 0.5s, border-color 0.5s;
     transform-style: preserve-3d;
     position: relative;
+    /* Force high z-index inside the plane */
+    z-index: 10;
   }
-  .project:hover{ border-color:var(--teal); box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(220,38,38,0.15); }
+  /* On hover of the plane, dim non-hovered projects */
+  @media (min-width: 1000px) {
+    .isometric-plane:hover .project { opacity: 0.4; }
+    .isometric-plane .project:hover { 
+      opacity: 1;
+      transform: translateZ(80px); /* Lifts up off the ground plane */
+      border-color:var(--teal); 
+      box-shadow: -60px 60px 50px rgba(220,38,38,0.2), inset 0 1px 0 rgba(255,255,255,1);
+    }
+  }
+  @media (max-width: 1000px) {
+    .project { margin-bottom: 20px; box-shadow: 0 10px 40px rgba(15,23,42,0.1); }
+    .project:hover { border-color:var(--teal); box-shadow: 0 10px 40px rgba(220,38,38,0.15); }
+  }
   
   .project-bg {
     position: absolute;
@@ -495,40 +529,34 @@
 <body>
 
 <div class="bg-container">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <canvas id="animus-bg"></canvas>
   <div class="bg-grid"></div>
 </div>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand"><span class="dot"></span>ARNAV.SHUKLA</div>
-    <nav class="toplinks" aria-label="Main Navigation">
-      <a href="#projects" aria-label="Projects Section">Projects</a>
-      <a href="#skills" aria-label="Skills Section">Stack</a>
-      <a href="#certs" aria-label="Certifications Section">Certs</a>
-      <a href="#contact" aria-label="Contact Section">Contact</a>
-    </nav>
-  </div>
-</header>
+<aside class="sidebar">
+  <div class="brand"><span class="dot"></span>ARNAV.SHUKLA</div>
+  <nav class="sidebar-links" aria-label="Main Navigation">
+    <a href="#projects" aria-label="Projects Section">Projects</a>
+    <a href="#skills" aria-label="Skills Section">Stack</a>
+    <a href="#certs" aria-label="Certifications Section">Certs</a>
+    <a href="#contact" aria-label="Contact Section">Contact</a>
+  </nav>
+</aside>
 
 <div class="wrap">
 
   <!-- HERO -->
   <section class="hero" style="border-top:none; padding-top:96px;">
     <div>
-      <div class="eyebrow">systems &amp; AI engineer · Bhopal, India</div>
-      <h1>I build closed-loop<br>systems that <span class="accent">decide</span>,<br>not just respond.</h1>
+      <div class="eyebrow">Initializing Agent Network</div>
+      <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <p class="hero-sub">
-        CS undergrad at <strong>VIT Bhopal</strong> building full-stack platforms and autonomous
-        AI agents — from a local-LLM HVAC controller with a physics simulation in the loop, to
-        row-level-secured healthcare infrastructure, to an ATS engine that explains its own scoring.
+        I engineer fault-tolerant, autonomous agent loops for complex environments. 
+        Specializing in large-scale data synthesis, robust API bridging, and secure LLM-driven decision engines.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#projects" aria-label="View Projects">View projects ↓</a>
-        <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener" aria-label="Download Resume PDF">Download Resume</a>
-        <a class="btn btn-ghost" href="mailto:arnavshukla0925@gmail.com" aria-label="Email Arnav">arnavshukla0925@gmail.com</a>
+        <a href="#projects" class="btn btn-primary">Deploy System_</a>
+        <a href="#contact" class="btn btn-ghost">Ping Endpoint</a>
       </div>
       <div class="status-row">
         <div class="status-item"><b>4</b>flagship projects</div>
@@ -537,8 +565,22 @@
         <div class="status-item"><b>AWS</b>cloud certified</div>
       </div>
     </div>
+    
+    <!-- 3D Geometric Relic -->
+    <div class="hero-relic-container">
+      <div class="relic">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face left"></div>
+        <div class="face right"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- SIGNATURE: agent control loop diagram -->
+  <!-- ARCHITECTURE (Agent Loop) -->
+  <section id="architecture" style="padding-top: 0;">
     <div class="loop-card">
       <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
       <canvas id="loop-canvas" style="width:100%; height:auto; margin-top:26px; display:none; min-height:250px; transform: translateZ(40px);"></canvas>
@@ -580,11 +622,13 @@
   <!-- PROJECTS -->
   <section id="projects">
     <div class="section-head">
-      <span class="section-num">01</span>
-      <span class="section-title">Projects</span>
-      <span class="section-note">ordered by engineering depth</span>
+      <span class="section-num">01.</span>
+      <h2 class="section-title">Case Studies</h2>
+      <span class="section-note">Core loops & architectures</span>
     </div>
 
+    <div class="isometric-plane">
+    
     <div class="project">
       <img src="assets/ruralhealth.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
@@ -695,6 +739,7 @@
         <span class="chip">SQLite</span><span class="chip">Render + Gunicorn</span>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- SKILLS -->
@@ -801,13 +846,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <script>
-  // 1. Initialize Lenis Smooth Scroll
-  const lenis = new Lenis();
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-  gsap.ticker.lagSmoothing(0);
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+  });
 
-  // 2. GSAP ScrollTrigger Animations
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
   gsap.utils.toArray('.project, .skill-block').forEach((el, i) => {
     gsap.fromTo(el, 
       { opacity: 0, y: 40 },
@@ -829,110 +879,102 @@
   try {
     const canvas = document.getElementById('loop-canvas');
     const fallbackSvg = document.getElementById('loop-svg-fallback');
-    const container = canvas.parentElement;
+    const container = canvas ? canvas.parentElement : null;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    fallbackSvg.style.display = 'none';
-    canvas.style.display = 'block';
+    if (canvas) {
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      fallbackSvg.style.display = 'none';
+      canvas.style.display = 'block';
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.z = 12;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+      camera.position.z = 12;
 
-    const style = getComputedStyle(document.body);
-    const cTeal = parseInt(style.getPropertyValue('--teal').trim().replace('#', '0x'), 16);
-    const cAmber = parseInt(style.getPropertyValue('--amber').trim().replace('#', '0x'), 16);
-    const cBlue = parseInt(style.getPropertyValue('--blue').trim().replace('#', '0x'), 16);
-    const cLine = parseInt(style.getPropertyValue('--line').trim().replace('#', '0x'), 16);
+      const style = getComputedStyle(document.body);
+      const cTeal = parseInt(style.getPropertyValue('--teal').trim().replace('#', '0x'), 16);
+      const cAmber = parseInt(style.getPropertyValue('--amber').trim().replace('#', '0x'), 16);
+      const cBlue = parseInt(style.getPropertyValue('--blue').trim().replace('#', '0x'), 16);
+      const cLine = parseInt(style.getPropertyValue('--line').trim().replace('#', '0x'), 16);
 
-    const group = new THREE.Group();
-    scene.add(group);
+      const group = new THREE.Group();
+      scene.add(group);
 
-    const centerGeo = new THREE.IcosahedronGeometry(0.6, 0);
-    const centerMat = new THREE.MeshBasicMaterial({ color: cLine, wireframe: true, transparent: true, opacity: 0.5 });
-    const centerNode = new THREE.Mesh(centerGeo, centerMat);
-    group.add(centerNode);
+      const centerGeo = new THREE.IcosahedronGeometry(0.6, 0);
+      const centerMat = new THREE.MeshBasicMaterial({ color: cLine, wireframe: true, transparent: true, opacity: 0.5 });
+      const centerNode = new THREE.Mesh(centerGeo, centerMat);
+      group.add(centerNode);
 
-    const nodeGeo = new THREE.IcosahedronGeometry(0.8, 0);
-    const dist = 4;
-    
-    const node1 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cTeal, wireframe: true }));
-    node1.position.set(0, dist, 0);
-    group.add(node1);
-
-    const node2 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cAmber, wireframe: true }));
-    node2.position.set(dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
-    group.add(node2);
-
-    const node3 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cBlue, wireframe: true }));
-    node3.position.set(-dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
-    group.add(node3);
-
-    const lineMat = new THREE.LineBasicMaterial({ color: cLine, transparent: true, opacity: 0.6 });
-    const addLine = (p1, p2) => {
-      const geo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
-      group.add(new THREE.Line(geo, lineMat));
-    };
-    addLine(node1.position, node2.position);
-    addLine(node2.position, node3.position);
-    addLine(node3.position, node1.position);
-    addLine(new THREE.Vector3(0,0,0), node1.position);
-    addLine(new THREE.Vector3(0,0,0), node2.position);
-    addLine(new THREE.Vector3(0,0,0), node3.position);
-
-    group.rotation.x = 0.5;
-    group.rotation.y = 0.2;
-
-    let isVisible = true;
-    const observer = new IntersectionObserver((entries) => {
-      isVisible = entries[0].isIntersecting;
-    });
-    observer.observe(container);
-
-    window.addEventListener('resize', () => {
-      const w = canvas.clientWidth;
-      const h = Math.max(250, w * 0.75); // responsive height
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h, false);
-      canvas.style.height = h + 'px';
-    });
-    window.dispatchEvent(new Event('resize'));
-
-    let time = 0;
-    const animate = () => {
-      requestAnimationFrame(animate);
-      if (!isVisible) return;
-      time += 0.005;
-      group.rotation.y = time;
-      group.rotation.z = time * 0.5;
+      const nodeGeo = new THREE.IcosahedronGeometry(0.8, 0);
+      const dist = 4;
       
-      node1.rotation.y = -time; node1.rotation.x = time;
-      node2.rotation.y = -time; node2.rotation.x = time;
-      node3.rotation.y = -time; node3.rotation.x = time;
-      centerNode.rotation.y = -time;
+      const node1 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cTeal, wireframe: true }));
+      node1.position.set(0, dist, 0);
+      group.add(node1);
 
-      renderer.render(scene, camera);
-    };
-    animate();
+      const node2 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cAmber, wireframe: true }));
+      node2.position.set(dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
+      group.add(node2);
+
+      const node3 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cBlue, wireframe: true }));
+      node3.position.set(-dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
+      group.add(node3);
+
+      const lineMat = new THREE.LineBasicMaterial({ color: cLine, transparent: true, opacity: 0.6 });
+      const addLine = (p1, p2) => {
+        const geo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
+        group.add(new THREE.Line(geo, lineMat));
+      };
+      addLine(node1.position, node2.position);
+      addLine(node2.position, node3.position);
+      addLine(node3.position, node1.position);
+      addLine(new THREE.Vector3(0,0,0), node1.position);
+      addLine(new THREE.Vector3(0,0,0), node2.position);
+      addLine(new THREE.Vector3(0,0,0), node3.position);
+
+      group.rotation.x = 0.5;
+      group.rotation.y = 0.2;
+
+      let isVisible = true;
+      const observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+      });
+      observer.observe(container);
+
+      window.addEventListener('resize', () => {
+        const w = canvas.clientWidth;
+        const h = Math.max(250, w * 0.75); // responsive height
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+        canvas.style.height = h + 'px';
+      });
+      window.dispatchEvent(new Event('resize'));
+
+      let time = 0;
+      const animate = () => {
+        requestAnimationFrame(animate);
+        if (!isVisible) return;
+        time += 0.005;
+        group.rotation.y = time;
+        group.rotation.z = time * 0.5;
+        
+        node1.rotation.y = -time; node1.rotation.x = time;
+        node2.rotation.y = -time; node2.rotation.x = time;
+        node3.rotation.y = -time; node3.rotation.x = time;
+        centerNode.rotation.y = -time;
+
+        renderer.render(scene, camera);
+      };
+      animate();
+    }
   } catch (e) {
     console.log("WebGL disabled or failed. Falling back to static SVG.", e);
   }
 
-  // 4. VanillaTilt
-  // Project Cards: Subtle tilt, slow smooth movement, slight pop out, high glare
-  VanillaTilt.init(document.querySelectorAll(".project"), {
-    max: 3,
-    speed: 1000,
-    glare: true,
-    "max-glare": 0.25,
-    scale: 1.02,
-    easing: "cubic-bezier(.03,.98,.52,.99)"
-  });
-
+  // 4. Vanilla Tilt
   // Loop Diagram: Deeper tilt, fast response to emphasize the 3D depth of the SVG
   VanillaTilt.init(document.querySelectorAll(".loop-card"), {
     max: 8,
@@ -949,21 +991,58 @@
     glare: false,
     scale: 1.05
   });
-  // 5. Navbar Scroll Effect
-  const topbar = document.querySelector('header.topbar');
-  if (topbar) {
-    const handleScroll = () => {
-      const scrollY = (typeof lenis !== 'undefined' && lenis.scroll !== undefined) ? lenis.scroll : window.scrollY;
-      if (scrollY > 20) {
-        topbar.classList.add('scrolled');
-      } else {
-        topbar.classList.remove('scrolled');
+  // Navbar Scroll Effect removed due to fixed sidebar
+  
+  // Canvas Animus Background
+  const canvas = document.getElementById('animus-bg');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+    const initCanvas = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      particles = [];
+      for (let i=0; i<70; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          size: Math.random() * 1.5 + 0.5
+        });
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    if (typeof lenis !== 'undefined') {
-      lenis.on('scroll', handleScroll);
-    }
+    initCanvas();
+    window.addEventListener('resize', initCanvas);
+    const draw = () => {
+      ctx.clearRect(0,0,width,height);
+      ctx.fillStyle = 'rgba(30, 41, 59, 0.4)'; // Navy
+      ctx.strokeStyle = 'rgba(197, 160, 89, 0.15)'; // Gold
+      ctx.lineWidth = 1;
+      
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        for (let j=i+1; j<particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(draw);
+    };
+    draw();
   }
 </script>
 </body>
