@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #F8F9FA;
@@ -35,7 +35,7 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
-    padding-left: 260px;
+    padding-left: 80px;
   }
   @media (max-width: 900px) { body { padding-left: 0; padding-bottom: 70px; } }
   ::selection{ background:var(--teal); color:#FFFFFF; text-shadow:none; }
@@ -51,61 +51,92 @@
   }
 
   /* ---------- background grid & orbs ---------- */
-  .bg-container {
-    position:fixed; inset:0; z-index:-1;
+  .bg-animus {
+    position: fixed; inset: 0; z-index: -1;
     background: var(--bg);
     overflow: hidden;
   }
-  #animus-bg {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0.6;
+  .bg-animus::before {
+    content: ""; position: absolute; inset: -200%;
+    background-image: 
+      linear-gradient(rgba(15,23,42,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,23,42,0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(600px) rotateX(70deg) translateZ(-100px);
+    animation: matrixScroll 10s infinite linear;
   }
-  .bg-grid{
-    position:absolute; inset:0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
-    opacity:0.4;
-    mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 10%, transparent 80%);
+  .bg-animus::after {
+    content: ""; position: absolute; inset: -200%;
+    background-image: 
+      linear-gradient(var(--amber) 1px, transparent 1px),
+      linear-gradient(90deg, var(--amber) 1px, transparent 1px);
+    background-size: 240px 240px;
+    opacity: 0.3;
+    transform: perspective(600px) rotateX(70deg) translateZ(50px);
+    animation: matrixScroll 15s infinite linear;
   }
-  .bg-grid::after {
-    content:''; position:absolute; inset:0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:16px 16px;
-    opacity:0.1;
+  @keyframes matrixScroll {
+    0% { transform: perspective(600px) rotateX(70deg) translateY(0); }
+    100% { transform: perspective(600px) rotateX(70deg) translateY(240px); }
   }
 
   /* ---------- sidebar ---------- */
   .sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
-    width: 260px;
+    width: 80px;
     background: linear-gradient(180deg, var(--blue), #0B1120);
     border-right: 1px solid var(--amber);
     box-shadow: 10px 0 30px rgba(15,23,42,0.3);
     display: flex; flex-direction: column;
-    padding: 60px 40px;
+    padding: 60px 0;
+    align-items: center;
+    transition: width 0.4s cubic-bezier(0.2, 1, 0.2, 1), padding 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .sidebar:hover {
+    width: 260px;
+    align-items: flex-start;
+    padding: 60px 30px;
   }
   .sidebar .brand {
-    font-family:'JetBrains Mono',monospace; font-weight:800; font-size: 16px; color: var(--amber); 
-    margin-bottom: 80px; display:flex; align-items:center; gap:10px;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 60px;
+    margin-bottom: 80px; position: relative;
   }
-  .sidebar .brand .dot { 
-    width:8px; height:8px; border-radius:50%; background: var(--amber); box-shadow: 0 0 12px var(--amber); 
-    animation:blink 2.4s ease-in-out infinite;
+  .sidebar:hover .brand { justify-content: flex-start; }
+  
+  .sidebar .brand .ac-logo {
+    width: 32px; height: 32px;
+    fill: var(--amber);
+    transition: opacity 0.3s, transform 0.3s;
+    position: absolute;
   }
-  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
-
-  nav.sidebar-links { display: flex; flex-direction: column; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .sidebar .brand .brand-text {
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 18px; color: var(--amber);
+    opacity: 0; transform: translateX(-20px); transition: opacity 0.3s, transform 0.3s;
+    position: absolute;
+    letter-spacing: 0.1em;
+  }
+  
+  .sidebar:hover .brand .ac-logo { opacity: 0; transform: scale(0.5); }
+  .sidebar:hover .brand .brand-text { opacity: 1; transform: translateX(0); position: relative; }
+  
+  nav.sidebar-links { 
+    display: flex; flex-direction: column; gap: 40px; font-family: 'JetBrains Mono', monospace; font-size: 13px; 
+    width: 100%; align-items: center;
+  }
+  .sidebar:hover nav.sidebar-links { align-items: flex-start; }
+  
   nav.sidebar-links a { 
     color: #94A3B8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
-    transition: color 0.3s, transform 0.3s; display: flex; align-items: center; gap: 12px; font-weight:600;
+    transition: color 0.3s, transform 0.3s; display: flex; align-items: center; gap: 20px; font-weight:600;
   }
-  nav.sidebar-links a::before { content: ''; width: 0; height: 2px; background: var(--teal); transition: width 0.3s; }
+  nav.sidebar-links a svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; }
+  nav.sidebar-links a span { opacity: 0; transition: opacity 0.3s; display: none; }
+  .sidebar:hover nav.sidebar-links a span { opacity: 1; display: block; }
+  
   nav.sidebar-links a:hover { color: var(--amber); transform: translateX(8px); }
-  nav.sidebar-links a:hover::before { width: 16px; background: var(--amber); }
 
   @media (max-width: 900px) {
     .sidebar { 
@@ -113,9 +144,14 @@
       flex-direction: row; padding: 0 20px; align-items: center; justify-content: space-between;
       border-right: none; border-top: 1px solid var(--amber);
     }
-    .sidebar .brand { margin-bottom: 0; font-size: 14px; }
-    nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; }
-    nav.sidebar-links a::before { display: none; }
+    .sidebar:hover { width: 100%; padding: 0 20px; align-items: center; }
+    .sidebar .brand { margin-bottom: 0; font-size: 14px; width: auto; height: auto; }
+    .sidebar .brand .ac-logo { position: relative; width: 24px; height: 24px; }
+    .sidebar:hover .brand .ac-logo { opacity: 1; transform: none; }
+    .sidebar .brand .brand-text { display: none; }
+    nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; width: auto; align-items: center; }
+    .sidebar:hover nav.sidebar-links { align-items: center; }
+    nav.sidebar-links a span { display: none !important; }
     nav.sidebar-links a:hover { transform: none; }
   }
 
@@ -124,15 +160,19 @@
     padding:96px 0 72px;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:48px;
+    gap:24px;
     align-items:center;
   }
   @media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:56px 0 40px; } }
   
+  .hero-visual-cluster {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; margin-top: -60px;
+  }
   .hero-relic-container {
     perspective: 1000px;
     display: flex; justify-content: center; align-items: center;
-    height: 300px;
+    height: 240px; margin-bottom: -100px; z-index: 20;
   }
   .relic {
     width: 120px; height: 120px;
@@ -311,45 +351,57 @@
   .section-note{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-left:auto; }
   @media (max-width:640px){ .section-note{ display:none; } }
 
-  /* ---------- projects & isometric plane ---------- */
+  /* ---------- projects, plates & hud ---------- */
   .isometric-plane {
     transform-style: preserve-3d;
-    transform: rotateX(55deg) rotateZ(-40deg) scale(0.95);
+    transform: rotateX(60deg) rotateZ(-45deg) scale(0.9);
     transition: transform 0.5s cubic-bezier(0.2,1,0.2,1);
-    padding: 60px 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    padding: 0; margin: 0;
   }
   @media (max-width: 1000px) {
-    .isometric-plane { transform: none; padding: 0; }
+    .isometric-plane { transform: none; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 120px; }
   }
   
-  .project{
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-    box-shadow: -20px 20px 30px rgba(15,23,42,0.15), inset 0 1px 0 rgba(255,255,255,1);
-    border-radius:16px;
-    padding:26px 28px;
-    margin-bottom:40px;
-    transition:transform 0.5s cubic-bezier(0.2,1,0.2,1), box-shadow 0.5s, opacity 0.5s, border-color 0.5s;
-    transform-style: preserve-3d;
+  .project-plate {
+    width: 140px; height: 140px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.2));
+    border: 1px solid rgba(15, 23, 42, 0.2);
+    box-shadow: -15px 15px 20px rgba(15,23,42,0.2), inset 0 1px 0 rgba(255,255,255,1);
+    border-radius: 12px;
+    transition: transform 0.4s cubic-bezier(0.2,1,0.2,1), box-shadow 0.4s, background 0.4s, border-color 0.4s;
     position: relative;
-    /* Force high z-index inside the plane */
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     z-index: 10;
   }
-  /* On hover of the plane, dim non-hovered projects */
-  @media (min-width: 1000px) {
-    .isometric-plane:hover .project { opacity: 0.4; }
-    .isometric-plane .project:hover { 
-      opacity: 1;
-      transform: translateZ(80px); /* Lifts up off the ground plane */
-      border-color:var(--teal); 
-      box-shadow: -60px 60px 50px rgba(220,38,38,0.2), inset 0 1px 0 rgba(255,255,255,1);
-    }
+  .project-plate::after {
+    content: attr(data-num); font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 800; color: rgba(15,23,42,0.1);
+    transition: color 0.4s;
   }
-  @media (max-width: 1000px) {
-    .project { margin-bottom: 20px; box-shadow: 0 10px 40px rgba(15,23,42,0.1); }
-    .project:hover { border-color:var(--teal); box-shadow: 0 10px 40px rgba(220,38,38,0.15); }
+  .project-plate:hover {
+    transform: translateZ(60px);
+    background: linear-gradient(135deg, rgba(220,38,38,0.05), rgba(255,255,255,0.9));
+    border-color: var(--teal);
+    box-shadow: -40px 40px 40px rgba(220,38,38,0.3), inset 0 1px 0 rgba(255,255,255,1);
+  }
+  .project-plate:hover::after { color: var(--teal); }
+  
+  .hud-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;
+  }
+  .hud-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px; padding: 32px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.05);
+    position: relative; overflow: hidden;
+  }
+  .hud-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(15,23,42,0.1);
+    border-color: var(--amber);
   }
   
   .project-bg {
@@ -528,18 +580,32 @@
 </head>
 <body>
 
-<div class="bg-container">
-  <canvas id="animus-bg"></canvas>
-  <div class="bg-grid"></div>
-</div>
+<div class="bg-animus"></div>
 
 <aside class="sidebar">
-  <div class="brand"><span class="dot"></span>ARNAV.SHUKLA</div>
+  <div class="brand">
+    <svg class="ac-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0 L90 85 L50 70 L10 85 Z M50 25 L40 70 L50 60 L60 70 Z" />
+    </svg>
+    <span class="brand-text">ARNAV SHUKLA</span>
+  </div>
   <nav class="sidebar-links" aria-label="Main Navigation">
-    <a href="#projects" aria-label="Projects Section">Projects</a>
-    <a href="#skills" aria-label="Skills Section">Stack</a>
-    <a href="#certs" aria-label="Certifications Section">Certs</a>
-    <a href="#contact" aria-label="Contact Section">Contact</a>
+    <a href="#projects" aria-label="Projects Section">
+      <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z"/></svg>
+      <span>Projects</span>
+    </a>
+    <a href="#skills" aria-label="Skills Section">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 5 10-5M2 17l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Stack</span>
+    </a>
+    <a href="#certs" aria-label="Certifications Section">
+      <svg viewBox="0 0 24 24"><path d="M12 15l-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Certs</span>
+    </a>
+    <a href="#contact" aria-label="Contact Section">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Contact</span>
+    </a>
   </nav>
 </aside>
 
@@ -566,15 +632,24 @@
       </div>
     </div>
     
-    <!-- 3D Geometric Relic -->
-    <div class="hero-relic-container">
-      <div class="relic">
-        <div class="face front"></div>
-        <div class="face back"></div>
-        <div class="face left"></div>
-        <div class="face right"></div>
-        <div class="face top"></div>
-        <div class="face bottom"></div>
+    <!-- 3D Geometric Relic & Base -->
+    <div class="hero-visual-cluster">
+      <div class="hero-relic-container">
+        <div class="relic">
+          <div class="face front"></div>
+          <div class="face back"></div>
+          <div class="face left"></div>
+          <div class="face right"></div>
+          <div class="face top"></div>
+          <div class="face bottom"></div>
+        </div>
+      </div>
+      
+      <div class="isometric-plane hero-base-plane">
+        <div class="project-plate" data-num="01"></div>
+        <div class="project-plate" data-num="02"></div>
+        <div class="project-plate" data-num="03"></div>
+        <div class="project-plate" data-num="04"></div>
       </div>
     </div>
   </section>
@@ -627,9 +702,9 @@
       <span class="section-note">Core loops & architectures</span>
     </div>
 
-    <div class="isometric-plane">
+    <div class="hud-grid">
     
-    <div class="project">
+    <article class="hud-card">
       <img src="assets/ruralhealth.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -655,9 +730,9 @@
         <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">Supabase / PostgreSQL</span>
         <span class="chip">PostGIS</span><span class="chip">Google Gemini</span><span class="chip">Playwright</span>
       </div>
-    </div>
+    </article>
 
-    <div class="project">
+    <article class="hud-card">
       <img src="assets/eco-loop.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -667,7 +742,7 @@
         <div class="project-score">
           <span class="stat-chip teal">50% energy reduction</span>
           <span class="stat-chip amber">9 MCP tools</span>
-          <span class="stat-chip blue">100% fault recovery (30 injected failures)</span>
+          <span class="stat-chip blue">100% fault recovery</span>
         </div>
       </div>
       <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
@@ -676,16 +751,15 @@
       <ul class="project-bullets">
         <li>Locally-hosted Qwen2.5 (via Ollama) makes setpoint decisions every 30 seconds against a physics-accurate thermal simulation</li>
         <li>Built a FastMCP server exposing 10 sensor/actuator tools — the building becomes a standard MCP-controllable device</li>
-        <li>If the LLM call fails or hallucinates invalid JSON, control silently falls back to a deterministic rule-based controller</li>
         <li>Live telemetry streamed to a React dashboard over WebSockets — Temperature, Energy, PMV/PPD comfort</li>
       </ul>
       <div class="stack">
         <span class="chip">Python / FastAPI</span><span class="chip">Ollama + Qwen2.5</span><span class="chip">FastMCP</span>
         <span class="chip">EnergyPlus</span><span class="chip">React + WebSockets</span><span class="chip">Docker</span>
       </div>
-    </div>
+    </article>
 
-    <div class="project">
+    <article class="hud-card">
       <img src="assets/talentmatch.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -702,18 +776,17 @@
         description and explains exactly why, using cheap deterministic math where possible and an
         LLM only where reasoning is actually needed.</p>
       <ul class="project-bullets">
-        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking (model trained on synthetic ATS resume-to-JD matches); Groq LLMs handle parsing and explainability</li>
+        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
         <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
-        <li>Stateless-by-design pipeline: files are processed in a temp directory and explicitly deleted afterward</li>
         <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
       </ul>
       <div class="stack">
         <span class="chip">Python / FastAPI</span><span class="chip">scikit-learn</span><span class="chip">Groq API</span>
         <span class="chip">PyMuPDF</span><span class="chip">Docker</span><span class="chip">Vite</span>
       </div>
-    </div>
+    </article>
 
-    <div class="project">
+    <article class="hud-card">
       <img src="assets/campuscart.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -738,7 +811,8 @@
         <span class="chip">Flask</span><span class="chip">SQLAlchemy</span><span class="chip">Flask-Login / Bcrypt</span>
         <span class="chip">SQLite</span><span class="chip">Render + Gunicorn</span>
       </div>
-    </div>
+    </article>
+      
     </div>
   </section>
 
@@ -858,7 +932,7 @@
   }
   requestAnimationFrame(raf);
 
-  gsap.utils.toArray('.project, .skill-block').forEach((el, i) => {
+  gsap.utils.toArray('.hud-card, .skill-block, .project-plate').forEach((el, i) => {
     gsap.fromTo(el, 
       { opacity: 0, y: 40 },
       {
@@ -993,57 +1067,7 @@
   });
   // Navbar Scroll Effect removed due to fixed sidebar
   
-  // Canvas Animus Background
-  const canvas = document.getElementById('animus-bg');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height, particles;
-    const initCanvas = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      particles = [];
-      for (let i=0; i<70; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          size: Math.random() * 1.5 + 0.5
-        });
-      }
-    };
-    initCanvas();
-    window.addEventListener('resize', initCanvas);
-    const draw = () => {
-      ctx.clearRect(0,0,width,height);
-      ctx.fillStyle = 'rgba(30, 41, 59, 0.4)'; // Navy
-      ctx.strokeStyle = 'rgba(197, 160, 89, 0.15)'; // Gold
-      ctx.lineWidth = 1;
-      
-      particles.forEach((p, i) => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        
-        for (let j=i+1; j<particles.length; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      });
-      requestAnimationFrame(draw);
-    };
-    draw();
-  }
+  // Canvas Animus Background removed in favor of pure CSS matrix
 </script>
 </body>
 </html>
