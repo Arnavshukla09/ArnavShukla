@@ -235,11 +235,18 @@
   .stack { transform: translateZ(25px); }
   .project-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
   .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:#F2F5F7; }
-  .project-score{
+  .project-score { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
+  .stat-chip {
     font-family:'IBM Plex Mono',monospace; font-size:11px;
-    color:var(--teal); border:1px solid var(--line); border-radius:20px;
-    padding:4px 12px; white-space:nowrap;
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    border-radius:20px;
+    padding:4px 11px;
+    white-space: nowrap;
   }
+  .stat-chip.teal { color: var(--teal); border: 1px solid var(--teal); }
+  .stat-chip.amber { color: var(--amber); border: 1px solid var(--amber); }
+  .stat-chip.blue { color: var(--blue); border: 1px solid var(--blue); }
   .project-role{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
   .project-desc{ margin-top:14px; color:var(--text); font-size:14.5px; max-width:70ch; }
   .project-bullets{ margin-top:14px; list-style:none; }
@@ -395,7 +402,11 @@
           <div class="project-title">Rural Healthcare Platform</div>
           <div class="project-role">Full-stack + AI · telehealth for underserved regions</div>
         </div>
-        <div class="project-score">9.6 / 10 engineering</div>
+        <div class="project-score">
+          <span class="stat-chip teal">274ms avg query</span>
+          <span class="stat-chip amber">6,616 facilities indexed</span>
+          <span class="stat-chip blue">100% security audit pass</span>
+        </div>
       </div>
       <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
         Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
@@ -418,7 +429,11 @@
           <div class="project-title">Eco-Loop — Autonomous Building AI</div>
           <div class="project-role">Honeywell Hackathon 2024 · agentic systems</div>
         </div>
-        <div class="project-score">9.6 / 10 engineering</div>
+        <div class="project-score">
+          <span class="stat-chip teal">50% energy reduction</span>
+          <span class="stat-chip amber">9 MCP tools</span>
+          <span class="stat-chip blue">100% fault recovery (30 injected failures)</span>
+        </div>
       </div>
       <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
         time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
@@ -441,7 +456,11 @@
           <div class="project-title">TalentMatch AI</div>
           <div class="project-role">ATS scoring engine · hybrid ML + LLM pipeline</div>
         </div>
-        <div class="project-score">8.9 / 10 engineering</div>
+        <div class="project-score">
+          <span class="stat-chip teal">&lt;21ms ranking</span>
+          <span class="stat-chip amber">240MB container</span>
+          <span class="stat-chip blue">~24.6 req/s</span>
+        </div>
       </div>
       <p class="project-desc">Opens up the resume-screening black box: scores a resume against a job
         description and explains exactly why, using cheap deterministic math where possible and an
@@ -464,7 +483,11 @@
           <div class="project-title">CampusCart</div>
           <div class="project-role">Multi-vendor campus marketplace · backend developer</div>
         </div>
-        <div class="project-score">7.3 / 10 engineering</div>
+        <div class="project-score">
+          <span class="stat-chip teal">&lt;1ms catalog queries</span>
+          <span class="stat-chip amber">0% error rate</span>
+          <span class="stat-chip blue">&lt;85MB RAM</span>
+        </div>
       </div>
       <p class="project-desc">A localized marketplace that replaces cash and queues for on-campus
         groceries, stationery, and document printing — with distinct role-based experiences for
