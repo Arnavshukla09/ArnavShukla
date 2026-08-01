@@ -81,7 +81,9 @@
 
   /* ---------- top bar ---------- */
   header.topbar{
-    position:sticky; top:0; z-index:50;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    width: 100%; max-width: 100%;
+    margin: 0 auto;
     background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -93,7 +95,6 @@
     top: 24px;
     width: calc(100% - 48px);
     max-width: 1040px;
-    margin: 0 auto;
     border-radius: 40px;
     border: 1px solid rgba(255,255,255,0.1);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.9);
@@ -874,13 +875,20 @@
   });
   // 5. Navbar Scroll Effect
   const topbar = document.querySelector('header.topbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      topbar.classList.add('scrolled');
-    } else {
-      topbar.classList.remove('scrolled');
+  if (topbar) {
+    const handleScroll = () => {
+      const scrollY = (typeof lenis !== 'undefined' && lenis.scroll !== undefined) ? lenis.scroll : window.scrollY;
+      if (scrollY > 20) {
+        topbar.classList.add('scrolled');
+      } else {
+        topbar.classList.remove('scrolled');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    if (typeof lenis !== 'undefined') {
+      lenis.on('scroll', handleScroll);
     }
-  });
+  }
 </script>
 </body>
 </html>
