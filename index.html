@@ -466,7 +466,7 @@
         description and explains exactly why, using cheap deterministic math where possible and an
         LLM only where reasoning is actually needed.</p>
       <ul class="project-bullets">
-        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
+        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking (model trained on synthetic ATS resume-to-JD matches); Groq LLMs handle parsing and explainability</li>
         <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
         <li>Stateless-by-design pipeline: files are processed in a temp directory and explicitly deleted afterward</li>
         <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
