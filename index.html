@@ -178,6 +178,7 @@
   .hero-relic-container:active { cursor: grabbing; }
   #agent-orb {
     width: 100%; height: 100%; display: block; touch-action: none;
+    filter: blur(1.5px) saturate(1.2) drop-shadow(0px 0px 25px rgba(100, 200, 255, 0.35));
   }
   .relic { display: none; } /* Kept for fallback if needed */
 
@@ -1214,16 +1215,23 @@
       loadPart('assets/anomalycoreb.stl');
 
       // ---- chromatic rim lighting ----
-      scene2.add(new THREE.AmbientLight(0xffffff, 0.3));
-      const key2 = new THREE.DirectionalLight(0x00ffff, 1.5);
+      scene2.add(new THREE.AmbientLight(0xffffff, 0.4));
+      
+      const key2 = new THREE.DirectionalLight(0x00ffff, 4.0);
       key2.position.set(4, 6, 5);
       scene2.add(key2);
-      const fill2 = new THREE.DirectionalLight(0xff00ff, 1.2);
+      
+      const fill2 = new THREE.DirectionalLight(0xff00ff, 3.5);
       fill2.position.set(-5, -2, -4);
       scene2.add(fill2);
-      const rim2 = new THREE.DirectionalLight(0xffff00, 1.0);
+      
+      const rim2 = new THREE.DirectionalLight(0xffff00, 3.0);
       rim2.position.set(0, -5, 2);
       scene2.add(rim2);
+
+      const back2 = new THREE.DirectionalLight(0x3300ff, 4.0);
+      back2.position.set(-2, 5, -6);
+      scene2.add(back2);
 
       // ---- Post-Processing Removed for Transparency ----
 
