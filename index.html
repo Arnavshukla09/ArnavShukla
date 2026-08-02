@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
+  :root, :root[data-theme="light"] {
     --bg: #F8F9FA;
     --panel: rgba(255, 255, 255, 0.7);
     --panel-2: rgba(255, 255, 255, 0.4);
@@ -33,11 +33,14 @@
     --card-gradient-3: rgba(255,255,255,0.9);
     --card-gradient-4: rgba(255,255,255,0.5);
     
+    --cert-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    --cert-border: rgba(15,23,42,0.1);
+    
     --radius: 12px;
   }
   
-  @media (prefers-color-scheme: dark) {
-    :root {
+  :root[data-theme="dark"], @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
       /* Inverted Base */
       --bg: #0F172A;
       --panel: rgba(15, 23, 42, 0.7);
@@ -56,6 +59,9 @@
       --card-gradient-2: rgba(15,23,42,0.8);
       --card-gradient-3: rgba(30,41,59,0.9);
       --card-gradient-4: rgba(15,23,42,0.5);
+      
+      --cert-bg: #0F172A;
+      --cert-border: var(--teal);
     }
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -658,11 +664,12 @@
   }
 
   /* ---------- certifications ---------- */
-  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid rgba(15,23,42,0.1); border-radius:16px; overflow:hidden; }
+  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid var(--cert-border); 
+border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   .cert-row{
     display:flex; justify-content:space-between; align-items:center;
     padding:16px 20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    background: var(--cert-bg);
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom:1px solid rgba(15,23,42,0.08);
     transition:all .3s ease; position: relative; overflow: hidden;
@@ -723,7 +730,26 @@
       <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       <span>Contact</span>
     </a>
+    
+    <button id="theme-toggle" class="sidebar-btn" aria-label="Toggle Dark Mode" style="margin-top:20px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); background:transparent; border:none; cursor:pointer; text-transform:uppercase; letter-spacing:0.1em; transition:color 0.3s; display:flex; align-items:center; gap:20px; font-weight:600;">
+      <svg viewBox="0 0 24 24" style="width:24px; height:24px; fill:currentColor; flex-shrink:0;">
+        <!-- Sun / Moon Icon -->
+        <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="theme-label" style="opacity:0; transition:opacity 0.3s; display:none;">Theme</span>
+    </button>
   </nav>
+  
+  <style>
+    .sidebar:hover .theme-label { opacity: 1; display: block; }
+    #theme-toggle:hover { color: var(--amber); transform: translateX(8px); text-shadow: 0 0 1px currentColor, 0 0 15px var(--amber); }
+    @media (max-width: 900px) {
+      .sidebar:hover .theme-label { display: none !important; }
+      #theme-toggle:hover { transform: none; }
+      #theme-toggle { margin-top: 0 !important; }
+    }
+  </style>
 </aside>
 
 <div class="wrap">
@@ -1329,6 +1355,23 @@
     console.log('VanillaTilt failed to init.', e);
   }
   // Navbar Scroll Effect removed due to fixed sidebar
+</script>
+<script>
+  const themeBtn = document.getElementById('theme-toggle');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }
+  
+  themeBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                   (!document.documentElement.hasAttribute('data-theme') && prefersDark.matches);
+    const newTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
 </script>
 </body>
 </html>
