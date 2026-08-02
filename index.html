@@ -998,11 +998,14 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Glowing Light Gold / Marble shell
-      const partMat = new THREE.MeshStandardMaterial({
-        color: 0xffebd6, // Very light warm white/gold
-        metalness: 0.5,
-        roughness: 0.2,
+      // Completely transparent crystal/glass shell
+      const partMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffebd6, // Slight warm tint to the reflections
+        metalness: 0.2,
+        roughness: 0.05,
+        transmission: 1.0, // 100% transparent refractive glass
+        ior: 1.5,
+        transparent: true,
         side: THREE.DoubleSide
       });
 
