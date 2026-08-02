@@ -998,12 +998,13 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Completely transparent crystal/glass shell
+      // Noticeable, thick refractive glass shell
       const partMat = new THREE.MeshPhysicalMaterial({
         color: 0xffebd6, // Slight warm tint to the reflections
-        metalness: 0.2,
-        roughness: 0.05,
-        transmission: 1.0, // 100% transparent refractive glass
+        metalness: 0.3,
+        roughness: 0.25, // Frosted/smudged glass
+        transmission: 0.95, // Highly transparent but catches light
+        thickness: 2.0, // Creates noticeable refractive distortion around the edges
         ior: 1.5,
         transparent: true,
         side: THREE.DoubleSide
@@ -1016,26 +1017,27 @@
       const p4 = new THREE.PointLight(0x001133, 0.3, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
       const p5 = new THREE.PointLight(0x110033, 0.4, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // Dark shadowy geometry floating in the bright shell
+      // Glowing smooth geometric rings inside
       const branchMat1 = new THREE.MeshStandardMaterial({
-        color: 0x111111, emissive: 0x000000, metalness: 0.9, roughness: 0.5
+        color: 0xffffff, emissive: 0xd4af37, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        transparent: true, opacity: 0.9
       });
-      // Low tubular/radial segments to make the knot angular and jagged (forged iron style)
-      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.06, 40, 4, 2, 7), branchMat1);
+      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.05, 100, 16, 2, 7), branchMat1);
       orbGroup.add(branches1);
 
       const branchMat2 = new THREE.MeshStandardMaterial({
-        color: 0x111111, emissive: 0x000000, metalness: 0.9, roughness: 0.5
+        color: 0xffffff, emissive: 0x9b111e, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        transparent: true, opacity: 0.9
       });
-      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.05, 30, 3, 3, 5), branchMat2);
+      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.04, 100, 16, 3, 5), branchMat2);
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
       const branchMat3 = new THREE.MeshStandardMaterial({
-        color: 0x050505, emissive: 0x000000, metalness: 0.9, roughness: 0.3, wireframe: true
+        color: 0xffffff, emissive: 0x33aa99, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        transparent: true, opacity: 0.9
       });
-      // Replace the 3rd knot with a sacred geometric Icosahedron
-      const branches3 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), branchMat3);
+      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.85, 0.06, 100, 16, 4, 3), branchMat3);
       branches3.rotation.z = Math.PI / 4;
       orbGroup.add(branches3);
 
