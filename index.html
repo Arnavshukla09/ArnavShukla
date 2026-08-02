@@ -257,7 +257,7 @@
     font-size:clamp(34px,5vw,54px);
     line-height:1.08;
     letter-spacing:-0.01em;
-    color:#F2F5F7;
+    color:var(--text);
   }
   h1 .accent{ color:var(--amber); }
 
@@ -518,9 +518,12 @@
     padding:4px 11px;
     white-space: nowrap;
   }
-  .stat-chip.teal { color: var(--teal); border: 1px solid var(--teal); }
-  .stat-chip.amber { color: var(--amber); border: 1px solid var(--amber); }
-  .stat-chip.blue { color: var(--blue); border: 1px solid var(--blue); }
+  .stat-chip.teal { color: var(--teal); border: 1px solid var(--teal); transition: all 0.3s; }
+  .stat-chip.amber { color: var(--amber); border: 1px solid var(--amber); transition: all 0.3s; }
+  .stat-chip.blue { color: var(--blue); border: 1px solid var(--blue); transition: all 0.3s; }
+  .project:hover .stat-chip.teal { box-shadow: 0 0 15px rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.05); }
+  .project:hover .stat-chip.amber { box-shadow: 0 0 15px rgba(180, 83, 9, 0.4); background: rgba(180, 83, 9, 0.05); }
+  .project:hover .stat-chip.blue { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); background: rgba(14, 165, 233, 0.05); }
   .project-role{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
   .project-desc{ margin-top:14px; color:var(--text); font-size:14.5px; max-width:70ch; }
   .project-bullets{ margin-top:14px; list-style:none; }
@@ -666,17 +669,18 @@
       <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <p class="hero-sub">
         I engineer fault-tolerant, autonomous agent loops for complex environments. 
-        Specializing in large-scale data synthesis, robust API bridging, and secure LLM-driven decision engines.
+        Specializing in large-scale data synthesis, robust API bridging, and secure LLM-driven decision engines 
+        using <strong>FastAPI, Next.js, PostGIS, Supabase, and Ollama/MCP</strong>.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">Deploy System_</a>
         <a href="#contact" class="btn btn-ghost">Ping Endpoint</a>
       </div>
       <div class="status-row">
-        <div class="status-item"><b>4</b>flagship projects</div>
-        <div class="status-item"><b>8.57</b>CGPA</div>
+        <div class="status-item"><b>9</b>total projects</div>
+        <div class="status-item"><b>8.6</b>CGPA</div>
         <div class="status-item"><b>2027</b>expected grad</div>
-        <div class="status-item"><b>AWS</b>cloud certified</div>
+        <div class="status-item"><b>15+</b>Tech Libraries</div>
       </div>
     </div>
   </section>
