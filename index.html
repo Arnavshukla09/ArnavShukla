@@ -107,8 +107,8 @@
   .sidebar:hover .brand { justify-content: flex-start; }
   
   .sidebar .brand .ac-logo {
-    width: 32px; height: 32px;
-    fill: var(--amber);
+    height: 38px; width: auto;
+    object-fit: contain;
     transition: opacity 0.3s, transform 0.3s;
     position: absolute;
   }
@@ -628,9 +628,7 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <svg class="ac-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M100 5 L180 150 Q130 130 100 170 Q70 130 20 150 Z M100 40 L45 140 Q80 110 100 145 Q120 110 155 140 Z M10 160 Q70 210 100 185 Q130 210 190 160 Q140 195 100 175 Q60 195 10 160 Z" fill="currentColor"/>
-    </svg>
+    <img class="ac-logo" src="assets/ac-logo-gold.png" alt="Assassin's Creed Logo" />
     <span class="brand-text">ARNAV SHUKLA</span>
   </div>
   <nav class="sidebar-links" aria-label="Main Navigation">
