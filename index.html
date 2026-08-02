@@ -468,8 +468,8 @@
   }
   .hud-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(15,23,42,0.1);
-    border-color: var(--amber);
+    box-shadow: 0 20px 60px var(--card-glow, rgba(15,23,42,0.1));
+    border-color: var(--card-accent, var(--amber));
   }
   
   .project-bg {
@@ -525,7 +525,7 @@
     transition: background 0.3s ease;
   }
   .project:hover .project-top {
-    background: linear-gradient(to bottom, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
+    background: linear-gradient(to bottom, var(--card-bg-glow, rgba(220, 38, 38, 0.05)) 0%, transparent 100%);
   }
   .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--text); transition: color 0.3s; }
   .project-score { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
@@ -747,7 +747,7 @@
 
     <div class="hud-grid">
     
-    <article class="hud-card">
+    <article class="hud-card project" style="--card-accent: #DC2626; --card-glow: rgba(220, 38, 38, 0.35); --card-bg-glow: rgba(220, 38, 38, 0.08);">
       <img src="assets/ruralhealth.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -775,7 +775,7 @@
       </div>
     </article>
 
-    <article class="hud-card">
+    <article class="hud-card project" style="--card-accent: #C5A059; --card-glow: rgba(197, 160, 89, 0.35); --card-bg-glow: rgba(197, 160, 89, 0.08);">
       <img src="assets/eco-loop.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -802,7 +802,7 @@
       </div>
     </article>
 
-    <article class="hud-card">
+    <article class="hud-card project" style="--card-accent: #0EA5E9; --card-glow: rgba(14, 165, 233, 0.35); --card-bg-glow: rgba(14, 165, 233, 0.08);">
       <img src="assets/talentmatch.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
@@ -829,7 +829,7 @@
       </div>
     </article>
 
-    <article class="hud-card">
+    <article class="hud-card project" style="--card-accent: #10B981; --card-glow: rgba(16, 185, 129, 0.35); --card-bg-glow: rgba(16, 185, 129, 0.08);">
       <img src="assets/campuscart.jpg" class="project-bg" alt="" aria-hidden="true">
       <div class="project-top">
         <div>
