@@ -504,10 +504,12 @@
     color: var(--text);
   }
   .project:hover .chip {
-    color: #FFFFFF;
-    border-color: rgba(255,255,255,0.4);
-    box-shadow: 0 2px 15px rgba(220,38,38,0.4);
-    text-shadow: 0 0 1px currentColor, 0 0 10px var(--teal);
+    color: var(--text);
+    background: #FFFFFF;
+    border-color: var(--card-accent, var(--teal));
+    box-shadow: 0 4px 15px var(--card-glow, rgba(220,38,38,0.4));
+    text-shadow: none;
+    font-weight: 600;
   }
   .project-desc { transform: translateZ(20px); }
   .project-bullets { transform: translateZ(20px); }
