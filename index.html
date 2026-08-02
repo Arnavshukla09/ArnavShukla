@@ -1191,26 +1191,46 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       window.update3DTheme = function(theme) {
         if (theme === 'dark') {
           partMat.color.setHex(0x0F172A);
-          partMat.transmission = 0.7;
+          partMat.transmission = 0.9;
           
           branchMat1.emissive.setHex(0xDC2626);
+          branchMat1.emissiveIntensity = 3.0;
+          
           branchMat2.emissive.setHex(0xC5A059);
+          branchMat2.emissiveIntensity = 3.0;
           
           mat4DOuter.emissive.setHex(0xC5A059);
+          mat4DOuter.emissiveIntensity = 2.5;
+          
           mat4DMid.emissive.setHex(0xC5A059);
+          mat4DMid.emissiveIntensity = 3.5;
+          
           mat4DCore.emissive.setHex(0xC5A059);
+          mat4DCore.emissiveIntensity = 8.0;
+          
           coreLight.color.setHex(0xC5A059);
+          coreLight.intensity = 4.0;
         } else {
           partMat.color.setHex(0xffebd6);
           partMat.transmission = 0.95;
           
           branchMat1.emissive.setHex(0xd4af37);
+          branchMat1.emissiveIntensity = 1.5;
+          
           branchMat2.emissive.setHex(0x9b111e);
+          branchMat2.emissiveIntensity = 1.5;
           
           mat4DOuter.emissive.setHex(0xff0022);
+          mat4DOuter.emissiveIntensity = 1.5;
+          
           mat4DMid.emissive.setHex(0xff0033);
+          mat4DMid.emissiveIntensity = 2.0;
+          
           mat4DCore.emissive.setHex(0xff0022);
+          mat4DCore.emissiveIntensity = 5.0;
+          
           coreLight.color.setHex(0xff0022);
+          coreLight.intensity = 2.0;
         }
       };
 
