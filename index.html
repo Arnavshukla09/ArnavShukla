@@ -1249,6 +1249,13 @@
       new IntersectionObserver((entries) => { orbVisible = entries[0].isIntersecting; })
         .observe(wrap);
 
+      // ---- dynamic flare & mouse tracking ----
+      let glMouseX = 0, glMouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        glMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        glMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
       // ---- drag-to-rotate ----
       let dragging = false, prevX = 0, prevY = 0;
       let autoSpinY = 0.0025, velY = 0, velX = 0;
@@ -1273,10 +1280,26 @@
       }, { passive: true });
 
       let t2 = 0;
+      let targetX = 0, targetY = 0;
       function animateOrb() {
         requestAnimationFrame(animateOrb);
         if (!orbVisible) return;
         t2 += 0.016;
+
+        // Smoothly interpolate mouse position for dynamic flaring
+        targetX += (glMouseX - targetX) * 0.1;
+        targetY += (glMouseY - targetY) * 0.1;
+
+        // Shift WebGL lights to create dynamic surface glares
+        key2.position.x = 4 + targetX * 8;
+        key2.position.y = 6 + targetY * 8;
+        fill2.position.x = -5 + targetX * 5;
+        fill2.position.y = -2 + targetY * 5;
+
+        // Shift CSS drop-shadow to create a responsive optical flare effect
+        const shadowX = -targetX * 40;
+        const shadowY = targetY * 40;
+        orbCanvas.style.filter = `blur(1.5px) saturate(1.2) drop-shadow(${shadowX}px ${shadowY}px 25px rgba(100, 200, 255, 0.45))`;
 
         if (!dragging) {
           orbGroup.rotation.y += autoSpinY + velY;
