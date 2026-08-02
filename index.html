@@ -1034,10 +1034,9 @@
       orbGroup.add(branches2);
 
       const branchMat3 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x33aa99, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
-        transparent: true, opacity: 0.9
+        color: 0x111111, emissive: 0x000000, metalness: 0.9, roughness: 0.3, wireframe: true
       });
-      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.85, 0.06, 100, 16, 4, 3), branchMat3);
+      const branches3 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), branchMat3);
       branches3.rotation.z = Math.PI / 4;
       orbGroup.add(branches3);
 
