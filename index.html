@@ -1135,25 +1135,22 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Dark, glossy metallic outer shell
+      // Darker, matte/glossy metallic outer shell
       const partMat = new THREE.MeshStandardMaterial({
-        color: 0x1a0b2e,
-        metalness: 0.85,
-        roughness: 0.2,
+        color: 0x080210,
+        metalness: 0.7,
+        roughness: 0.3,
         side: THREE.DoubleSide
       });
 
-      // intense inner rainbow glow pushing out through the holes
-      const p1 = new THREE.PointLight(0x00ffff, 2.5, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
-      const p2 = new THREE.PointLight(0xff00ff, 2.5, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
-      const p3 = new THREE.PointLight(0xffff00, 2.5, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
+      // multi-source soft inner glow pushing out through the holes
+      const p1 = new THREE.PointLight(0x00ffff, 1.2, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
+      const p2 = new THREE.PointLight(0xff00ff, 1.2, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
+      const p3 = new THREE.PointLight(0xffff00, 1.2, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
+      const p4 = new THREE.PointLight(0xffffff, 0.8, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
+      const p5 = new THREE.PointLight(0x00ff88, 1.0, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // physical inner core so light has something to bounce off
-      const innerGeo = new THREE.SphereGeometry(1.65, 32, 32);
-      const innerMat = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.5, roughness: 0.1, metalness: 0.5
-      });
-      orbGroup.add(new THREE.Mesh(innerGeo, innerMat));
+      // Removed the solid inner sphere so the lights illuminate the inside walls of the STL
 
       const loader = new THREE.STLLoader();
       let partsLoaded = 0;
@@ -1213,9 +1210,9 @@
       // ---- Post-Processing Pipeline ----
       const renderScene = new THREE.RenderPass(scene2, camera2);
       const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-      bloomPass.threshold = 0.15;
-      bloomPass.strength = 1.8;
-      bloomPass.radius = 0.8;
+      bloomPass.threshold = 0.2;
+      bloomPass.strength = 0.7; // softer bloom
+      bloomPass.radius = 0.5;
       
       const composer = new THREE.EffectComposer(renderer2);
       composer.addPass(renderScene);
