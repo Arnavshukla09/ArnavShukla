@@ -17,6 +17,7 @@
 <style>
   :root, :root[data-theme="light"] {
     --bg: #F8F9FA;
+    --nav-bg: #0F172A;
     --panel: rgba(255, 255, 255, 0.7);
     --panel-2: rgba(255, 255, 255, 0.4);
     --line: rgba(15, 23, 42, 0.15);
@@ -44,6 +45,7 @@
   :root[data-theme="dark"] {
     /* Inverted Base */
     --bg: #0F172A;
+    --nav-bg: #F8F9FA;
     --panel: rgba(15, 23, 42, 0.7);
     --panel-2: rgba(15, 23, 42, 0.4);
     --line: rgba(255, 255, 255, 0.15);
@@ -138,7 +140,7 @@
   .sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
     width: 80px;
-    background: var(--bg);
+    background: var(--nav-bg);
     box-shadow: 10px 0 30px rgba(15,23,42,0.3);
     display: flex; flex-direction: column;
     padding: 60px 0;
