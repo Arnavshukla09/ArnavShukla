@@ -86,7 +86,7 @@
       linear-gradient(90deg, rgba(15,23,42,0.1) 1px, transparent 1px);
     background-size: 60px 60px;
     transform: perspective(600px) rotateX(70deg) translateZ(-100px);
-    animation: matrixScroll 10s infinite linear;
+    background-position: 0 var(--scroll-y-1, 0px);
   }
   .bg-animus::after {
     content: ""; position: absolute; inset: -200%;
@@ -96,11 +96,7 @@
     background-size: 240px 240px;
     opacity: 0.3;
     transform: perspective(600px) rotateX(70deg) translateZ(50px);
-    animation: matrixScroll 15s infinite linear;
-  }
-  @keyframes matrixScroll {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 240px; }
+    background-position: 0 var(--scroll-y-2, 0px);
   }
 
   /* ---------- sidebar ---------- */
@@ -977,8 +973,17 @@
         wheelMultiplier: 0.75, // Adds weight to the scroll
       });
 
+      const bgAnimus = document.querySelector('.bg-animus');
+
       function raf(time) {
         lenis.raf(time);
+        
+        if (bgAnimus) {
+          const scrollY = window.scrollY;
+          bgAnimus.style.setProperty('--scroll-y-1', (scrollY * 0.4) + 'px');
+          bgAnimus.style.setProperty('--scroll-y-2', (scrollY * 0.8) + 'px');
+        }
+        
         requestAnimationFrame(raf);
       }
       requestAnimationFrame(raf);
