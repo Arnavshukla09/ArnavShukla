@@ -1127,8 +1127,6 @@
       renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene2 = new THREE.Scene();
-      scene2.background = new THREE.Color(0xF8F9FA); // Matches website bg to fix black square
-      scene2.fog = new THREE.FogExp2(0xF8F9FA, 0.04);
       
       const camera2 = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
       camera2.position.set(0, 0, 7.2);
