@@ -40,6 +40,24 @@
   @media (max-width: 900px) { body { padding-left: 0; padding-bottom: 70px; } }
   ::selection{ background:var(--teal); color:#FFFFFF; text-shadow:none; }
 
+  /* ---------- custom cursor & glow ---------- */
+  body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
+    cursor: url('assets/custom_cursor.png') 21 0, auto !important;
+  }
+  #cursor-glow {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.4) 0%, rgba(220, 38, 38, 0) 70%);
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    left: -100px;
+    top: -100px;
+  }
+
   a{ color:inherit; }
   .mono{ font-family:'JetBrains Mono',monospace; }
   .data{ font-family:'IBM Plex Mono',monospace; }
@@ -633,6 +651,7 @@
 </head>
 <body>
 
+<div id="cursor-glow"></div>
 <div class="bg-animus"></div>
 
 <aside class="sidebar">
@@ -1254,7 +1273,25 @@
   }
   // Navbar Scroll Effect removed due to fixed sidebar
   
-  // Canvas Animus Background removed in favor of pure CSS matrix
+  // Custom Cursor Glow Logic
+  const cursorGlow = document.getElementById('cursor-glow');
+  window.addEventListener('mousemove', (e) => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .btn, .project, .project-plate, .sidebar-links a').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorGlow.style.width = '100px';
+      cursorGlow.style.height = '100px';
+      cursorGlow.style.background = 'radial-gradient(circle, rgba(220, 38, 38, 0.7) 0%, rgba(220, 38, 38, 0) 70%)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorGlow.style.width = '60px';
+      cursorGlow.style.height = '60px';
+      cursorGlow.style.background = 'radial-gradient(circle, rgba(220, 38, 38, 0.4) 0%, rgba(220, 38, 38, 0) 70%)';
+    });
+  });
 </script>
 </body>
 </html>
