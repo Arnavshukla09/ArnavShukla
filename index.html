@@ -98,13 +98,6 @@
   }
 
   /* ---------- custom cursor ---------- */
-  *, body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
-    cursor: url('assets/ac_cursor_32.png') 16 4, auto !important;
-  }
-  :root[data-theme="dark"] *, :root[data-theme="dark"] body, :root[data-theme="dark"] a, :root[data-theme="dark"] button, :root[data-theme="dark"] .project, :root[data-theme="dark"] .btn, :root[data-theme="dark"] .sidebar, :root[data-theme="dark"] .sidebar-links a, :root[data-theme="dark"] .project-plate {
-    cursor: url('assets/ac_cursor_32_light.png') 16 4, auto !important;
-  }
-
   a{ color:inherit; }
   .mono{ font-family:'JetBrains Mono',monospace; }
   .data{ font-family:'IBM Plex Mono',monospace; }
@@ -167,9 +160,7 @@
   }
   .sidebar:hover .brand { justify-content: flex-start; }
   
-  .sidebar .brand .ac-logo {
-    height: 130px; width: auto;
-    object-fit: contain;
+  .sidebar .brand .brand-logo {
     transition: opacity 0.3s, transform 0.3s;
     position: absolute;
   }
@@ -180,7 +171,7 @@
     letter-spacing: 0.1em;
   }
   
-  .sidebar:hover .brand .ac-logo { opacity: 0; transform: scale(0.5); }
+  .sidebar:hover .brand .brand-logo { opacity: 0; transform: scale(0.5); }
   .sidebar:hover .brand .brand-text { opacity: 1; transform: translateX(0); position: relative; }
   
   nav.sidebar-links { 
@@ -212,8 +203,8 @@
     }
     .sidebar:hover { width: 100%; padding: 0 20px; align-items: center; }
     .sidebar .brand { margin-bottom: 0; font-size: 14px; width: auto; height: auto; }
-    .sidebar .brand .ac-logo { position: relative; width: 24px; height: 24px; }
-    .sidebar:hover .brand .ac-logo { opacity: 1; transform: none; }
+    .sidebar .brand .brand-logo { position: relative; width: 24px; height: 24px; }
+    .sidebar:hover .brand .brand-logo { opacity: 1; transform: none; }
     .sidebar .brand .brand-text { display: none; }
     nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; width: auto; align-items: center; }
     .sidebar:hover nav.sidebar-links { align-items: center; }
@@ -714,7 +705,11 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 
 <aside class="sidebar">
   <div class="brand">
-    <img class="ac-logo" src="assets/ac-logo-gold.png" alt="Assassin's Creed Logo" />
+    <svg class="brand-logo" width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="18,3 33,11.5 33,24.5 18,33 3,24.5 3,11.5" />
+      <polyline points="10,24 18,10 26,24" />
+      <path d="M 22 14 C 18 14 18 18 22 18 C 26 18 26 22 22 22" />
+    </svg>
     <span class="brand-text">ARNAV SHUKLA</span>
   </div>
   <nav class="sidebar-links" aria-label="Main Navigation">
@@ -1426,10 +1421,6 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   
   function updateThemeUI(theme) {
     themeLabel.textContent = theme === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
-    const logo = document.querySelector('.ac-logo');
-    if (logo) {
-      logo.src = theme === 'dark' ? 'assets/ac-logo-red.png' : 'assets/ac-logo-gold.png';
-    }
     if (typeof window.update3DTheme === 'function') {
       window.update3DTheme(theme);
     }
