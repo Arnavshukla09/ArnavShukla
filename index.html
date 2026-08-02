@@ -63,30 +63,28 @@
     --cert-border: var(--teal);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      /* Inverted Base */
-      --bg: #0F172A;
-      --panel: rgba(15, 23, 42, 0.7);
-      --panel-2: rgba(15, 23, 42, 0.4);
-      --line: rgba(255, 255, 255, 0.15);
-      --text: #F8F9FA;
-      --text-dim: #94A3B8;
-      
-      /* Inverted Accents (Red <-> Gold) */
-      --amber: #DC2626;
-      --teal: #C5A059;
-      --blue: #E2E8F0;
-      
-      /* Inverted Gradients */
-      --card-gradient-1: rgba(30,41,59,0.95);
-      --card-gradient-2: rgba(15,23,42,0.8);
-      --card-gradient-3: rgba(30,41,59,0.9);
-      --card-gradient-4: rgba(15,23,42,0.5);
-      
-      --cert-bg: #0F172A;
-      --cert-border: var(--teal);
-    }
+  :root[data-theme="dark"] {
+    /* Inverted Base */
+    --bg: #0F172A;
+    --panel: rgba(15, 23, 42, 0.7);
+    --panel-2: rgba(15, 23, 42, 0.4);
+    --line: rgba(255, 255, 255, 0.15);
+    --text: #F8F9FA;
+    --text-dim: #94A3B8;
+    
+    /* Inverted Accents (Red <-> Gold) */
+    --amber: #DC2626;
+    --teal: #C5A059;
+    --blue: #E2E8F0;
+    
+    /* Inverted Gradients */
+    --card-gradient-1: rgba(30,41,59,0.95);
+    --card-gradient-2: rgba(15,23,42,0.8);
+    --card-gradient-3: rgba(30,41,59,0.9);
+    --card-gradient-4: rgba(15,23,42,0.5);
+    
+    --cert-bg: #0F172A;
+    --cert-border: var(--teal);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -123,10 +121,8 @@
   *, body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
     cursor: url('assets/ac_cursor_32.png') 16 4, auto !important;
   }
-  @media (prefers-color-scheme: dark) {
-    *, body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
-      cursor: url('assets/ac_cursor_32_light.png') 16 4, auto !important;
-    }
+  :root[data-theme="dark"] *, :root[data-theme="dark"] body, :root[data-theme="dark"] a, :root[data-theme="dark"] button, :root[data-theme="dark"] .project, :root[data-theme="dark"] .btn, :root[data-theme="dark"] .sidebar, :root[data-theme="dark"] .sidebar-links a, :root[data-theme="dark"] .project-plate {
+    cursor: url('assets/ac_cursor_32_light.png') 16 4, auto !important;
   }
 
   a{ color:inherit; }
@@ -1429,8 +1425,6 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 </script>
 <script>
   const themeBtn = document.getElementById('theme-toggle');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  
   const themeLabel = document.getElementById('theme-label');
   
   function updateThemeUI(theme) {
@@ -1449,12 +1443,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     document.documentElement.setAttribute('data-theme', currentTheme);
     updateThemeUI(currentTheme);
   } else {
-    updateThemeUI(prefersDark.matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', 'light');
+    updateThemeUI('light');
   }
   
   themeBtn.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || 
-                   (!document.documentElement.hasAttribute('data-theme') && prefersDark.matches);
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const newTheme = isDark ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
