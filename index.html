@@ -40,6 +40,24 @@
   @media (max-width: 900px) { body { padding-left: 0; padding-bottom: 70px; } }
   ::selection{ background:var(--teal); color:#FFFFFF; text-shadow:none; }
 
+  /* ---------- custom scrollbar ---------- */
+  ::-webkit-scrollbar {
+    width: 10px;
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.03);
+    border-left: 1px solid var(--line);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--amber), #8a6a32);
+    border-radius: 8px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--teal), #9b111e);
+  }
+
   /* ---------- custom cursor & glow ---------- */
   body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
     cursor: url('assets/ac_cursor_32.png') 16 4, auto !important;
@@ -953,9 +971,10 @@
   try {
     if (typeof Lenis !== 'undefined') {
       const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
+        duration: 1.8,
+        easing: (t) => 1 - Math.pow(1 - t, 4), // Heavy Quartic ease-out for vintage analog feel
+        smoothWheel: true,
+        wheelMultiplier: 0.75, // Adds weight to the scroll
       });
 
       function raf(time) {
