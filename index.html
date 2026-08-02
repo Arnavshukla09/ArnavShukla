@@ -22,10 +22,41 @@
     --line: rgba(15, 23, 42, 0.15);
     --text: #0F172A;
     --text-dim: #64748B;
+    
     --amber: #C5A059;
     --teal: #DC2626;
     --blue: #1E293B;
+    
+    /* CSS Variables for Gradients */
+    --card-gradient-1: rgba(255,255,255,0.95);
+    --card-gradient-2: rgba(255,255,255,0.8);
+    --card-gradient-3: rgba(255,255,255,0.9);
+    --card-gradient-4: rgba(255,255,255,0.5);
+    
     --radius: 12px;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Inverted Base */
+      --bg: #0F172A;
+      --panel: rgba(15, 23, 42, 0.7);
+      --panel-2: rgba(15, 23, 42, 0.4);
+      --line: rgba(255, 255, 255, 0.15);
+      --text: #F8F9FA;
+      --text-dim: #94A3B8;
+      
+      /* Inverted Accents (Red <-> Gold) */
+      --amber: #DC2626;
+      --teal: #C5A059;
+      --blue: #E2E8F0;
+      
+      /* Inverted Gradients */
+      --card-gradient-1: rgba(30,41,59,0.95);
+      --card-gradient-2: rgba(15,23,42,0.8);
+      --card-gradient-3: rgba(30,41,59,0.9);
+      --card-gradient-4: rgba(15,23,42,0.5);
+    }
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -61,6 +92,11 @@
   /* ---------- custom cursor ---------- */
   *, body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
     cursor: url('assets/ac_cursor_32.png') 16 4, auto !important;
+  }
+  @media (prefers-color-scheme: dark) {
+    *, body, a, button, .project, .btn, .sidebar, .sidebar-links a, .project-plate {
+      cursor: url('assets/ac_cursor_32_light.png') 16 4, auto !important;
+    }
   }
 
   a{ color:inherit; }
@@ -463,7 +499,7 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;
   }
   .hud-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
     border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 16px; padding: 32px;
     transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
@@ -514,7 +550,7 @@
   }
   .project:hover .chip {
     color: var(--text);
-    background: #FFFFFF;
+    background: var(--bg);
     border-color: var(--card-accent, var(--teal));
     box-shadow: 0 4px 15px var(--card-glow, rgba(220,38,38,0.4));
     text-shadow: none;
@@ -575,7 +611,7 @@
   .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
   @media (max-width:700px){ .skills-grid{ grid-template-columns:1fr; } }
   .skill-block{
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    background: linear-gradient(135deg, var(--card-gradient-3), var(--card-gradient-4));
     backdrop-filter: blur(24px) saturate(150%);
     -webkit-backdrop-filter: blur(24px) saturate(150%);
     border: 1px solid rgba(15, 23, 42, 0.1);
