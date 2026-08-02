@@ -998,42 +998,44 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Deep Arcane purple shell, completely solid/opaque like the photos
+      // Dark Bronze / Forged Iron shell
       const partMat = new THREE.MeshStandardMaterial({
-        color: 0x22153b, // Deep indigo/purple, not completely black
-        metalness: 0.7,
-        roughness: 0.3,
+        color: 0x3d2b1f, // Dark warm bronze
+        metalness: 0.8,
+        roughness: 0.45,
         side: THREE.DoubleSide
       });
 
-      // multi-source soft inner glow pushing out through the holes
-      const p1 = new THREE.PointLight(0x00ffff, 1.5, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
-      const p2 = new THREE.PointLight(0xff00ff, 1.5, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
-      const p3 = new THREE.PointLight(0xffff00, 1.5, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
-      const p4 = new THREE.PointLight(0xffffff, 1.0, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
-      const p5 = new THREE.PointLight(0x00ff88, 1.2, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
+      // Warm magical fire inner glow
+      const p1 = new THREE.PointLight(0xff8800, 1.5, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
+      const p2 = new THREE.PointLight(0xff2200, 1.5, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
+      const p3 = new THREE.PointLight(0xffdd55, 1.5, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
+      const p4 = new THREE.PointLight(0xcc5522, 1.0, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
+      const p5 = new THREE.PointLight(0x33aa99, 1.2, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // Organic glowing connections inside (fleshy pink, cyan, and purple web)
+      // Angular, jagged geometric connections inside
       const branchMat1 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xff1155, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        color: 0xffffff, emissive: 0xd4af37, emissiveIntensity: 1.2, roughness: 0.4, metalness: 0.6,
         transparent: true, opacity: 0.9
       });
-      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.05, 100, 16, 2, 7), branchMat1);
+      // Low tubular/radial segments to make the knot angular and jagged (forged iron style)
+      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.06, 40, 4, 2, 7), branchMat1);
       orbGroup.add(branches1);
 
       const branchMat2 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x00ffff, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        color: 0xffffff, emissive: 0x9b111e, emissiveIntensity: 1.2, roughness: 0.4, metalness: 0.6,
         transparent: true, opacity: 0.9
       });
-      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.04, 100, 16, 3, 5), branchMat2);
+      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.05, 30, 3, 3, 5), branchMat2);
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
       const branchMat3 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xaa00ff, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
-        transparent: true, opacity: 0.9
+        color: 0xffffff, emissive: 0x33aa99, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
+        transparent: true, opacity: 0.9, wireframe: true
       });
-      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.85, 0.06, 100, 16, 4, 3), branchMat3);
+      // Replace the 3rd knot with a sacred geometric Icosahedron
+      const branches3 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), branchMat3);
       branches3.rotation.z = Math.PI / 4;
       orbGroup.add(branches3);
 
@@ -1080,22 +1082,22 @@
       loadPart('assets/anomalycorea.stl');
       loadPart('assets/anomalycoreb.stl');
 
-      // ---- chromatic rim lighting ----
+      // ---- retro medieval rim lighting ----
       scene2.add(new THREE.AmbientLight(0xffffff, 0.4));
       
-      const key2 = new THREE.DirectionalLight(0x00ffff, 4.0);
+      const key2 = new THREE.DirectionalLight(0xffa844, 3.5); // Warm Amber
       key2.position.set(4, 6, 5);
       scene2.add(key2);
       
-      const fill2 = new THREE.DirectionalLight(0xff00ff, 3.5);
+      const fill2 = new THREE.DirectionalLight(0x9b111e, 3.0); // Deep Ruby/Crimson
       fill2.position.set(-5, -2, -4);
       scene2.add(fill2);
       
-      const rim2 = new THREE.DirectionalLight(0xffff00, 3.0);
+      const rim2 = new THREE.DirectionalLight(0x2a9d8f, 2.5); // Oxidized Copper/Teal
       rim2.position.set(0, -5, 2);
       scene2.add(rim2);
 
-      const back2 = new THREE.DirectionalLight(0x3300ff, 4.0);
+      const back2 = new THREE.DirectionalLight(0xd4af37, 3.0); // Tarnished Gold
       back2.position.set(-2, 5, -6);
       scene2.add(back2);
 
@@ -1165,7 +1167,7 @@
         // Shift CSS drop-shadow to create a responsive optical flare effect
         const shadowX = -targetX * 40;
         const shadowY = targetY * 40;
-        orbCanvas.style.filter = `saturate(1.2) drop-shadow(${shadowX}px ${shadowY}px 25px rgba(100, 200, 255, 0.45))`;
+        orbCanvas.style.filter = `saturate(1.1) drop-shadow(${shadowX}px ${shadowY}px 25px rgba(255, 140, 50, 0.4))`;
 
         if (!dragging) {
           orbGroup.rotation.y += autoSpinY + velY;
