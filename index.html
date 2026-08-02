@@ -213,15 +213,16 @@
   }
   .sidebar:hover nav.sidebar-links { align-items: flex-start; }
   
-  nav.sidebar-links a { 
-    color: #94A3B8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
+  nav.sidebar-links a, #theme-toggle { 
+    color: #0EA5E9; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
     transition: color 0.3s, transform 0.3s; display: flex; align-items: center; gap: 20px; font-weight:600;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; background: transparent; border: none; cursor: pointer; padding: 0;
   }
-  nav.sidebar-links a svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; }
-  nav.sidebar-links a span { opacity: 0; transition: opacity 0.3s; display: none; }
-  .sidebar:hover nav.sidebar-links a span { opacity: 1; display: block; }
+  nav.sidebar-links a svg, #theme-toggle svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; }
+  nav.sidebar-links a span, #theme-toggle span { opacity: 0; transition: opacity 0.3s; display: none; }
+  .sidebar:hover nav.sidebar-links a span, .sidebar:hover #theme-toggle span { opacity: 1; display: block; }
   
-  nav.sidebar-links a:hover { 
+  nav.sidebar-links a:hover, #theme-toggle:hover { 
     color: var(--amber); 
     transform: translateX(8px); 
     text-shadow: 0 0 1px currentColor, 0 0 15px var(--amber); 
@@ -240,8 +241,8 @@
     .sidebar .brand .brand-text { display: none; }
     nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; width: auto; align-items: center; }
     .sidebar:hover nav.sidebar-links { align-items: center; }
-    nav.sidebar-links a span { display: none !important; }
-    nav.sidebar-links a:hover { transform: none; }
+    nav.sidebar-links a span, #theme-toggle span { display: none !important; }
+    nav.sidebar-links a:hover, #theme-toggle:hover { transform: none; }
   }
 
   /* ---------- hero & 3d relic ---------- */
@@ -755,30 +756,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 5 8-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       <span>Contact</span>
     </a>
-    
-    <button id="theme-toggle" class="sidebar-btn" aria-label="Toggle Dark Mode" style="margin-top:30px; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--text); background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px; cursor:pointer; text-transform:uppercase; letter-spacing:0.1em; transition:all 0.3s; display:flex; flex-direction:column; align-items:center; gap:6px; font-weight:700; box-shadow: 0 4px 10px rgba(15,23,42,0.05);">
-      <svg viewBox="0 0 24 24" style="width:28px; height:28px; fill:currentColor; flex-shrink:0;">
+    <button id="theme-toggle" aria-label="Toggle Theme">
+      <svg viewBox="0 0 24 24">
         <!-- Sun / Moon Icon -->
         <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
         <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      <span class="theme-label" style="display:block !important; opacity:1 !important;">THEME</span>
+      <span id="theme-label">DARK MODE</span>
     </button>
   </nav>
-  
-  <style>
-    #theme-toggle:hover { 
-      color: var(--amber); 
-      border-color: var(--amber); 
-      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15); 
-      transform: translateY(-2px); 
-    }
-    @media (max-width: 900px) {
-      #theme-toggle:hover { transform: none; }
-      #theme-toggle { margin-top: 0 !important; padding: 6px 10px; flex-direction: row !important; }
-      #theme-toggle svg { width: 20px !important; height: 20px !important; }
-    }
-  </style>
 </aside>
 
 <div class="wrap">
@@ -1389,9 +1375,18 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   const themeBtn = document.getElementById('theme-toggle');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
   
+  const themeLabel = document.getElementById('theme-label');
+  
+  function updateThemeUI(theme) {
+    themeLabel.textContent = theme === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+  }
+
   const currentTheme = localStorage.getItem('theme');
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeUI(currentTheme);
+  } else {
+    updateThemeUI(prefersDark.matches ? 'dark' : 'light');
   }
   
   themeBtn.addEventListener('click', () => {
@@ -1400,6 +1395,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     const newTheme = isDark ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+    updateThemeUI(newTheme);
   });
 </script>
 </body>
