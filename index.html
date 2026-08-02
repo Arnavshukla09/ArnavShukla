@@ -1129,14 +1129,11 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Deep Arcane purple shell with frosted subsurface scattering on the rims
-      const partMat = new THREE.MeshPhysicalMaterial({
-        color: 0x2a1b38,
-        metalness: 0.4,
-        roughness: 0.55, // Higher roughness makes the transmitted light through rims look blurred
-        transmission: 0.9, // Higher transmission for more glassy edges
-        thickness: 2.0,
-        transparent: true,
+      // Deep Arcane purple shell, completely solid/opaque like the photos
+      const partMat = new THREE.MeshStandardMaterial({
+        color: 0x22153b, // Deep indigo/purple, not completely black
+        metalness: 0.7,
+        roughness: 0.3,
         side: THREE.DoubleSide
       });
 
