@@ -503,6 +503,10 @@
   .project:hover .project-bullets li {
     color: var(--text);
   }
+  .project:hover .project-bullets li::before {
+    color: var(--card-accent, var(--amber));
+    text-shadow: 0 0 8px var(--card-accent, var(--amber));
+  }
   .project:hover .chip {
     color: var(--text);
     background: #FFFFFF;
@@ -548,8 +552,8 @@
   .project-role{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
   .project-desc{ margin-top:14px; color:var(--text); font-size:14.5px; max-width:70ch; }
   .project-bullets{ margin-top:14px; list-style:none; }
-  .project-bullets li{ position:relative; padding-left:18px; font-size:13.5px; color:var(--text-dim); margin-bottom:7px; }
-  .project-bullets li::before{ content:'▸'; position:absolute; left:0; color:var(--amber); }
+  .project-bullets li{ position:relative; padding-left:18px; font-size:13.5px; color:var(--text-dim); margin-bottom:7px; transition: color 0.3s; }
+  .project-bullets li::before{ content:'▸'; position:absolute; left:0; color:var(--text-dim); transition: all 0.3s; }
   .stack{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
   .chip{
     font-family:'IBM Plex Mono',monospace; font-size:11px;
