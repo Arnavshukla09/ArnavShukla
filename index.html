@@ -138,7 +138,7 @@
   .sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
     width: 80px;
-    background: linear-gradient(90deg, var(--blue), #0B1120);
+    background: var(--bg);
     box-shadow: 10px 0 30px rgba(15,23,42,0.3);
     display: flex; flex-direction: column;
     padding: 60px 0;
@@ -180,7 +180,7 @@
   .sidebar:hover nav.sidebar-links { align-items: flex-start; }
   
   nav.sidebar-links a, #theme-toggle { 
-    color: #0EA5E9; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
+    color: #10B981; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
     transition: color 0.3s, transform 0.3s; display: flex; align-items: center; gap: 20px; font-weight:600;
     font-family: 'JetBrains Mono', monospace; font-size: 13px; background: transparent; border: none; cursor: pointer; padding: 0;
   }
@@ -407,17 +407,17 @@
     display: flex; align-items: center; gap: 6px;
   }
   .loop-card:hover .loop-status {
-    color: var(--teal);
-    text-shadow: 0 1px 3px rgba(220,38,38,0.3), 0 2px 10px rgba(220,38,38,0.2), 0 4px 20px rgba(220,38,38,0.1);
+    color: #10B981;
+    text-shadow: 0 1px 3px rgba(16,185,129,0.3), 0 2px 10px rgba(16,185,129,0.2), 0 4px 20px rgba(16,185,129,0.1);
   }
   .loop-status-dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: var(--teal);
-    box-shadow: 0 0 8px var(--teal);
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
     animation: blink 1.5s ease-in-out infinite;
   }
   .loop-card:hover .loop-status-dot {
-    box-shadow: 0 0 15px var(--teal);
+    box-shadow: 0 0 15px #10B981;
     animation: blink 0.5s ease-in-out infinite;
   }
   
