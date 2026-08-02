@@ -1114,7 +1114,7 @@
   // 3b. Anomaly Core — real STL print model, ethereal rendering
   try {
     const orbCanvas = document.getElementById('agent-orb');
-    if (orbCanvas && typeof THREE.STLLoader !== 'undefined' && typeof THREE.EffectComposer !== 'undefined') {
+    if (orbCanvas && typeof THREE.STLLoader !== 'undefined') {
       const wrap = orbCanvas.parentElement;
 
       const renderer2 = new THREE.WebGLRenderer({ canvas: orbCanvas, alpha: true, antialias: false });
