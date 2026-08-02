@@ -1117,7 +1117,7 @@
     if (orbCanvas && typeof THREE.STLLoader !== 'undefined') {
       const wrap = orbCanvas.parentElement;
 
-      const renderer2 = new THREE.WebGLRenderer({ canvas: orbCanvas, alpha: true, antialias: false });
+      const renderer2 = new THREE.WebGLRenderer({ canvas: orbCanvas, alpha: true, antialias: true });
       renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene2 = new THREE.Scene();
@@ -1128,13 +1128,14 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Highly reflective silver base so it catches the Cyan/Magenta/Yellow lights!
-      const partMat = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        metalness: 0.9,
-        roughness: 0.15,
+      // Deep Arcane purple shell with subsurface scattering on the rims
+      const partMat = new THREE.MeshPhysicalMaterial({
+        color: 0x2a1b38,
+        metalness: 0.5,
+        roughness: 0.4,
+        transmission: 0.8, // Glass-like translucency
+        thickness: 2.0, // Creates the colored 'shadows' on the rims of the openings
         transparent: true,
-        opacity: 0.5,
         side: THREE.DoubleSide
       });
 
@@ -1145,27 +1146,27 @@
       const p4 = new THREE.PointLight(0xffffff, 1.0, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
       const p5 = new THREE.PointLight(0x00ff88, 1.2, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // Organic glowing branches inside (made thinner, highly frequent, and dense)
+      // Organic glowing connections inside (fleshy pink, cyan, and purple web)
       const branchMat1 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x00ffff, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
+        color: 0xffffff, emissive: 0xff1155, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
         transparent: true, opacity: 0.9
       });
-      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.08, 128, 16, 5, 11), branchMat1);
+      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.05, 100, 16, 2, 7), branchMat1);
       orbGroup.add(branches1);
 
       const branchMat2 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xff00ff, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
+        color: 0xffffff, emissive: 0x00ffff, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
         transparent: true, opacity: 0.9
       });
-      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.07, 128, 16, 4, 9), branchMat2);
+      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.04, 100, 16, 3, 5), branchMat2);
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
       const branchMat3 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xffff00, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.8,
+        color: 0xffffff, emissive: 0xaa00ff, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
         transparent: true, opacity: 0.9
       });
-      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.95, 0.07, 128, 16, 3, 13), branchMat3);
+      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.85, 0.06, 100, 16, 4, 3), branchMat3);
       branches3.rotation.z = Math.PI / 4;
       orbGroup.add(branches3);
 
