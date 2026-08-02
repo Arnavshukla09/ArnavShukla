@@ -211,25 +211,25 @@
     animation-delay: -11s;
   }
   @keyframes orbitSense {
-    from { transform: rotate(0deg) translateX(225px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(225px) rotate(-360deg); }
+    from { transform: rotate(0deg) translateX(155px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(155px) rotate(-360deg); }
   }
   @keyframes orbitDecide {
-    from { transform: rotate(0deg) translateX(195px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(195px) rotate(-360deg); }
+    from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
   }
   @keyframes orbitAct {
-    from { transform: rotate(0deg) translateX(255px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(255px) rotate(-360deg); }
+    from { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
   }
 
   @media (max-width: 860px) {
     .hero-relic-container { height: 320px; width: 320px; }
     .orb-label { font-size: 11px; }
     .orb-sub { font-size: 10px; }
-    @keyframes orbitSense  { from { transform: rotate(0deg) translateX(165px) rotate(0deg); } to { transform: rotate(360deg) translateX(165px) rotate(-360deg); } }
-    @keyframes orbitDecide { from { transform: rotate(0deg) translateX(142px) rotate(0deg); } to { transform: rotate(360deg) translateX(142px) rotate(-360deg); } }
-    @keyframes orbitAct    { from { transform: rotate(0deg) translateX(185px) rotate(0deg); } to { transform: rotate(360deg) translateX(185px) rotate(-360deg); } }
+    @keyframes orbitSense  { from { transform: rotate(0deg) translateX(115px) rotate(0deg); } to { transform: rotate(360deg) translateX(115px) rotate(-360deg); } }
+    @keyframes orbitDecide { from { transform: rotate(0deg) translateX(95px) rotate(0deg); } to { transform: rotate(360deg) translateX(95px) rotate(-360deg); } }
+    @keyframes orbitAct    { from { transform: rotate(0deg) translateX(135px) rotate(0deg); } to { transform: rotate(360deg) translateX(135px) rotate(-360deg); } }
   }
   @media (max-width: 500px) {
     .orbit-decide, .orbit-act { display: none; }
@@ -681,6 +681,24 @@
       <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
       <div class="hero-relic-container" style="width: 100%; height: 350px; margin: 20px auto; position: relative;">
         <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+        <div class="orbit-pivot orbit-sense">
+          <div class="orb-label">
+            <span class="orb-dot dot-red"></span><b>SENSE</b>
+            <div class="orb-sub">occupancy · vitals · JD</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-decide">
+          <div class="orb-label">
+            <span class="orb-dot dot-amber"></span><b>DECIDE</b>
+            <div class="orb-sub">LLM + rule fallback</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-act">
+          <div class="orb-label">
+            <span class="orb-dot dot-dark"></span><b>ACT</b>
+            <div class="orb-sub">setpoint · alert · score</div>
+          </div>
+        </div>
       </div>
       <div class="loop-desc">
         The pattern behind Eco-Loop's HVAC agent, the healthcare triage engine,
