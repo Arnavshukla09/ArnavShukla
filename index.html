@@ -998,41 +998,38 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Dark Bronze / Forged Iron shell
+      // Glowing Light Gold / Marble shell
       const partMat = new THREE.MeshStandardMaterial({
-        color: 0x3d2b1f, // Dark warm bronze
-        metalness: 0.8,
-        roughness: 0.45,
+        color: 0xffebd6, // Very light warm white/gold
+        metalness: 0.5,
+        roughness: 0.2,
         side: THREE.DoubleSide
       });
 
-      // Warm magical fire inner glow
-      const p1 = new THREE.PointLight(0xff8800, 1.5, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
-      const p2 = new THREE.PointLight(0xff2200, 1.5, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
-      const p3 = new THREE.PointLight(0xffdd55, 1.5, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
-      const p4 = new THREE.PointLight(0xcc5522, 1.0, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
-      const p5 = new THREE.PointLight(0x33aa99, 1.2, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
+      // Dark void interior: dim purple/blue point lights
+      const p1 = new THREE.PointLight(0x110033, 0.5, 10); p1.position.set(1.2, 1, 0); orbGroup.add(p1);
+      const p2 = new THREE.PointLight(0x001133, 0.5, 10); p2.position.set(-1, -1.2, 0); orbGroup.add(p2);
+      const p3 = new THREE.PointLight(0x110033, 0.5, 10); p3.position.set(0, 0.5, 1.2); orbGroup.add(p3);
+      const p4 = new THREE.PointLight(0x001133, 0.3, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
+      const p5 = new THREE.PointLight(0x110033, 0.4, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // Angular, jagged geometric connections inside
+      // Dark shadowy geometry floating in the bright shell
       const branchMat1 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xd4af37, emissiveIntensity: 1.2, roughness: 0.4, metalness: 0.6,
-        transparent: true, opacity: 0.9
+        color: 0x111111, emissive: 0x000000, metalness: 0.9, roughness: 0.5
       });
       // Low tubular/radial segments to make the knot angular and jagged (forged iron style)
       const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.06, 40, 4, 2, 7), branchMat1);
       orbGroup.add(branches1);
 
       const branchMat2 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x9b111e, emissiveIntensity: 1.2, roughness: 0.4, metalness: 0.6,
-        transparent: true, opacity: 0.9
+        color: 0x111111, emissive: 0x000000, metalness: 0.9, roughness: 0.5
       });
       const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.05, 30, 3, 3, 5), branchMat2);
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
       const branchMat3 = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x33aa99, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
-        transparent: true, opacity: 0.9, wireframe: true
+        color: 0x050505, emissive: 0x000000, metalness: 0.9, roughness: 0.3, wireframe: true
       });
       // Replace the 3rd knot with a sacred geometric Icosahedron
       const branches3 = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), branchMat3);
