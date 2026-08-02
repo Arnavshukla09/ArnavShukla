@@ -1150,14 +1150,14 @@
         color: 0xffffff, emissive: 0x00ffff, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
         transparent: true, opacity: 0.9
       });
-      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.2, 0.08, 128, 16, 5, 11), branchMat1);
+      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.08, 128, 16, 5, 11), branchMat1);
       orbGroup.add(branches1);
 
       const branchMat2 = new THREE.MeshStandardMaterial({
         color: 0xffffff, emissive: 0xff00ff, emissiveIntensity: 1.2, roughness: 0.2, metalness: 0.8,
         transparent: true, opacity: 0.9
       });
-      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.3, 0.07, 128, 16, 4, 9), branchMat2);
+      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.07, 128, 16, 4, 9), branchMat2);
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
@@ -1165,7 +1165,7 @@
         color: 0xffffff, emissive: 0xffff00, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.8,
         transparent: true, opacity: 0.9
       });
-      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.25, 0.07, 128, 16, 3, 13), branchMat3);
+      const branches3 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.95, 0.07, 128, 16, 3, 13), branchMat3);
       branches3.rotation.z = Math.PI / 4;
       orbGroup.add(branches3);
 
