@@ -1038,17 +1038,17 @@
       branches3.rotation.z = Math.PI / 4;
 
       const mat3a = new THREE.MeshStandardMaterial({
-        color: 0x050511, emissive: 0x000000, metalness: 0.9, roughness: 0.2, wireframe: true
+        color: 0xffffff, emissive: 0x4488ff, emissiveIntensity: 3.0, roughness: 0.2, wireframe: true, transparent: true, opacity: 0.9
       });
       const mesh3a = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), mat3a);
       
       const mat3b = new THREE.MeshStandardMaterial({
-        color: 0x220505, emissive: 0x000000, metalness: 0.8, roughness: 0.4
+        color: 0xffffff, emissive: 0xff2244, emissiveIntensity: 3.0, roughness: 0.4, transparent: true, opacity: 0.9
       });
       const mesh3b = new THREE.Mesh(new THREE.OctahedronGeometry(0.65, 0), mat3b);
       
       const mat3c = new THREE.MeshStandardMaterial({
-        color: 0x111611, emissive: 0x000000, metalness: 0.9, roughness: 0.1, wireframe: true
+        color: 0xffffff, emissive: 0x88ffff, emissiveIntensity: 4.0, roughness: 0.1, wireframe: true, transparent: true, opacity: 0.9
       });
       const mesh3c = new THREE.Mesh(new THREE.TetrahedronGeometry(0.85, 0), mat3c);
 
