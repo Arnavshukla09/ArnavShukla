@@ -158,12 +158,12 @@
   /* ---------- hero & 3d relic ---------- */
   .hero{
     padding:96px 0 72px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px;
-    align-items:center;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  @media (max-width:860px){ .hero{ grid-template-columns:1fr; padding:56px 0 40px; } }
+  @media (max-width:860px){ .hero{ padding:56px 0 40px; } }
   
   .hero-visual-cluster {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -242,7 +242,7 @@
     color:var(--teal);
     letter-spacing:0.14em;
     text-transform:uppercase;
-    display:flex; align-items:center; gap:10px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
     margin-bottom:22px;
   }
   .eyebrow::before{ content:'//'; color:var(--text-dim); }
@@ -265,7 +265,14 @@
   }
   .hero-sub strong{ color:var(--text); font-weight:600; }
 
-  .hero-actions{ display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+  .hero-actions{
+    display:flex; gap:16px; margin:32px 0 48px 0; justify-content:center;
+  }
+  
+  .status-row{
+    display:flex; gap:32px; border-top:1px solid var(--border); padding-top:24px; justify-content:center;
+  }
+
   .btn{
     font-family:'JetBrains Mono',monospace;
     font-size:13px;
@@ -668,72 +675,15 @@
         <div class="status-item"><b>AWS</b>cloud certified</div>
       </div>
     </div>
-    
-    <!-- 3D Geometric Relic & Base -->
-    <div class="hero-visual-cluster">
-      <div class="hero-relic-container">
-        <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
-        <div class="orbit-pivot orbit-sense">
-          <div class="orb-label">
-            <span class="orb-dot dot-red"></span><b>SENSE</b>
-            <div class="orb-sub">occupancy · vitals · JD</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-decide">
-          <div class="orb-label">
-            <span class="orb-dot dot-amber"></span><b>DECIDE</b>
-            <div class="orb-sub">LLM + rule fallback</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-act">
-          <div class="orb-label">
-            <span class="orb-dot dot-dark"></span><b>ACT</b>
-            <div class="orb-sub">setpoint · alert · score</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="isometric-plane hero-base-plane">
-        <div class="project-plate" data-num="01"></div>
-        <div class="project-plate" data-num="02"></div>
-        <div class="project-plate" data-num="03"></div>
-        <div class="project-plate" data-num="04"></div>
-      </div>
-    </div>
   </section>
 
   <!-- ARCHITECTURE (Agent Loop) -->
   <section id="architecture" style="padding-top: 0;">
     <div class="loop-card">
       <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
-      <canvas id="loop-canvas" style="width:100%; height:auto; margin-top:26px; display:none; min-height:250px; transform: translateZ(40px);"></canvas>
-      <svg id="loop-svg-fallback" class="loop-svg" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- loop path -->
-        <path d="M 190 60 A 100 100 0 1 1 189.9 60" fill="none" stroke="#223040" stroke-width="1.5"/>
-        <path class="loop-dash" d="M 190 60 A 100 100 0 1 1 189.9 60" fill="none" stroke="#5FD9C4" stroke-width="1.5" stroke-opacity="0.7"/>
-
-        <!-- SENSE node (top) -->
-        <circle cx="190" cy="60" r="30" fill="#141D26" stroke="#223040"/>
-        <circle class="pulse-dot" cx="190" cy="60" r="4" fill="#5FD9C4"/>
-        <text x="190" y="102" text-anchor="middle" class="loop-node-label">SENSE</text>
-        <text x="190" y="114" text-anchor="middle" class="loop-node-sub">occupancy · vitals · JD</text>
-
-        <!-- DECIDE node (right) -->
-        <circle cx="288" cy="180" r="30" fill="#141D26" stroke="#223040"/>
-        <circle class="pulse-dot" cx="288" cy="180" r="4" fill="#FFB454" style="animation-delay:0.8s"/>
-        <text x="288" y="222" text-anchor="middle" class="loop-node-label">DECIDE</text>
-        <text x="288" y="234" text-anchor="middle" class="loop-node-sub">LLM + rule fallback</text>
-
-        <!-- ACT node (left) -->
-        <circle cx="92" cy="180" r="30" fill="#141D26" stroke="#223040"/>
-        <circle class="pulse-dot" cx="92" cy="180" r="4" fill="#7AA2F7" style="animation-delay:1.6s"/>
-        <text x="92" y="222" text-anchor="middle" class="loop-node-label">ACT</text>
-        <text x="92" y="234" text-anchor="middle" class="loop-node-sub">setpoint · alert · score</text>
-
-        <!-- center label -->
-        <text x="190" y="184" text-anchor="middle" class="loop-node-sub" fill="#7C8A97" font-size="9">every 30s</text>
-        <text x="190" y="196" text-anchor="middle" class="loop-node-label" font-size="10">fault-tolerant</text>
-      </svg>
+      <div class="hero-relic-container" style="width: 100%; height: 350px; margin: 20px auto; position: relative;">
+        <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+      </div>
       <div class="loop-desc">
         The pattern behind Eco-Loop's HVAC agent, the healthcare triage engine,
         and TalentMatch's scoring pipeline: sense → decide → act, with a deterministic
@@ -1010,104 +960,7 @@
     console.log('GSAP scroll-reveal failed to init.', e);
   }
 
-  // 3. Three.js Agent Loop
-  try {
-    const canvas = document.getElementById('loop-canvas');
-    const fallbackSvg = document.getElementById('loop-svg-fallback');
-    const container = canvas ? canvas.parentElement : null;
 
-    if (canvas) {
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      fallbackSvg.style.display = 'none';
-      canvas.style.display = 'block';
-
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-      camera.position.z = 12;
-
-      const style = getComputedStyle(document.body);
-      const cTeal = parseInt(style.getPropertyValue('--teal').trim().replace('#', '0x'), 16);
-      const cAmber = parseInt(style.getPropertyValue('--amber').trim().replace('#', '0x'), 16);
-      const cBlue = parseInt(style.getPropertyValue('--blue').trim().replace('#', '0x'), 16);
-      const cLine = parseInt(style.getPropertyValue('--line').trim().replace('#', '0x'), 16);
-
-      const group = new THREE.Group();
-      scene.add(group);
-
-      const centerGeo = new THREE.IcosahedronGeometry(0.6, 0);
-      const centerMat = new THREE.MeshBasicMaterial({ color: cLine, wireframe: true, transparent: true, opacity: 0.5 });
-      const centerNode = new THREE.Mesh(centerGeo, centerMat);
-      group.add(centerNode);
-
-      const nodeGeo = new THREE.IcosahedronGeometry(0.8, 0);
-      const dist = 4;
-      
-      const node1 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cTeal, wireframe: true }));
-      node1.position.set(0, dist, 0);
-      group.add(node1);
-
-      const node2 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cAmber, wireframe: true }));
-      node2.position.set(dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
-      group.add(node2);
-
-      const node3 = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: cBlue, wireframe: true }));
-      node3.position.set(-dist * Math.cos(-Math.PI/6), -dist * Math.sin(-Math.PI/6), 0);
-      group.add(node3);
-
-      const lineMat = new THREE.LineBasicMaterial({ color: cLine, transparent: true, opacity: 0.6 });
-      const addLine = (p1, p2) => {
-        const geo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
-        group.add(new THREE.Line(geo, lineMat));
-      };
-      addLine(node1.position, node2.position);
-      addLine(node2.position, node3.position);
-      addLine(node3.position, node1.position);
-      addLine(new THREE.Vector3(0,0,0), node1.position);
-      addLine(new THREE.Vector3(0,0,0), node2.position);
-      addLine(new THREE.Vector3(0,0,0), node3.position);
-
-      group.rotation.x = 0.5;
-      group.rotation.y = 0.2;
-
-      let isVisible = true;
-      const observer = new IntersectionObserver((entries) => {
-        isVisible = entries[0].isIntersecting;
-      });
-      observer.observe(container);
-
-      window.addEventListener('resize', () => {
-        const w = canvas.clientWidth;
-        const h = Math.max(250, w * 0.75); // responsive height
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h, false);
-        canvas.style.height = h + 'px';
-      });
-      window.dispatchEvent(new Event('resize'));
-
-      let time = 0;
-      const animate = () => {
-        requestAnimationFrame(animate);
-        if (!isVisible) return;
-        time += 0.005;
-        group.rotation.y = time;
-        group.rotation.z = time * 0.5;
-        
-        node1.rotation.y = -time; node1.rotation.x = time;
-        node2.rotation.y = -time; node2.rotation.x = time;
-        node3.rotation.y = -time; node3.rotation.x = time;
-        centerNode.rotation.y = -time;
-
-        renderer.render(scene, camera);
-      };
-      animate();
-    }
-  } catch (e) {
-    console.log("WebGL disabled or failed. Falling back to static SVG.", e);
-  }
 
 
 
