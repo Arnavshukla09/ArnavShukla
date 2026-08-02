@@ -39,7 +39,31 @@
     --radius: 12px;
   }
   
-  :root[data-theme="dark"], @media (prefers-color-scheme: dark) {
+  :root[data-theme="dark"] {
+    /* Inverted Base */
+    --bg: #0F172A;
+    --panel: rgba(15, 23, 42, 0.7);
+    --panel-2: rgba(15, 23, 42, 0.4);
+    --line: rgba(255, 255, 255, 0.15);
+    --text: #F8F9FA;
+    --text-dim: #94A3B8;
+    
+    /* Inverted Accents (Red <-> Gold) */
+    --amber: #DC2626;
+    --teal: #C5A059;
+    --blue: #E2E8F0;
+    
+    /* Inverted Gradients */
+    --card-gradient-1: rgba(30,41,59,0.95);
+    --card-gradient-2: rgba(15,23,42,0.8);
+    --card-gradient-3: rgba(30,41,59,0.9);
+    --card-gradient-4: rgba(15,23,42,0.5);
+    
+    --cert-bg: #0F172A;
+    --cert-border: var(--teal);
+  }
+
+  @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       /* Inverted Base */
       --bg: #0F172A;
