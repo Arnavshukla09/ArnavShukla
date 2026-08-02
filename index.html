@@ -1128,13 +1128,13 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // Darker, matte/glossy metallic outer shell (now highly translucent glass)
+      // Highly reflective silver base so it catches the Cyan/Magenta/Yellow lights!
       const partMat = new THREE.MeshStandardMaterial({
-        color: 0x080210,
+        color: 0xffffff,
         metalness: 0.9,
-        roughness: 0.1,
+        roughness: 0.15,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.5,
         side: THREE.DoubleSide
       });
 
