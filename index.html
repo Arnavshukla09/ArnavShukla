@@ -1033,32 +1033,31 @@
       branches2.rotation.x = Math.PI / 2;
       orbGroup.add(branches2);
 
-      // Replace the 3rd knot with a cluster of sacred geometries in multiple dark tones
+      // Replace the 3rd knot with a 4D Tesseract simulation (nested hypercubes) and a bright accent red core
       const branches3 = new THREE.Group();
-      branches3.rotation.z = Math.PI / 4;
-
-      const mat3a = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x4488ff, emissiveIntensity: 3.0, roughness: 0.2, wireframe: true, transparent: true, opacity: 0.9
-      });
-      const mesh3a = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 1), mat3a);
       
-      const mat3b = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0xff2244, emissiveIntensity: 3.0, roughness: 0.4, transparent: true, opacity: 0.9
+      const mat4DOuter = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xff0022, emissiveIntensity: 1.5, wireframe: true, transparent: true, opacity: 0.5
       });
-      const mesh3b = new THREE.Mesh(new THREE.OctahedronGeometry(0.65, 0), mat3b);
+      const meshOuter = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.95, 0.95), mat4DOuter);
       
-      const mat3c = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x88ffff, emissiveIntensity: 4.0, roughness: 0.1, wireframe: true, transparent: true, opacity: 0.9
+      const mat4DMid = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xff0033, emissiveIntensity: 2.0, wireframe: true, transparent: true, opacity: 0.8
       });
-      const mesh3c = new THREE.Mesh(new THREE.TetrahedronGeometry(0.85, 0), mat3c);
+      const meshMid = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.65), mat4DMid);
+      
+      const mat4DCore = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xff0022, emissiveIntensity: 5.0, roughness: 0.1, transparent: true, opacity: 0.95
+      });
+      const meshCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.3, 0), mat4DCore);
 
-      // Rotate them slightly so they interlock
-      mesh3b.rotation.x = 0.5;
-      mesh3c.rotation.y = 1.0;
-
-      branches3.add(mesh3a);
-      branches3.add(mesh3b);
-      branches3.add(mesh3c);
+      branches3.add(meshOuter);
+      branches3.add(meshMid);
+      branches3.add(meshCore);
+      
+      // Accent red point light exactly at the core
+      const coreLight = new THREE.PointLight(0xff0022, 2.0, 15);
+      branches3.add(coreLight);
       
       orbGroup.add(branches3);
 
@@ -1204,8 +1203,13 @@
         branches1.rotation.z = t2 * 0.2;
         branches2.rotation.x = -t2 * 0.4;
         branches2.rotation.y = -t2 * 0.1;
-        branches3.rotation.z = -t2 * 0.3;
-        branches3.rotation.y = t2 * 0.2;
+        
+        // 4D Tesseract counter-rotation folding effect
+        branches3.children[0].rotation.x = t2 * 0.3; // Outer
+        branches3.children[0].rotation.y = t2 * 0.4;
+        branches3.children[1].rotation.x = -t2 * 0.5; // Mid
+        branches3.children[1].rotation.z = -t2 * 0.6;
+        branches3.children[2].rotation.y = t2 * 0.8; // Core
 
         renderer2.render(scene2, camera2);
       }
