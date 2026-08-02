@@ -1127,11 +1127,14 @@
       const orbGroup = new THREE.Group();
       scene2.add(orbGroup);
 
-      // plain material — light gunmetal grey, matches raw print material
+      // translucent material
       const partMat = new THREE.MeshStandardMaterial({
         color: 0x9aa0a6,
-        metalness: 0.35,
-        roughness: 0.55,
+        metalness: 0.4,
+        roughness: 0.2,
+        transparent: true,
+        opacity: 0.45,
+        side: THREE.DoubleSide
       });
 
       const loader = new THREE.STLLoader();
