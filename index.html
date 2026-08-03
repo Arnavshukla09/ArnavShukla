@@ -316,6 +316,35 @@
   }
 
 
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    margin-bottom: 22px;
+  }
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--teal);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--teal);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
     font-size:12.5px;
@@ -768,7 +797,10 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   <!-- HERO -->
   <section class="hero" style="border-top:none; padding-top:96px;">
     <div class="hero-content">
-      <div class="eyebrow">Initializing Agent Network</div>
+      <div class="availability-badge">
+        <span class="pulse-dot"></span>
+        OPEN TO ML / AI ENGINEERING ROLES
+      </div>
       <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <h2 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--text); margin-top: 15px; letter-spacing: 0.05em;">ARNAV SHUKLA</h2>
       <p class="hero-sub">
@@ -781,7 +813,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <a href="#contact" class="btn btn-ghost">Ping Endpoint</a>
       </div>
       <div class="status-row">
-        <div class="status-item"><b>4</b>total projects</div>
+        <div class="status-item"><b>10</b>total projects</div>
         <div class="status-item"><b>8.6</b>CGPA</div>
         <div class="status-item"><b>B.Tech</b>Computer Science</div>
       </div>
