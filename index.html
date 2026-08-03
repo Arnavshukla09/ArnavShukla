@@ -115,15 +115,16 @@
   /* ---------- background grid & orbs ---------- */
   .bg-animus {
     position: fixed; inset: 0; z-index: -1;
-    background: var(--bg);
     overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
   }
   .bg-animus::before {
     content: ""; position: absolute; inset: -200%;
     background-image: 
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-size: 140px 140px;
     transform: perspective(600px) rotateX(70deg) translateZ(-100px);
   }
   .bg-animus::after {
@@ -131,7 +132,7 @@
     background-image: 
       linear-gradient(var(--amber) 1px, transparent 1px),
       linear-gradient(90deg, var(--amber) 1px, transparent 1px);
-    background-size: 240px 240px;
+    background-size: 400px 400px;
     opacity: 0.6;
     transform: perspective(600px) rotateX(70deg) translateZ(50px);
   }
