@@ -270,33 +270,31 @@
   .dot-red   { background: #FF2D78; box-shadow: 0 0 8px rgba(255,45,120,0.8); }
   .dot-amber { background: #FFD23F; box-shadow: 0 0 8px rgba(255,210,63,0.8); }
   .dot-dark  { background: #22E5FF; box-shadow: 0 0 8px rgba(34,229,255,0.8); }
+  .dot-purple { background: #9D4EDD; box-shadow: 0 0 8px rgba(157,78,221,0.8); }
+  .dot-white  { background: #F8F9FA; box-shadow: 0 0 8px rgba(248,249,250,0.8); }
+  .dot-green  { background: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.8); }
+  .dot-orange { background: #F97316; box-shadow: 0 0 8px rgba(249,115,22,0.8); }
 
   /* ---- orbiting label pivots ---- */
   .orbit-pivot {
     position: absolute; top: 50%; left: 50%; width: 0; height: 0;
   }
-  .orbit-sense {
-    animation: orbitSense 17s linear infinite;
-  }
-  .orbit-decide {
-    animation: orbitDecide 23s linear infinite reverse;
-  }
-  .orbit-act {
-    animation: orbitAct 29s linear infinite;
-    animation-delay: -11s;
-  }
-  @keyframes orbitSense {
-    from { transform: rotate(0deg) translateX(155px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(155px) rotate(-360deg); }
-  }
-  @keyframes orbitDecide {
-    from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
-  }
-  @keyframes orbitAct {
-    from { transform: rotate(0deg) translateX(180px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
-  }
+  .orbit-sense { animation: orbitSense 17s linear infinite; }
+  .orbit-decide { animation: orbitDecide 23s linear infinite reverse; }
+  .orbit-act { animation: orbitAct 29s linear infinite; animation-delay: -11s; }
+  
+  .orbit-memory { animation: orbitMemory 19s linear infinite reverse; animation-delay: -4s; }
+  .orbit-plan { animation: orbitPlan 31s linear infinite; animation-delay: -15s; }
+  .orbit-evaluate { animation: orbitEvaluate 27s linear infinite reverse; animation-delay: -8s; }
+  .orbit-observe { animation: orbitObserve 37s linear infinite; animation-delay: -21s; }
+
+  @keyframes orbitSense { from { transform: rotate(0deg) translateX(155px) rotate(0deg); } to { transform: rotate(360deg) translateX(155px) rotate(-360deg); } }
+  @keyframes orbitDecide { from { transform: rotate(0deg) translateX(130px) rotate(0deg); } to { transform: rotate(360deg) translateX(130px) rotate(-360deg); } }
+  @keyframes orbitAct { from { transform: rotate(0deg) translateX(180px) rotate(0deg); } to { transform: rotate(360deg) translateX(180px) rotate(-360deg); } }
+  @keyframes orbitMemory { from { transform: rotate(0deg) translateX(145px) rotate(0deg); } to { transform: rotate(360deg) translateX(145px) rotate(-360deg); } }
+  @keyframes orbitPlan { from { transform: rotate(0deg) translateX(200px) rotate(0deg); } to { transform: rotate(360deg) translateX(200px) rotate(-360deg); } }
+  @keyframes orbitEvaluate { from { transform: rotate(0deg) translateX(170px) rotate(0deg); } to { transform: rotate(360deg) translateX(170px) rotate(-360deg); } }
+  @keyframes orbitObserve { from { transform: rotate(0deg) translateX(215px) rotate(0deg); } to { transform: rotate(360deg) translateX(215px) rotate(-360deg); } }
 
   @media (max-width: 860px) {
     .hero-relic-container { height: 320px; width: 320px; }
@@ -305,9 +303,13 @@
     @keyframes orbitSense  { from { transform: rotate(0deg) translateX(115px) rotate(0deg); } to { transform: rotate(360deg) translateX(115px) rotate(-360deg); } }
     @keyframes orbitDecide { from { transform: rotate(0deg) translateX(95px) rotate(0deg); } to { transform: rotate(360deg) translateX(95px) rotate(-360deg); } }
     @keyframes orbitAct    { from { transform: rotate(0deg) translateX(135px) rotate(0deg); } to { transform: rotate(360deg) translateX(135px) rotate(-360deg); } }
+    @keyframes orbitMemory { from { transform: rotate(0deg) translateX(105px) rotate(0deg); } to { transform: rotate(360deg) translateX(105px) rotate(-360deg); } }
+    @keyframes orbitPlan   { from { transform: rotate(0deg) translateX(150px) rotate(0deg); } to { transform: rotate(360deg) translateX(150px) rotate(-360deg); } }
+    @keyframes orbitEvaluate { from { transform: rotate(0deg) translateX(125px) rotate(0deg); } to { transform: rotate(360deg) translateX(125px) rotate(-360deg); } }
+    @keyframes orbitObserve { from { transform: rotate(0deg) translateX(165px) rotate(0deg); } to { transform: rotate(360deg) translateX(165px) rotate(-360deg); } }
   }
   @media (max-width: 500px) {
-    .orbit-decide, .orbit-act { display: none; }
+    .orbit-decide, .orbit-act, .orbit-plan, .orbit-observe { display: none; }
   }
 
 
@@ -800,6 +802,30 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
           <div class="orb-label">
             <span class="orb-dot dot-dark"></span><b>ACT</b>
             <div class="orb-sub">setpoint · alert · score</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-memory">
+          <div class="orb-label">
+            <span class="orb-dot dot-purple"></span><b>MEMORY</b>
+            <div class="orb-sub">vector db · context</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-plan">
+          <div class="orb-label">
+            <span class="orb-dot dot-white"></span><b>PLAN</b>
+            <div class="orb-sub">task graphs · mcp</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-evaluate">
+          <div class="orb-label">
+            <span class="orb-dot dot-green"></span><b>EVALUATE</b>
+            <div class="orb-sub">safety · heuristics</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-observe">
+          <div class="orb-label">
+            <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
+            <div class="orb-sub">telemetry · traces</div>
           </div>
         </div>
       </div>
