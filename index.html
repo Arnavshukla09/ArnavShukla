@@ -23,6 +23,7 @@
     --line: rgba(15, 23, 42, 0.15);
     --text: #0F172A;
     --text-dim: #64748B;
+    --grid-line: rgba(15, 23, 42, 0.25);
     
     --amber: #C5A059;
     --teal: #DC2626;
@@ -51,6 +52,7 @@
     --line: rgba(255, 255, 255, 0.15);
     --text: #F8F9FA;
     --text-dim: #94A3B8;
+    --grid-line: rgba(255, 255, 255, 0.25);
     
     /* Inverted Accents (Red <-> Gold) */
     --amber: #DC2626;
@@ -119,11 +121,10 @@
   .bg-animus::before {
     content: ""; position: absolute; inset: -200%;
     background-image: 
-      linear-gradient(rgba(15,23,42,0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15,23,42,0.1) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
     transform: perspective(600px) rotateX(70deg) translateZ(-100px);
-    animation: gridMoveSmall 4s linear infinite;
   }
   .bg-animus::after {
     content: ""; position: absolute; inset: -200%;
@@ -131,18 +132,8 @@
       linear-gradient(var(--amber) 1px, transparent 1px),
       linear-gradient(90deg, var(--amber) 1px, transparent 1px);
     background-size: 240px 240px;
-    opacity: 0.3;
+    opacity: 0.6;
     transform: perspective(600px) rotateX(70deg) translateZ(50px);
-    animation: gridMoveLarge 10s linear infinite;
-  }
-
-  @keyframes gridMoveSmall {
-    from { background-position: 0 0; }
-    to { background-position: 0 60px; }
-  }
-  @keyframes gridMoveLarge {
-    from { background-position: 0 0; }
-    to { background-position: 0 240px; }
   }
 
   /* ---------- sidebar ---------- */
