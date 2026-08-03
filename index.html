@@ -123,7 +123,7 @@
       linear-gradient(90deg, rgba(15,23,42,0.1) 1px, transparent 1px);
     background-size: 60px 60px;
     transform: perspective(600px) rotateX(70deg) translateZ(-100px);
-    background-position: 0 var(--scroll-y-1, 0px);
+    animation: gridMoveSmall 4s linear infinite;
   }
   .bg-animus::after {
     content: ""; position: absolute; inset: -200%;
@@ -133,7 +133,16 @@
     background-size: 240px 240px;
     opacity: 0.3;
     transform: perspective(600px) rotateX(70deg) translateZ(50px);
-    background-position: 0 var(--scroll-y-2, 0px);
+    animation: gridMoveLarge 10s linear infinite;
+  }
+
+  @keyframes gridMoveSmall {
+    from { background-position: 0 0; }
+    to { background-position: 0 60px; }
+  }
+  @keyframes gridMoveLarge {
+    from { background-position: 0 0; }
+    to { background-position: 0 240px; }
   }
 
   /* ---------- sidebar ---------- */
