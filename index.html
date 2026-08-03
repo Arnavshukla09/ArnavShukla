@@ -275,38 +275,41 @@
   .dot-green  { background: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.8); }
   .dot-orange { background: #F97316; box-shadow: 0 0 8px rgba(249,115,22,0.8); }
 
-  /* ---- orbiting label pivots ---- */
-  .orbit-pivot {
-    position: absolute; top: 50%; left: 50%; width: 0; height: 0;
-  }
-  .orbit-sense { animation: orbitSense 17s linear infinite; }
-  .orbit-decide { animation: orbitDecide 23s linear infinite reverse; }
-  .orbit-act { animation: orbitAct 29s linear infinite; animation-delay: -11s; }
+  /* ---- unified ring animation ---- */
+  .orbit-pivot { position: absolute; top: 50%; left: 50%; width: 0; height: 0; }
   
-  .orbit-memory { animation: orbitMemory 19s linear infinite reverse; animation-delay: -4s; }
-  .orbit-plan { animation: orbitPlan 31s linear infinite; animation-delay: -15s; }
-  .orbit-evaluate { animation: orbitEvaluate 27s linear infinite reverse; animation-delay: -8s; }
-  .orbit-observe { animation: orbitObserve 37s linear infinite; animation-delay: -21s; }
+  .orbit-sense    { animation: orbitRing 40s linear infinite; animation-delay: -0s; }
+  .orbit-memory   { animation: orbitRing 40s linear infinite; animation-delay: -5.7s; }
+  .orbit-plan     { animation: orbitRing 40s linear infinite; animation-delay: -11.4s; }
+  .orbit-decide   { animation: orbitRing 40s linear infinite; animation-delay: -17.1s; }
+  .orbit-evaluate { animation: orbitRing 40s linear infinite; animation-delay: -22.8s; }
+  .orbit-act      { animation: orbitRing 40s linear infinite; animation-delay: -28.5s; }
+  .orbit-observe  { animation: orbitRing 40s linear infinite; animation-delay: -34.2s; }
 
-  @keyframes orbitSense { from { transform: rotate(0deg) translateX(155px) rotate(0deg); } to { transform: rotate(360deg) translateX(155px) rotate(-360deg); } }
-  @keyframes orbitDecide { from { transform: rotate(0deg) translateX(130px) rotate(0deg); } to { transform: rotate(360deg) translateX(130px) rotate(-360deg); } }
-  @keyframes orbitAct { from { transform: rotate(0deg) translateX(180px) rotate(0deg); } to { transform: rotate(360deg) translateX(180px) rotate(-360deg); } }
-  @keyframes orbitMemory { from { transform: rotate(0deg) translateX(145px) rotate(0deg); } to { transform: rotate(360deg) translateX(145px) rotate(-360deg); } }
-  @keyframes orbitPlan { from { transform: rotate(0deg) translateX(200px) rotate(0deg); } to { transform: rotate(360deg) translateX(200px) rotate(-360deg); } }
-  @keyframes orbitEvaluate { from { transform: rotate(0deg) translateX(170px) rotate(0deg); } to { transform: rotate(360deg) translateX(170px) rotate(-360deg); } }
-  @keyframes orbitObserve { from { transform: rotate(0deg) translateX(215px) rotate(0deg); } to { transform: rotate(360deg) translateX(215px) rotate(-360deg); } }
+  @keyframes orbitRing {
+    from { transform: rotate(0deg) translateX(190px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(190px) rotate(-360deg); }
+  }
+
+  .orbit-ring-line {
+    position: absolute; top: 50%; left: 50%;
+    width: 380px; height: 380px;
+    transform: translate(-50%, -50%);
+    border: 1px dashed var(--line);
+    border-radius: 50%;
+    z-index: 10;
+    pointer-events: none;
+  }
 
   @media (max-width: 860px) {
     .hero-relic-container { height: 320px; width: 320px; }
     .orb-label { font-size: 11px; }
     .orb-sub { font-size: 10px; }
-    @keyframes orbitSense  { from { transform: rotate(0deg) translateX(115px) rotate(0deg); } to { transform: rotate(360deg) translateX(115px) rotate(-360deg); } }
-    @keyframes orbitDecide { from { transform: rotate(0deg) translateX(95px) rotate(0deg); } to { transform: rotate(360deg) translateX(95px) rotate(-360deg); } }
-    @keyframes orbitAct    { from { transform: rotate(0deg) translateX(135px) rotate(0deg); } to { transform: rotate(360deg) translateX(135px) rotate(-360deg); } }
-    @keyframes orbitMemory { from { transform: rotate(0deg) translateX(105px) rotate(0deg); } to { transform: rotate(360deg) translateX(105px) rotate(-360deg); } }
-    @keyframes orbitPlan   { from { transform: rotate(0deg) translateX(150px) rotate(0deg); } to { transform: rotate(360deg) translateX(150px) rotate(-360deg); } }
-    @keyframes orbitEvaluate { from { transform: rotate(0deg) translateX(125px) rotate(0deg); } to { transform: rotate(360deg) translateX(125px) rotate(-360deg); } }
-    @keyframes orbitObserve { from { transform: rotate(0deg) translateX(165px) rotate(0deg); } to { transform: rotate(360deg) translateX(165px) rotate(-360deg); } }
+    .orbit-ring-line { width: 280px; height: 280px; }
+    @keyframes orbitRing {
+      from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
+    }
   }
   @media (max-width: 500px) {
     .orbit-decide, .orbit-act, .orbit-plan, .orbit-observe { display: none; }
@@ -785,6 +788,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     </div>
     <div class="hero-visual">
       <div class="hero-relic-container" style="width: 100%; height: 400px; position: relative;">
+        <div class="orbit-ring-line"></div>
         <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
         <div class="orbit-pivot orbit-sense">
           <div class="orb-label">
