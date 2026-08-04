@@ -872,29 +872,51 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       </div>
     </div>
     <div class="hero-visual" style="align-items: flex-start; margin-top: 20px;">
-      <div class="loop-card" style="padding: 30px; width: 100%;">
-        <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
-        <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 10px; font-weight: bold; letter-spacing: 0.1em;">AGENT_LOOP.SVC</div>
-        
-        <div class="flow-container" style="display: flex; flex-direction: column; gap: 10px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
-          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-            <div style="color: #FF2D78; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[01] SENSE</div>
-            <p style="font-size: 12px; color: var(--text-dim); margin:0;">Ingest telemetry, parse natural language, and index vectors.</p>
-          </div>
-          <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
-          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-            <div style="color: #FFD23F; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[02] DECIDE</div>
-            <p style="font-size: 12px; color: var(--text-dim); margin:0;">LLM reasoning with deterministic rule-based fallbacks.</p>
-          </div>
-          <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
-          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-            <div style="color: #22E5FF; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[03] ACT</div>
-            <p style="font-size: 12px; color: var(--text-dim); margin:0;">Execute MCP tools, fire webhooks, update databases.</p>
+      <div class="hero-relic-container" style="width: 100%; max-width: 600px; height: 500px; position: relative;">
+        <div class="orbit-ring-line"></div>
+        <div id="orb-loader" class="orb-loader"></div>
+        <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+        <div class="orbit-pivot orbit-sense">
+          <div class="orb-label">
+            <span class="orb-dot dot-red"></span><b>SENSE</b>
+            <div class="orb-sub">occupancy · vitals · JD</div>
           </div>
         </div>
-
-        <div class="loop-desc" style="font-size: 11px;">
-          The robust architectural pattern behind Eco-Loop, the triage engine, and TalentMatch ensuring fault tolerance.
+        <div class="orbit-pivot orbit-decide">
+          <div class="orb-label">
+            <span class="orb-dot dot-amber"></span><b>DECIDE</b>
+            <div class="orb-sub">LLM + rule fallback</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-act">
+          <div class="orb-label">
+            <span class="orb-dot dot-dark"></span><b>ACT</b>
+            <div class="orb-sub">setpoint · alert · score</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-memory">
+          <div class="orb-label">
+            <span class="orb-dot dot-purple"></span><b>MEMORY</b>
+            <div class="orb-sub">vector db · context</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-plan">
+          <div class="orb-label">
+            <span class="orb-dot dot-white"></span><b>PLAN</b>
+            <div class="orb-sub">task graphs · mcp</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-evaluate">
+          <div class="orb-label">
+            <span class="orb-dot dot-green"></span><b>EVALUATE</b>
+            <div class="orb-sub">safety · heuristics</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-observe">
+          <div class="orb-label">
+            <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
+            <div class="orb-sub">telemetry · traces</div>
+          </div>
         </div>
       </div>
     </div>
@@ -904,51 +926,29 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 
   <!-- ARCHITECTURE (Agent Loop Flowchart) -->
   <section id="architecture" style="padding-top: 0; display: flex; justify-content: center;">
-    <div class="hero-relic-container" style="width: 100%; max-width: 600px; height: 500px; position: relative;">
-      <div class="orbit-ring-line"></div>
-      <div id="orb-loader" class="orb-loader"></div>
-      <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
-      <div class="orbit-pivot orbit-sense">
-        <div class="orb-label">
-          <span class="orb-dot dot-red"></span><b>SENSE</b>
-          <div class="orb-sub">occupancy · vitals · JD</div>
+    <div class="loop-card" style="padding: 30px; width: 100%; max-width: 600px;">
+      <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
+      <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 10px; font-weight: bold; letter-spacing: 0.1em;">AGENT_LOOP.SVC</div>
+      
+      <div class="flow-container" style="display: flex; flex-direction: column; gap: 10px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
+        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+          <div style="color: #FF2D78; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[01] SENSE</div>
+          <p style="font-size: 12px; color: var(--text-dim); margin:0;">Ingest telemetry, parse natural language, and index vectors.</p>
+        </div>
+        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
+        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+          <div style="color: #FFD23F; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[02] DECIDE</div>
+          <p style="font-size: 12px; color: var(--text-dim); margin:0;">LLM reasoning with deterministic rule-based fallbacks.</p>
+        </div>
+        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
+        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+          <div style="color: #22E5FF; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[03] ACT</div>
+          <p style="font-size: 12px; color: var(--text-dim); margin:0;">Execute MCP tools, fire webhooks, update databases.</p>
         </div>
       </div>
-      <div class="orbit-pivot orbit-decide">
-        <div class="orb-label">
-          <span class="orb-dot dot-amber"></span><b>DECIDE</b>
-          <div class="orb-sub">LLM + rule fallback</div>
-        </div>
-      </div>
-      <div class="orbit-pivot orbit-act">
-        <div class="orb-label">
-          <span class="orb-dot dot-dark"></span><b>ACT</b>
-          <div class="orb-sub">setpoint · alert · score</div>
-        </div>
-      </div>
-      <div class="orbit-pivot orbit-memory">
-        <div class="orb-label">
-          <span class="orb-dot dot-purple"></span><b>MEMORY</b>
-          <div class="orb-sub">vector db · context</div>
-        </div>
-      </div>
-      <div class="orbit-pivot orbit-plan">
-        <div class="orb-label">
-          <span class="orb-dot dot-white"></span><b>PLAN</b>
-          <div class="orb-sub">task graphs · mcp</div>
-        </div>
-      </div>
-      <div class="orbit-pivot orbit-evaluate">
-        <div class="orb-label">
-          <span class="orb-dot dot-green"></span><b>EVALUATE</b>
-          <div class="orb-sub">safety · heuristics</div>
-        </div>
-      </div>
-      <div class="orbit-pivot orbit-observe">
-        <div class="orb-label">
-          <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
-          <div class="orb-sub">telemetry · traces</div>
-        </div>
+
+      <div class="loop-desc" style="font-size: 11px;">
+        The robust architectural pattern behind Eco-Loop, the triage engine, and TalentMatch ensuring fault tolerance.
       </div>
     </div>
   </section>
