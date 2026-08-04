@@ -1009,16 +1009,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
             <span class="stat-chip blue">100% security audit pass</span>
           </div>
         </div>
+        <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
+          Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
+          to end with PostgreSQL row-level security.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
-            <p class="project-desc" style="margin-top: 0;">A Next.js telehealth platform built for rural India: AI symptom triage in
-              Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
-              to end with PostgreSQL row-level security.</p>
-            <ul class="project-bullets">
+            <ul class="project-bullets" style="margin-top: 0;">
               <li>Row-Level Security policies guarantee a patient's queries can only ever return their own records, even if the API layer is compromised</li>
               <li>Gemini-powered triage returns structured, urgency-ranked JSON with a deterministic rule-based fallback</li>
               <li>PostGIS <span class="data">ST_DWithin</span> queries return the nearest facilities without shipping thousands of rows to the client</li>
@@ -1059,16 +1059,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
             <span class="stat-chip blue">100% fault recovery</span>
           </div>
         </div>
+        <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
+          time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
+          simulation, exposed to any MCP client as a set of controllable tools.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
-            <p class="project-desc" style="margin-top: 0;">A closed-loop AI agent that runs a commercial building's HVAC in real
-              time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
-              simulation, exposed to any MCP client as a set of controllable tools.</p>
-            <ul class="project-bullets">
+            <ul class="project-bullets" style="margin-top: 0;">
               <li>Locally-hosted Qwen2.5 (via Ollama) makes setpoint decisions every 30 seconds against a physics-accurate thermal simulation</li>
               <li>Built a FastMCP server exposing 10 sensor/actuator tools — the building becomes a standard MCP-controllable device</li>
               <li>Live telemetry streamed to a React dashboard over WebSockets — Temperature, Energy, PMV/PPD comfort</li>
@@ -1105,16 +1105,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
             <span class="stat-chip blue">~24.6 req/s</span>
           </div>
         </div>
+        <p class="project-desc">Opens up the resume-screening black box: scores a resume against a job
+          description and explains exactly why, using cheap deterministic math where possible and an
+          LLM only where reasoning is actually needed.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
-            <p class="project-desc" style="margin-top: 0;">Opens up the resume-screening black box: scores a resume against a job
-              description and explains exactly why, using cheap deterministic math where possible and an
-              LLM only where reasoning is actually needed.</p>
-            <ul class="project-bullets">
+            <ul class="project-bullets" style="margin-top: 0;">
               <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
               <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
               <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
@@ -1154,16 +1154,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
             <span class="stat-chip blue">&lt;85MB RAM</span>
           </div>
         </div>
+        <p class="project-desc">A localized marketplace that replaces cash and queues for on-campus
+          groceries, stationery, and document printing — with distinct role-based experiences for
+          students, vendors, and administrators.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
-            <p class="project-desc" style="margin-top: 0;">A localized marketplace that replaces cash and queues for on-campus
-              groceries, stationery, and document printing — with distinct role-based experiences for
-              students, vendors, and administrators.</p>
-            <ul class="project-bullets">
+            <ul class="project-bullets" style="margin-top: 0;">
               <li>Flask Blueprints cleanly isolate Student, Vendor, and Admin logic and routing</li>
               <li>Relational schema in SQLAlchemy with strict foreign keys and role-based access decorators</li>
               <li>Secure multipart uploads for print-shop orders, a simulated campus wallet, and in-app notifications</li>
