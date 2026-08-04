@@ -559,7 +559,7 @@
   .project-plate:hover::after { color: var(--teal); }
   
   .hud-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 32px;
   }
   .hud-card {
     background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
