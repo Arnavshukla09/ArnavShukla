@@ -256,6 +256,20 @@
     width: 100%; height: 100%; display: block; touch-action: none;
     filter: saturate(1.2) drop-shadow(0px 0px 70px rgba(255, 215, 0, 0.55));
   }
+  .orb-loader {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 50px; height: 50px;
+    border: 3px solid var(--grid-line);
+    border-top-color: var(--amber);
+    border-radius: 50%;
+    animation: orb-spin 1s linear infinite;
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  @keyframes orb-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
   .relic { display: none; } /* Kept for fallback if needed */
 
   .orb-label {
@@ -827,6 +841,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     <div class="hero-visual">
       <div class="hero-relic-container" style="width: 100%; height: 400px; position: relative;">
         <div class="orbit-ring-line"></div>
+        <div id="orb-loader" class="orb-loader"></div>
         <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
         <div class="orbit-pivot orbit-sense">
           <div class="orb-label">
@@ -1379,6 +1394,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         loadedMeshes.forEach(m => m.scale.setScalar(scale));
         orbGroup.scale.setScalar(1);
         loadedMeshes.forEach(m => orbGroup.add(m));
+
+        const loaderEl = document.getElementById('orb-loader');
+        if (loaderEl) {
+          loaderEl.style.opacity = '0';
+          setTimeout(() => loaderEl.remove(), 500);
+        }
       }
 
       function loadPart(url) {
