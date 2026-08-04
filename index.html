@@ -874,14 +874,48 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     100% { opacity: 0.6; text-shadow: 0 0 5px rgba(197,160,89,0); }
   }
   body.loaded #global-preloader { opacity: 0; visibility: hidden; }
+
+  /* ---------- Flare & Binary Particles ---------- */
+  .binary-particle {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    pointer-events: none;
+    z-index: 10;
+    animation: floatUp 2s linear forwards;
+    text-shadow: 0 0 6px rgba(255,255,255,1);
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    20% { opacity: 1; transform: translateY(-10px) scale(1); }
+    100% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+  }
+  .flare-particle {
+    position: absolute;
+    width: 2px;
+    height: 18px;
+    background: white;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9;
+    box-shadow: 0 0 8px white, 0 0 15px var(--teal);
+    animation: flarePop 1.5s ease-out forwards;
+  }
+  @keyframes flarePop {
+    0% { transform: scaleY(0); opacity: 0; }
+    50% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(0) translateY(-20px); opacity: 0; }
+  }
 </style>
 </head>
 <body>
 
 <!-- GLOBAL PRELOADER -->
 <div id="global-preloader">
+  <div id="greeting-text" class="preloader-text" style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--amber); letter-spacing: 3px; font-family: 'Cinzel', serif;">Hello</div>
   <div class="preloader-spinner"></div>
-  <div class="preloader-text">Initializing Systems</div>
 </div>
 
 <div class="bg-animus"></div>
@@ -1845,6 +1879,46 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     localStorage.setItem('theme', newTheme);
     updateThemeUI(newTheme);
   });
+
+  // Preloader Greeting
+  const greetings = ["Hello", "Bonjour", "Hola", "नमस्ते", "こんにちは", "Привет", "Hallo", "Ciao", "مرحبا"];
+  let gIndex = 0;
+  const gEl = document.getElementById("greeting-text");
+  if (gEl) {
+    const gInt = setInterval(() => {
+      gIndex = (gIndex + 1) % greetings.length;
+      gEl.innerText = greetings[gIndex];
+    }, 250);
+    window.addEventListener('load', () => clearInterval(gInt));
+  }
+
+  // Binary & Flare Animation next to Orb
+  const relicContainer = document.querySelector('.hero-relic-container');
+  if (relicContainer) {
+    setInterval(() => {
+      // Spawn binary
+      if (Math.random() > 0.4) {
+        const bin = document.createElement('div');
+        bin.className = 'binary-particle';
+        bin.innerText = Math.random() > 0.5 ? '1' : '0';
+        // Random position within 80% center
+        bin.style.left = (10 + Math.random() * 80) + '%';
+        bin.style.top = (10 + Math.random() * 80) + '%';
+        relicContainer.appendChild(bin);
+        setTimeout(() => bin.remove(), 2000);
+      }
+      // Spawn flare
+      if (Math.random() > 0.85) {
+        const flare = document.createElement('div');
+        flare.className = 'flare-particle';
+        flare.style.left = (10 + Math.random() * 80) + '%';
+        flare.style.top = (10 + Math.random() * 80) + '%';
+        flare.style.transform = `rotate(${Math.random() * 360}deg)`;
+        relicContainer.appendChild(flare);
+        setTimeout(() => flare.remove(), 1500);
+      }
+    }, 120);
+  }
 </script>
 </body>
 </html>
