@@ -811,9 +811,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <h2 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--text); margin-top: 15px; letter-spacing: 0.05em;">ARNAV SHUKLA</h2>
       <p class="hero-sub">
-        I engineer fault-tolerant, autonomous agent loops for complex environments. 
-        Specializing in large-scale data synthesis, robust API bridging, and secure LLM-driven decision engines 
-        using <strong>FastAPI, Next.js, PostGIS, Supabase, and Ollama/MCP</strong>.
+        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student with an <strong style="color: var(--text);">8.6 CGPA</strong>, passionate about building robust AI architectures. Currently, I'm developing fault-tolerant agentic systems and scalable backend infrastructure. I am actively seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can contribute to mission-critical deployments and complex data synthesis pipelines.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -876,20 +874,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" style="padding-top: 80px; padding-bottom: 20px;">
-    <div class="section-head">
-      <span class="section-num">00</span>
-      <span class="section-title">About</span>
-    </div>
-    <div style="max-width: 800px; padding-left: 20px; border-left: 2px solid var(--amber);">
-      <p style="font-size: 16px; line-height: 1.8; color: var(--text-dim);">
-        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student with an <strong style="color: var(--text);">8.6 CGPA</strong>, passionate about building robust AI architectures. 
-        Currently, I'm developing fault-tolerant agentic systems and scalable backend infrastructure. 
-        I am actively seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can contribute to mission-critical deployments and complex data synthesis pipelines.
-      </p>
-    </div>
-  </section>
+
 
   <!-- ARCHITECTURE (Agent Loop Flowchart) -->
   <section id="architecture" style="padding-top: 0;">
@@ -1376,48 +1361,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         }
       };
 
-      const loader = new THREE.STLLoader();
-      let partsLoaded = 0;
-      const TOTAL_PARTS = 2;
-      const loadedMeshes = [];
-
-      function onAllPartsLoaded() {
-        const box = new THREE.Box3();
-        loadedMeshes.forEach(m => box.expandByObject(m));
-        const size = new THREE.Vector3();
-        box.getSize(size);
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-        const maxDim = Math.max(size.x, size.y, size.z) || 1;
-        const targetDiameter = 3.2;
-        const scale = targetDiameter / maxDim;
-
-        orbGroup.position.sub(center.multiplyScalar(scale));
-        loadedMeshes.forEach(m => m.scale.setScalar(scale));
-        orbGroup.scale.setScalar(1);
-        loadedMeshes.forEach(m => orbGroup.add(m));
-      }
-
-      function loadPart(url) {
-        loader.load(
-          url,
-          (geometry) => {
-            geometry.computeVertexNormals();
-            const mesh = new THREE.Mesh(geometry, partMat);
-            loadedMeshes.push(mesh);
-            partsLoaded++;
-            if (partsLoaded === TOTAL_PARTS) onAllPartsLoaded();
-          },
-          undefined,
-          (err) => {
-            console.log('STL part failed to load:', url, err);
-            partsLoaded++;
-            if (partsLoaded === TOTAL_PARTS && loadedMeshes.length) onAllPartsLoaded();
-          }
-        );
-      }
-      loadPart('assets/anomalycorea.stl');
-      loadPart('assets/anomalycoreb.stl');
+      // Procedural Outer Shell to replace STL
+      const geo1 = new THREE.IcosahedronGeometry(1.6, 1);
+      const mesh1 = new THREE.Mesh(geo1, partMat);
+      orbGroup.add(mesh1);
+      
+      const geo2 = new THREE.IcosahedronGeometry(1.4, 0);
+      const mesh2 = new THREE.Mesh(geo2, partMat);
+      mesh2.rotation.y = Math.PI / 4;
+      orbGroup.add(mesh2);
 
       // ---- retro medieval rim lighting ----
       scene2.add(new THREE.AmbientLight(0xffffff, 0.4));
