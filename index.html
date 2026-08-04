@@ -272,6 +272,53 @@
   }
   .relic { display: none; } /* Kept for fallback if needed */
 
+  .cert-link-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .cert-icon-link {
+    color: var(--teal);
+    transition: color 0.3s, background 0.3s;
+    display: flex;
+    padding: 6px;
+    border: 1px solid rgba(34, 229, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(34, 229, 255, 0.05);
+  }
+  .cert-icon-link:hover {
+    background: var(--teal);
+    color: #0F172A;
+    box-shadow: 0 0 10px rgba(34, 229, 255, 0.4);
+  }
+  .cert-icon-link svg {
+    width: 14px;
+    height: 14px;
+  }
+  .cert-preview-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    width: 300px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+    z-index: 100;
+    pointer-events: none;
+    object-fit: cover;
+    background: #000;
+  }
+  .cert-link-wrapper:hover .cert-preview-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
   .orb-label {
     position: absolute; top: 0; left: 0; transform: translate(-50%, -50%);
     font-family: 'JetBrains Mono', monospace;
@@ -1249,14 +1296,24 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div><span class="name">ServiceNow Virtual Internship Program</span><span class="issuer">ServiceNow, AICTE, SmartBridge</span></div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <span class="date">JUL 2026</span>
-          <a href="assets/cert_servicenow.png" target="_blank" class="cert-link">Credential</a>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_servicenow.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_servicenow.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
         </div>
       </div>
       <div class="cert-row">
         <div><span class="name">AWS Academy Graduate — Cloud Architecting (60 hrs)</span><span class="issuer">Amazon Web Services</span></div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <span class="date">JUN 2026</span>
-          <a href="assets/cert_aws.png" target="_blank" class="cert-link">Credential</a>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_aws.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_aws.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
         </div>
       </div>
       <div class="cert-row">
@@ -1267,7 +1324,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div><span class="name">Marketing Analytics</span><span class="issuer">NPTEL / IIT Kharagpur</span></div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <span class="date">2025—2026</span>
-          <a href="assets/cert_nptel.png" target="_blank" class="cert-link">Credential</a>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_nptel.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_nptel.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
         </div>
       </div>
       <div class="cert-row" style="flex-direction: column; align-items: flex-start; gap: 6px;">
@@ -1275,7 +1337,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
           <div><span class="name">AI Knowledge Challenge (Winner)</span><span class="issuer">IBM Call for Code</span></div>
           <div style="display: flex; align-items: center; gap: 16px;">
             <span class="date">2024</span>
-            <a href="assets/cert_ibm.png" target="_blank" class="cert-link">Credential</a>
+            <div class="cert-link-wrapper">
+              <a href="assets/cert_ibm.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </a>
+              <img src="assets/cert_ibm.png" class="cert-preview-tooltip" alt="Certificate Preview">
+            </div>
           </div>
         </div>
         <div style="font-size: 13px; color: var(--text-dim); margin-top: -2px;">First participant to score 100% on the final quiz across all six Generative AI courses</div>
@@ -1284,7 +1351,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div><span class="name">Computer Networking</span><span class="issuer">Coursera / Google</span></div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <span class="date">2024</span>
-          <a href="assets/cert_google.png" target="_blank" class="cert-link">Credential</a>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_google.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_google.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
         </div>
       </div>
     </div>
