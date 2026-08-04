@@ -878,29 +878,29 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   /* ---------- Flare & Binary Particles ---------- */
   .binary-particle {
     position: absolute;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--teal);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 800;
     pointer-events: none;
-    z-index: 10;
-    animation: floatUp 2s linear forwards;
-    text-shadow: 0 0 6px rgba(255,255,255,1);
+    z-index: 99;
+    animation: floatUp 2.5s linear forwards;
+    text-shadow: 0 0 10px var(--teal);
   }
   @keyframes floatUp {
     0% { transform: translateY(0) scale(0.5); opacity: 0; }
-    20% { opacity: 1; transform: translateY(-10px) scale(1); }
-    100% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+    20% { opacity: 1; transform: translateY(-10px) scale(1.2); }
+    100% { transform: translateY(-60px) scale(0.8); opacity: 0; }
   }
   .flare-particle {
     position: absolute;
     width: 2px;
     height: 18px;
-    background: white;
+    background: var(--amber);
     border-radius: 2px;
     pointer-events: none;
-    z-index: 9;
-    box-shadow: 0 0 8px white, 0 0 15px var(--teal);
+    z-index: 99;
+    box-shadow: 0 0 10px var(--amber), 0 0 15px var(--teal);
     animation: flarePop 1.5s ease-out forwards;
   }
   @keyframes flarePop {
