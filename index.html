@@ -815,7 +815,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     <span class="brand-text">ARNAV SHUKLA</span>
   </div>
   <nav class="sidebar-links" aria-label="Main Navigation">
-    <a href="#" aria-label="Resume Download" target="_blank">
+    <a href="assets/Arnav_Shukla_Resume.pdf" aria-label="Resume Download" target="_blank" download>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
       <span>Resume</span>
     </a>
@@ -858,65 +858,43 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <h2 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--text); margin-top: 15px; letter-spacing: 0.05em;">ARNAV SHUKLA</h2>
       <p class="hero-sub">
-        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student at <strong style="color: var(--text);">Vellore Institute of Technology</strong> with an <strong style="color: var(--text);">8.6 CGPA</strong>, passionate about building robust AI architectures. Currently, I'm developing fault-tolerant agentic systems and scalable backend infrastructure. I am actively seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can contribute to mission-critical deployments and complex data synthesis pipelines.
+        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student at <strong style="color: var(--text);">Vellore Institute of Technology</strong>, passionate about building robust AI architectures. Currently, I'm developing fault-tolerant agentic systems and scalable backend infrastructure. I am actively seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can contribute to mission-critical deployments and complex data synthesis pipelines.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View Projects</a>
         <a href="#contact" class="btn btn-ghost">Contact Me</a>
-        <a href="#" class="btn btn-ghost" style="border-color: var(--amber); color: var(--amber);" target="_blank">Resume</a>
+        <a href="assets/Arnav_Shukla_Resume.pdf" class="btn btn-ghost" style="border-color: var(--amber); color: var(--amber);" target="_blank" download>Resume</a>
       </div>
       <div class="status-row">
         <div class="status-item"><b>10</b>total projects</div>
-        <div class="status-item"><b>8.6</b>CGPA</div>
         <div class="status-item"><b>B.Tech</b>Computer Science</div>
+        <div class="status-item"><b>VIT</b>Vellore</div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="hero-relic-container" style="width: 100%; height: 400px; position: relative;">
-        <div class="orbit-ring-line"></div>
-        <div id="orb-loader" class="orb-loader"></div>
-        <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
-        <div class="orbit-pivot orbit-sense">
-          <div class="orb-label">
-            <span class="orb-dot dot-red"></span><b>SENSE</b>
-            <div class="orb-sub">occupancy · vitals · JD</div>
+    <div class="hero-visual" style="align-items: flex-start; margin-top: 20px;">
+      <div class="loop-card" style="padding: 30px; width: 100%;">
+        <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
+        <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 10px; font-weight: bold; letter-spacing: 0.1em;">AGENT_LOOP.SVC</div>
+        
+        <div class="flow-container" style="display: flex; flex-direction: column; gap: 10px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
+          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+            <div style="color: #FF2D78; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[01] SENSE</div>
+            <p style="font-size: 12px; color: var(--text-dim); margin:0;">Ingest telemetry, parse natural language, and index vectors.</p>
+          </div>
+          <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
+          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+            <div style="color: #FFD23F; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[02] DECIDE</div>
+            <p style="font-size: 12px; color: var(--text-dim); margin:0;">LLM reasoning with deterministic rule-based fallbacks.</p>
+          </div>
+          <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
+          <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
+            <div style="color: #22E5FF; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[03] ACT</div>
+            <p style="font-size: 12px; color: var(--text-dim); margin:0;">Execute MCP tools, fire webhooks, update databases.</p>
           </div>
         </div>
-        <div class="orbit-pivot orbit-decide">
-          <div class="orb-label">
-            <span class="orb-dot dot-amber"></span><b>DECIDE</b>
-            <div class="orb-sub">LLM + rule fallback</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-act">
-          <div class="orb-label">
-            <span class="orb-dot dot-dark"></span><b>ACT</b>
-            <div class="orb-sub">setpoint · alert · score</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-memory">
-          <div class="orb-label">
-            <span class="orb-dot dot-purple"></span><b>MEMORY</b>
-            <div class="orb-sub">vector db · context</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-plan">
-          <div class="orb-label">
-            <span class="orb-dot dot-white"></span><b>PLAN</b>
-            <div class="orb-sub">task graphs · mcp</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-evaluate">
-          <div class="orb-label">
-            <span class="orb-dot dot-green"></span><b>EVALUATE</b>
-            <div class="orb-sub">safety · heuristics</div>
-          </div>
-        </div>
-        <div class="orbit-pivot orbit-observe">
-          <div class="orb-label">
-            <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
-            <div class="orb-sub">telemetry · traces</div>
-          </div>
+
+        <div class="loop-desc" style="font-size: 11px;">
+          The robust architectural pattern behind Eco-Loop, the triage engine, and TalentMatch ensuring fault tolerance.
         </div>
       </div>
     </div>
@@ -925,31 +903,52 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 
 
   <!-- ARCHITECTURE (Agent Loop Flowchart) -->
-  <section id="architecture" style="padding-top: 0;">
-    <div class="loop-card" style="padding: 40px;">
-      <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
-      <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 20px; font-weight: bold; letter-spacing: 0.1em;">AGENT_LOOP.SVC</div>
-      
-      <div class="flow-container" style="display: flex; gap: 20px; justify-content: space-between; margin: 40px 0; align-items: center; text-align: left;">
-        <div class="flow-step" style="flex: 1; padding: 20px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #FF2D78; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 10px;">[01] SENSE</div>
-          <p style="font-size: 13px; color: var(--text-dim); margin:0;">Ingest telemetry, parse natural language, and index vectors. Real-time data synthesis from APIs and sensors.</p>
-        </div>
-        <div style="color: var(--text-dim); font-size: 20px;">➔</div>
-        <div class="flow-step" style="flex: 1; padding: 20px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #FFD23F; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 10px;">[02] DECIDE</div>
-          <p style="font-size: 13px; color: var(--text-dim); margin:0;">LLM reasoning with deterministic rule-based fallbacks. Strict semantic validation via Pydantic schemas.</p>
-        </div>
-        <div style="color: var(--text-dim); font-size: 20px;">➔</div>
-        <div class="flow-step" style="flex: 1; padding: 20px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #22E5FF; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 10px;">[03] ACT</div>
-          <p style="font-size: 13px; color: var(--text-dim); margin:0;">Execute MCP tools, fire webhooks, update databases, and alter external system states.</p>
+  <section id="architecture" style="padding-top: 0; display: flex; justify-content: center;">
+    <div class="hero-relic-container" style="width: 100%; max-width: 600px; height: 500px; position: relative;">
+      <div class="orbit-ring-line"></div>
+      <div id="orb-loader" class="orb-loader"></div>
+      <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+      <div class="orbit-pivot orbit-sense">
+        <div class="orb-label">
+          <span class="orb-dot dot-red"></span><b>SENSE</b>
+          <div class="orb-sub">occupancy · vitals · JD</div>
         </div>
       </div>
-
-      <div class="loop-desc">
-        The architectural pattern behind Eco-Loop's HVAC agent, the healthcare triage engine,
-        and TalentMatch's scoring pipeline. A robust feedback loop ensuring fault tolerance when models hallucinate.
+      <div class="orbit-pivot orbit-decide">
+        <div class="orb-label">
+          <span class="orb-dot dot-amber"></span><b>DECIDE</b>
+          <div class="orb-sub">LLM + rule fallback</div>
+        </div>
+      </div>
+      <div class="orbit-pivot orbit-act">
+        <div class="orb-label">
+          <span class="orb-dot dot-dark"></span><b>ACT</b>
+          <div class="orb-sub">setpoint · alert · score</div>
+        </div>
+      </div>
+      <div class="orbit-pivot orbit-memory">
+        <div class="orb-label">
+          <span class="orb-dot dot-purple"></span><b>MEMORY</b>
+          <div class="orb-sub">vector db · context</div>
+        </div>
+      </div>
+      <div class="orbit-pivot orbit-plan">
+        <div class="orb-label">
+          <span class="orb-dot dot-white"></span><b>PLAN</b>
+          <div class="orb-sub">task graphs · mcp</div>
+        </div>
+      </div>
+      <div class="orbit-pivot orbit-evaluate">
+        <div class="orb-label">
+          <span class="orb-dot dot-green"></span><b>EVALUATE</b>
+          <div class="orb-sub">safety · heuristics</div>
+        </div>
+      </div>
+      <div class="orbit-pivot orbit-observe">
+        <div class="orb-label">
+          <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
+          <div class="orb-sub">telemetry · traces</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1194,7 +1193,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     <p>Backend, full-stack, or applied-AI roles — happy to talk through any of the systems above in more depth.</p>
     <div class="contact-actions">
       <a class="btn btn-primary" href="mailto:arnavshukla0925@gmail.com" aria-label="Send an email to Arnav">Email me</a>
-      <a class="btn btn-primary" href="#" target="_blank" style="background: transparent; color: var(--amber); border-color: var(--amber);" aria-label="Download Resume">Resume</a>
+      <a class="btn btn-primary" href="assets/Arnav_Shukla_Resume.pdf" target="_blank" style="background: transparent; color: var(--amber); border-color: var(--amber);" aria-label="Download Resume" download>Resume</a>
       <a class="btn btn-ghost" href="https://github.com/Arnavshukla09" target="_blank" rel="noopener" aria-label="Visit Arnav's GitHub Profile">GitHub</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnavshukla09" target="_blank" rel="noopener" aria-label="Visit Arnav's LinkedIn Profile">LinkedIn</a>
     </div>
