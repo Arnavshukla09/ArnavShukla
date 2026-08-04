@@ -13,58 +13,62 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root, :root[data-theme="light"] {
-    --bg: #FFFFFF;
-    --nav-bg: #FFFFFF;
-    --panel: #FFFFFF;
-    --panel-2: #F8F9FA;
-    --line: #E2E8F0;
+    --bg: #F8F9FA;
+    --nav-bg: #0F172A;
+    --panel: rgba(255, 255, 255, 0.7);
+    --panel-2: rgba(255, 255, 255, 0.4);
+    --line: rgba(15, 23, 42, 0.15);
     --text: #0F172A;
     --text-dim: #64748B;
-    --grid-line: transparent;
+    --grid-line: rgba(15, 23, 42, 0.25);
     
-    --amber: #64748B;
-    --teal: #3B82F6;
-    --blue: #3B82F6;
+    --amber: #C5A059;
+    --teal: #DC2626;
+    --blue: #1E293B;
     
-    --card-gradient-1: #FFFFFF;
-    --card-gradient-2: #FFFFFF;
-    --card-gradient-3: #FFFFFF;
-    --card-gradient-4: #FFFFFF;
+    /* CSS Variables for Gradients */
+    --card-gradient-1: rgba(255,255,255,0.95);
+    --card-gradient-2: rgba(255,255,255,0.8);
+    --card-gradient-3: rgba(255,255,255,0.9);
+    --card-gradient-4: rgba(255,255,255,0.5);
     
-    --cert-bg: #FFFFFF;
-    --cert-border: #E2E8F0;
+    --cert-bg: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+    --cert-border: rgba(15,23,42,0.1);
     
-    --card-hover: #F8F9FA;
+    --card-hover: #F1F5F9;
     
-    --radius: 8px;
+    --radius: 12px;
   }
   
   :root[data-theme="dark"] {
-    --bg: #0B0F19;
-    --nav-bg: #0B0F19;
-    --panel: #111827;
-    --panel-2: #1F2937;
-    --line: #1F2937;
-    --text: #F9FAFB;
-    --text-dim: #9CA3AF;
-    --grid-line: transparent;
+    /* Inverted Base */
+    --bg: #0F172A;
+    --nav-bg: #F8F9FA;
+    --panel: rgba(15, 23, 42, 0.7);
+    --panel-2: rgba(15, 23, 42, 0.4);
+    --line: rgba(255, 255, 255, 0.15);
+    --text: #F8F9FA;
+    --text-dim: #94A3B8;
+    --grid-line: rgba(255, 255, 255, 0.25);
     
-    --amber: #9CA3AF; 
-    --teal: #60A5FA;
-    --blue: #60A5FA;
+    /* Inverted Accents (Red <-> Gold) */
+    --amber: #DC2626;
+    --teal: #C5A059;
+    --blue: #E2E8F0;
     
-    --card-gradient-1: #111827;
-    --card-gradient-2: #111827;
-    --card-gradient-3: #111827;
-    --card-gradient-4: #111827;
+    /* Inverted Gradients */
+    --card-gradient-1: rgba(30,41,59,0.95);
+    --card-gradient-2: rgba(15,23,42,0.8);
+    --card-gradient-3: rgba(30,41,59,0.9);
+    --card-gradient-4: rgba(15,23,42,0.5);
     
-    --card-hover: #1F2937;
+    --card-hover: #1E293B;
     
-    --cert-bg: #111827;
-    --cert-border: #1F2937;
+    --cert-bg: #0F172A;
+    --cert-border: var(--teal);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -100,7 +104,7 @@
   /* ---------- custom cursor ---------- */
   a{ color:inherit; }
   .mono{ font-family:'JetBrains Mono',monospace; }
-  .data{ font-family:'Inter',sans-serif; }
+  .data{ font-family:'IBM Plex Mono',monospace; }
 
   .wrap{
     max-width:1040px;
@@ -109,7 +113,29 @@
   }
 
   /* ---------- background grid & orbs ---------- */
-  .bg-animus { display: none; }
+  .bg-animus {
+    position: fixed; inset: 0; z-index: -1;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
+  }
+  .bg-animus::before {
+    content: ""; position: absolute; inset: -200%;
+    background-image: 
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 140px 140px;
+    transform: perspective(600px) rotateX(70deg) translateZ(-100px);
+  }
+  .bg-animus::after {
+    content: ""; position: absolute; inset: -200%;
+    background-image: 
+      linear-gradient(var(--amber) 1px, transparent 1px),
+      linear-gradient(90deg, var(--amber) 1px, transparent 1px);
+    background-size: 400px 400px;
+    opacity: 0.6;
+    transform: perspective(600px) rotateX(70deg) translateZ(50px);
+  }
 
   /* ---------- sidebar ---------- */
   .sidebar {
@@ -141,10 +167,10 @@
     position: absolute;
   }
   .sidebar .brand .brand-text {
-    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 18px; color: var(--text);
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 18px; color: var(--amber);
     opacity: 0; transform: translateX(-20px); transition: opacity 0.3s, transform 0.3s;
     position: absolute;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
   }
   
   .sidebar:hover .brand .brand-logo { opacity: 0; transform: scale(0.5); }
@@ -166,8 +192,9 @@
   .sidebar:hover nav.sidebar-links a span, .sidebar:hover #theme-toggle span { opacity: 1; display: block; }
   
   nav.sidebar-links a:hover, #theme-toggle:hover { 
-    color: var(--teal); 
+    color: var(--amber); 
     transform: translateX(8px); 
+    text-shadow: 0 0 1px currentColor, 0 0 15px var(--amber); 
   }
 
   @media (max-width: 900px) {
@@ -308,128 +335,184 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 6px 12px;
+    padding: 6px 16px;
     border-radius: 4px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--amber);
     background: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.1em;
     margin-bottom: 22px;
+    text-shadow: 0 0 8px rgba(197, 160, 89, 0.4);
+    box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.1), 0 0 15px rgba(197, 160, 89, 0.1);
   }
   .pulse-dot {
     width: 6px;
     height: 6px;
-    background-color: #10B981;
+    background-color: var(--amber);
     border-radius: 50%;
+    box-shadow: 0 0 10px var(--amber);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
     font-size:12.5px;
-    color:var(--text-dim);
-    letter-spacing:0.05em;
+    color:var(--teal);
+    letter-spacing:0.14em;
     text-transform:uppercase;
     display:flex; align-items:center; justify-content:flex-start; gap:10px;
     margin-bottom:22px;
   }
-  .eyebrow::before{ content:'//'; color:var(--line); }
+  .eyebrow::before{ content:'//'; color:var(--text-dim); }
 
   h1{
-    font-family:'Inter',sans-serif;
+    font-family:'JetBrains Mono',monospace;
     font-weight:800;
     font-size:clamp(34px,5vw,54px);
     line-height:1.08;
-    letter-spacing:-0.02em;
+    letter-spacing:-0.01em;
     color:var(--text);
   }
-  h1 .accent{ color:var(--text); }
+  h1 .accent{ color:var(--amber); }
 
   .hero-sub{
     margin-top:22px;
-    font-size:16px;
+    font-size:16.5px;
     color:var(--text-dim);
     max-width:52ch;
-    font-weight: 400;
   }
-  .hero-sub strong{ color:var(--text); font-weight:500; }
+  .hero-sub strong{ color:var(--text); font-weight:600; }
 
   .hero-actions{
-    display:flex; gap:12px; margin:32px 0 48px 0; justify-content:flex-start;
+    display:flex; gap:16px; margin:32px 0 48px 0; justify-content:flex-start;
+  }
+  
+  .status-row{
+    display:flex; gap:32px; border-top:1px solid var(--border); padding-top:24px; justify-content:flex-start;
   }
 
   .btn{
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    font-weight:500;
-    padding:10px 18px;
-    border-radius:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    padding:12px 20px;
+    border-radius:12px;
     text-decoration:none;
     display:inline-flex; align-items:center; gap:8px;
     transition:all .2s;
     background: var(--panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--line);
+    box-shadow: 0 4px 10px rgba(15,23,42,0.05);
     color: var(--text);
   }
   .btn:hover{
-    border-color: var(--text-dim);
-    background: var(--panel-2);
+    border-color: var(--teal);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 4px 20px var(--teal);
+    color: var(--teal);
+    text-shadow: 0 0 1px currentColor, 0 0 15px var(--teal);
   }
-  .btn-primary{ background: var(--text); color: var(--bg); border-color: var(--text); }
-  .btn-primary:hover{ background: var(--text-dim); border-color: var(--text-dim); color: var(--bg); }
-  .btn-ghost{ border-color: var(--line); color: var(--text); background: transparent; }
-  .btn-ghost:hover{ border-color: var(--text-dim); background: var(--panel-2); }
+  .btn-primary{ border-color: var(--teal); color: var(--teal); }
+  .btn-primary:hover{ background: var(--panel-2); }
+  .btn-ghost{ border-color: var(--line); color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
 
-  .status-row{ display:flex; gap:32px; border-top:1px solid var(--line); padding-top:24px; justify-content:flex-start; flex-wrap:wrap; margin-top:40px; }
-  .status-item{ font-family:'Inter',sans-serif; font-size:13px; color:var(--text-dim); }
-  .status-item b{ color:var(--text); display:block; font-size:16px; font-weight: 600; margin-bottom: 4px; }  /* ---------- signature: control loop diagram ---------- */
+  .status-row{ display:flex; gap:22px; margin-top:40px; flex-wrap:wrap; justify-content:flex-start; }
+  .status-item{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); }
+  .status-item b{ color:var(--text); display:block; font-size:18px; font-family:'JetBrains Mono',monospace; }
+
+  /* ---------- signature: control loop diagram ---------- */
   .loop-card{
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 24px;
-    position: relative;
-    transition: border-color 0.2s;
+    background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(15,23,42,0.1);
+    border-radius:16px;
+    padding:26px;
+    position:relative;
+    overflow:hidden;
+    transform-style: preserve-3d;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
   }
   .loop-card:hover {
-    border-color: var(--text-dim);
+    background: var(--card-hover);
+    border-color: var(--teal);
+    box-shadow: 0 0 35px var(--teal), inset 0 0 15px var(--teal), 0 15px 50px rgba(15,23,42,0.15);
   }
   .loop-card::before{
     content:'AGENT_LOOP.SVC';
-    position:absolute; top:20px; left:24px;
+    position:absolute; top:14px; left:20px;
     font-family:'JetBrains Mono',monospace;
-    font-size:11px;
+    font-size:10.5px; letter-spacing:0.1em;
     color:var(--text-dim);
+    transform: translateZ(30px);
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+  .loop-card:hover::before {
+    color: var(--teal); 
+    text-shadow: 0 0 12px var(--teal);
   }
   .loop-status {
-    position:absolute; top:20px; right:24px;
-    font-family:'Inter',sans-serif;
-    font-size:11px; font-weight: 500;
+    position:absolute; top:14px; right:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:0.06em;
     color:var(--text-dim);
+    transform: translateZ(30px);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
     display: flex; align-items: center; gap: 6px;
+  }
+  .loop-card:hover .loop-status {
+    color: #10B981;
+    text-shadow: 0 1px 3px rgba(16,185,129,0.3), 0 2px 10px rgba(16,185,129,0.2), 0 4px 20px rgba(16,185,129,0.1);
   }
   .loop-status-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  .loop-card:hover .loop-status-dot {
+    box-shadow: 0 0 15px #10B981;
+    animation: blink 0.5s ease-in-out infinite;
   }
   
   .loop-card canvas {
-    transition: transform 0.3s;
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.2, 1);
   }
   .loop-card:hover canvas {
-    transform: scale(1.02) !important;
+    transform: scale(1.08) translateZ(50px) !important;
   }
   
-  .loop-svg{ width:100%; height:auto; margin-top:26px; display:block; }
-  .loop-node-label{ font-family:'JetBrains Mono',monospace; font-size:11px; fill:var(--text); }
-  .loop-node-sub{ font-family:'Inter',sans-serif; font-size:10px; fill:var(--text-dim); }
+  .loop-svg{ width:100%; height:auto; margin-top:26px; display:block; transform: translateZ(40px); }
+  .loop-node-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--text); }
+  .loop-node-sub{ font-family:'IBM Plex Mono',monospace; font-size:9px; fill:var(--text-dim); }
   
   .loop-desc {
-    margin-top:16px; font-family:'Inter',sans-serif; font-size:13px; color:var(--text-dim); border-top:1px solid var(--line); padding-top:16px;
+    margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); border-top:1px solid var(--line); padding-top:14px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+  .loop-card:hover .loop-desc {
+    color: var(--text);
   }
 
-  .loop-dash{ stroke-dasharray:6 6; stroke: var(--line); }
+  .loop-dash{ stroke-dasharray:6 6; animation:dash 3.2s linear infinite; }
+  @keyframes dash{ to{ stroke-dashoffset:-120; } }
+
+  .pulse-dot{ animation:pulseDot 2.4s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ opacity:0.4; r:3.5;} 50%{ opacity:1; r:5;} }
+
+  @media (prefers-reduced-motion: reduce){
+    .loop-dash, .pulse-dot, .brand .dot{ animation:none !important; }
   }
 
   /* ---------- section shell ---------- */
@@ -442,90 +525,167 @@
 
   /* ---------- projects, plates & hud ---------- */
   .isometric-plane {
+    transform-style: preserve-3d;
+    transform: rotateX(60deg) rotateZ(-45deg) scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.2,1,0.2,1);
     display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
     padding: 0; margin: 0;
   }
   @media (max-width: 1000px) {
-    .isometric-plane { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 40px; }
+    .isometric-plane { transform: none; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 120px; }
   }
   
   .project-plate {
     width: 140px; height: 140px;
-    background: var(--panel);
-    border: 1px solid var(--line);
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.2));
+    border: 1px solid rgba(15, 23, 42, 0.2);
+    box-shadow: -15px 15px 20px rgba(15,23,42,0.2), inset 0 1px 0 rgba(255,255,255,1);
     border-radius: 12px;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.4s cubic-bezier(0.2,1,0.2,1), box-shadow 0.4s, background 0.4s, border-color 0.4s;
     position: relative;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 10;
   }
   .project-plate::after {
-    content: attr(data-num); font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: var(--text-dim);
-    transition: color 0.2s;
+    content: attr(data-num); font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 800; color: rgba(15,23,42,0.1);
+    transition: color 0.4s;
   }
   .project-plate:hover {
-    transform: translateY(-4px);
-    border-color: var(--text-dim);
+    transform: translateZ(60px);
+    background: linear-gradient(135deg, rgba(220,38,38,0.05), rgba(255,255,255,0.9));
+    border-color: var(--teal);
+    box-shadow: -40px 40px 40px rgba(220,38,38,0.3), inset 0 1px 0 rgba(255,255,255,1);
   }
-  .project-plate:hover::after { color: var(--text); }
+  .project-plate:hover::after { color: var(--teal); }
   
   .hud-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;
   }
   .hud-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px; padding: 32px;
-    transition: transform 0.2s, border-color 0.2s;
+    background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px; padding: 32px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.05);
     position: relative; overflow: hidden;
   }
   .hud-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--text-dim);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px var(--card-glow, rgba(15,23,42,0.1));
+    border-color: var(--card-accent, var(--amber));
   }
   
-  .project-bg { display: none; }
-  
+  .hud-card.project {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .project-content {
+    padding: 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .project-image-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.2,1,0.2,1);
+    background: #000;
+  }
+  .hud-card.project:hover .project-image-wrapper {
+    grid-template-rows: 1fr;
+  }
+  .project-image-inner {
+    overflow: hidden;
+  }
+  .project-split-img {
+    min-height: 0;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    opacity: 0.6;
+    filter: saturate(1.2);
+    transition: opacity 0.4s, transform 0.6s cubic-bezier(0.2,1,0.2,1);
+    transform: scale(1.05);
+  }
+  .hud-card.project:hover .project-split-img {
+    opacity: 1;
+    transform: scale(1);
+  }
   .project:hover .project-title,
   .project:hover .project-role,
   .project:hover .project-desc {
+    color: var(--card-accent);
+    text-shadow: 0 1px 3px var(--card-glow), 0 2px 10px var(--card-glow);
+  }
+  .project:hover .project-bullets li {
     color: var(--text);
   }
-  .project:hover .project-bullets li { color: var(--text); }
-  .project:hover .project-bullets li::before { color: var(--text); }
-  .project:hover .chip { border-color: var(--text-dim); }
-  
+  .project:hover .project-bullets li::before {
+    color: var(--card-accent, var(--amber));
+    text-shadow: 0 0 8px var(--card-accent, var(--amber));
+  }
+  .project:hover .chip {
+    color: var(--text);
+    background: var(--bg);
+    border-color: var(--card-accent, var(--teal));
+    box-shadow: 0 4px 15px var(--card-glow, rgba(220,38,38,0.4));
+    text-shadow: none;
+    font-weight: 600;
+  }
+  .project-desc { transform: translateZ(20px); }
+  .project-bullets { transform: translateZ(20px); }
+  .stack { transform: translateZ(25px); }
   .project-top{ 
     display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; 
-    margin: -32px -32px 20px -32px;
-    padding: 32px 32px 32px 32px;
-    border-bottom: 1px solid var(--line);
+    margin: -26px -28px 20px -28px;
+    padding: 26px 28px 40px 28px; /* Extra bottom padding for smooth gradient fade */
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 0%, transparent 100%);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    position: relative;
+    z-index: 2;
+    transform: translateZ(30px);
+    transition: background 0.3s ease;
   }
-  .project-title{ font-family:'Inter',sans-serif; font-weight:700; font-size:18px; color:var(--text); transition: color 0.2s; }
+  .project:hover .project-top {
+    background: linear-gradient(to bottom, var(--card-bg-glow, rgba(220, 38, 38, 0.05)) 0%, transparent 100%);
+  }
+  .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--text); transition: color 0.3s; }
   .project-score { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
   .stat-chip {
-    font-family:'Inter',sans-serif; font-size:11px; font-weight:500;
-    background: var(--panel-2);
-    border-radius:6px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    background: rgba(16, 23, 31, 0.4);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    border-radius:20px;
     padding:4px 11px;
     white-space: nowrap;
-    border: 1px solid var(--line);
-    color: var(--text-dim);
   }
-  .project-role{ font-family:'Inter',sans-serif; font-size:12px; color:var(--text-dim); margin-top:6px; }
+  .stat-chip.teal { color: var(--teal); border: 1px solid var(--teal); transition: all 0.3s; }
+  .stat-chip.amber { color: var(--amber); border: 1px solid var(--amber); transition: all 0.3s; }
+  .stat-chip.blue { color: var(--blue); border: 1px solid var(--blue); transition: all 0.3s; }
+  .project:hover .stat-chip.teal { box-shadow: 0 0 15px rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.05); }
+  .project:hover .stat-chip.amber { box-shadow: 0 0 15px rgba(180, 83, 9, 0.4); background: rgba(180, 83, 9, 0.05); }
+  .project:hover .stat-chip.blue { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); background: rgba(14, 165, 233, 0.05); }
+  .project-role{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
   .project-desc{ margin-top:14px; color:var(--text); font-size:14.5px; max-width:70ch; }
   .project-bullets{ margin-top:14px; list-style:none; }
-  .project-bullets li{ position:relative; padding-left:18px; font-size:13.5px; color:var(--text-dim); margin-bottom:7px; transition: color 0.2s; }
-  .project-bullets li::before{ content:'•'; position:absolute; left:0; color:var(--text-dim); transition: all 0.2s; }
+  .project-bullets li{ position:relative; padding-left:18px; font-size:13.5px; color:var(--text-dim); margin-bottom:7px; transition: color 0.3s; }
+  .project-bullets li::before{ content:'▸'; position:absolute; left:0; color:var(--text-dim); transition: all 0.3s; }
   .stack{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
   .chip{
-    font-family:'Inter',sans-serif; font-size:11px; font-weight: 500;
-    background: var(--panel-2); color:var(--text-dim);
-    border:1px solid var(--line); border-radius:6px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    background: var(--panel); color:var(--text-dim);
+    border:1px solid rgba(15,23,42,0.1); border-radius:20px;
     padding:4px 11px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1);
   }
   .project-links{ margin-top:16px; display:flex; gap:16px; }
-  .project-links a{ font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:var(--text); text-decoration:none; transition: color 0.2s; }
-  .project-links a:hover{ color:var(--text-dim); }
+  .project-links a{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--blue); text-decoration:none; transition: color 0.2s; }
+  .project-links a:hover{ color:var(--teal); }
 
   /* ---------- skills ---------- */
   .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
@@ -536,29 +696,51 @@
   }
   @media (max-width:700px){ .skills-grid{ grid-template-columns:1fr; } }
   .skill-block{
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius:12px; padding:20px 22px;
+    background: linear-gradient(135deg, var(--card-gradient-3), var(--card-gradient-4));
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(15,23,42,0.1);
+    border-radius:16px; padding:20px 22px;
+    transform-style: preserve-3d;
     position: relative;
     overflow: hidden;
-    transition: border-color .2s;
+    transition: border-color .3s, box-shadow .3s;
   }
   .skill-block:hover { 
-    border-color: var(--text-dim); 
+    border-color: var(--teal); 
+    box-shadow: 0 0 25px var(--teal), inset 0 0 10px var(--teal), 0 10px 40px rgba(15,23,42,0.15); 
   }
   .skill-block h4{ 
-    font-family:'Inter',sans-serif; font-weight:600; font-size:12px; color:var(--text-dim); 
-    letter-spacing:0.05em; text-transform:uppercase; margin-bottom:12px; 
-    transition: color .2s; 
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim); 
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; 
+    transform: translateZ(20px); transition: color .3s, text-shadow .3s; 
   }
-  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; transform: translateZ(30px); }
   
-  .skill-icon { display: none; }
+  .skill-icon {
+    position: absolute; right: -15px; bottom: -15px; width: 110px; height: 110px;
+    color: var(--blue); opacity: 0.05; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(-5px); pointer-events: none;
+  }
+  .skill-block:hover .skill-icon {
+    opacity: 0.25; right: -5px; bottom: -5px; 
+    filter: drop-shadow(0 0 20px var(--teal));
+    color: var(--teal);
+  }
+  .skill-block:hover h4 { 
+    color: var(--teal);
+    text-shadow: 0 0 12px var(--teal);
+  }
   
+  /* Make the skill chips glow neon orange on hover */
   .skill-block .chip { transition: all 0.2s ease; }
   .skill-block .chip:hover {
-    color: var(--text);
-    border-color: var(--text-dim);
+    color: var(--teal);
+    background: rgba(220,38,38,0.05);
+    border-color: var(--teal);
+    box-shadow: 0 0 15px rgba(220,38,38,0.3), inset 0 0 8px rgba(220,38,38,0.1);
+    transform: translateY(-2px);
   }
 
   /* ---------- certifications ---------- */
@@ -706,12 +888,55 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="status-item"><b>VIT</b>Vellore</div>
       </div>
     </div>
-      <div class="hero-visual" style="align-items: flex-start; margin-top: 20px;">
-        <div class="hero-relic-container" style="width: 100%; max-width: 600px; height: 500px; position: relative;">
-          <div id="orb-loader" class="orb-loader"></div>
-          <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+    <div class="hero-visual" style="align-items: flex-start; margin-top: 20px;">
+      <div class="hero-relic-container" style="width: 100%; max-width: 600px; height: 500px; position: relative;">
+        <div class="orbit-ring-line"></div>
+        <div id="orb-loader" class="orb-loader"></div>
+        <canvas id="agent-orb" aria-label="Rotating faceted agent-loop sphere"></canvas>
+        <div class="orbit-pivot orbit-sense">
+          <div class="orb-label">
+            <span class="orb-dot dot-red"></span><b>SENSE</b>
+            <div class="orb-sub">occupancy · vitals · JD</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-decide">
+          <div class="orb-label">
+            <span class="orb-dot dot-amber"></span><b>DECIDE</b>
+            <div class="orb-sub">LLM + rule fallback</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-act">
+          <div class="orb-label">
+            <span class="orb-dot dot-dark"></span><b>ACT</b>
+            <div class="orb-sub">setpoint · alert · score</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-memory">
+          <div class="orb-label">
+            <span class="orb-dot dot-purple"></span><b>MEMORY</b>
+            <div class="orb-sub">vector db · context</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-plan">
+          <div class="orb-label">
+            <span class="orb-dot dot-white"></span><b>PLAN</b>
+            <div class="orb-sub">task graphs · mcp</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-evaluate">
+          <div class="orb-label">
+            <span class="orb-dot dot-green"></span><b>EVALUATE</b>
+            <div class="orb-sub">safety · heuristics</div>
+          </div>
+        </div>
+        <div class="orbit-pivot orbit-observe">
+          <div class="orb-label">
+            <span class="orb-dot dot-orange"></span><b>OBSERVE</b>
+            <div class="orb-sub">telemetry · traces</div>
+          </div>
         </div>
       </div>
+    </div>
   </section>
 
 
@@ -756,139 +981,163 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     <div class="hud-grid">
     
     <article class="hud-card project" style="--card-accent: #DC2626; --card-glow: rgba(220, 38, 38, 0.35); --card-bg-glow: rgba(220, 38, 38, 0.08);">
-      <img src="assets/ruralhealth.jpg" class="project-bg" alt="" aria-hidden="true">
-      <div class="project-top">
-        <div>
-          <div class="project-title">Rural Healthcare Platform</div>
-          <div class="project-role">2024 · Full-stack + AI · telehealth for underserved regions</div>
+      <div class="project-content">
+        <div class="project-top">
+          <div>
+            <div class="project-title">Rural Healthcare Platform</div>
+            <div class="project-role">2024 · Full-stack + AI · telehealth for underserved regions</div>
+          </div>
+          <div class="project-score">
+            <span class="stat-chip teal">274ms avg query</span>
+            <span class="stat-chip amber">6,616 facilities indexed</span>
+            <span class="stat-chip blue">100% security audit pass</span>
+          </div>
         </div>
-        <div class="project-score">
-          <span class="stat-chip teal">274ms avg query</span>
-          <span class="stat-chip amber">6,616 facilities indexed</span>
-          <span class="stat-chip blue">100% security audit pass</span>
+        <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
+          Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
+          to end with PostgreSQL row-level security.</p>
+        <ul class="project-bullets">
+          <li>Row-Level Security policies guarantee a patient's queries can only ever return their own records, even if the API layer is compromised</li>
+          <li>Gemini-powered triage returns structured, urgency-ranked JSON with a deterministic rule-based fallback</li>
+          <li>PostGIS <span class="data">ST_DWithin</span> queries return the nearest facilities without shipping thousands of rows to the client</li>
+          <li>Upstash Redis rate-limiting on AI endpoints, Playwright E2E coverage on critical flows</li>
+        </ul>
+        <div class="stack" style="margin-top: auto;">
+          <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">Supabase / PostgreSQL</span>
+          <span class="chip">PostGIS</span><span class="chip">Google Gemini</span><span class="chip">Playwright</span>
+          <div style="margin-left: auto; display: flex; gap: 8px;">
+            <a href="https://rural-healthcare-platform.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
+            </a>
+            <a href="https://github.com/Arnavshukla09/RURAL-HEALTHCARE-PLATFORM" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
+            </a>
+          </div>
         </div>
       </div>
-      <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
-        Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
-        to end with PostgreSQL row-level security.</p>
-      <ul class="project-bullets">
-        <li>Row-Level Security policies guarantee a patient's queries can only ever return their own records, even if the API layer is compromised</li>
-        <li>Gemini-powered triage returns structured, urgency-ranked JSON with a deterministic rule-based fallback</li>
-        <li>PostGIS <span class="data">ST_DWithin</span> queries return the nearest facilities without shipping thousands of rows to the client</li>
-        <li>Upstash Redis rate-limiting on AI endpoints, Playwright E2E coverage on critical flows</li>
-      </ul>
-      <div class="stack">
-        <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">Supabase / PostgreSQL</span>
-        <span class="chip">PostGIS</span><span class="chip">Google Gemini</span><span class="chip">Playwright</span>
-        <div style="margin-left: auto; display: flex; gap: 8px;">
-          <a href="https://rural-healthcare-platform.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
-          </a>
-          <a href="https://github.com/Arnavshukla09/RURAL-HEALTHCARE-PLATFORM" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
-          </a>
+      <div class="project-image-wrapper">
+        <div class="project-image-inner">
+          <img src="assets/ruralhealth.jpg" class="project-split-img" alt="">
         </div>
       </div>
     </article>
 
     <article class="hud-card project" style="--card-accent: #C5A059; --card-glow: rgba(197, 160, 89, 0.35); --card-bg-glow: rgba(197, 160, 89, 0.08);">
-      <img src="assets/eco-loop.jpg" class="project-bg" alt="" aria-hidden="true">
-      <div class="project-top">
-        <div>
-          <div class="project-title">Eco-Loop — Autonomous Building AI</div>
-          <div class="project-role">2024 · Honeywell Hackathon · agentic systems</div>
+      <div class="project-content">
+        <div class="project-top">
+          <div>
+            <div class="project-title">Eco-Loop — Autonomous Building AI</div>
+            <div class="project-role">2024 · Honeywell Hackathon · agentic systems</div>
+          </div>
+          <div class="project-score">
+            <span class="stat-chip teal">50% energy reduction</span>
+            <span class="stat-chip amber">9 MCP tools</span>
+            <span class="stat-chip blue">100% fault recovery</span>
+          </div>
         </div>
-        <div class="project-score">
-          <span class="stat-chip teal">50% energy reduction</span>
-          <span class="stat-chip amber">9 MCP tools</span>
-          <span class="stat-chip blue">100% fault recovery</span>
+        <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
+          time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
+          simulation, exposed to any MCP client as a set of controllable tools.</p>
+        <ul class="project-bullets">
+          <li>Locally-hosted Qwen2.5 (via Ollama) makes setpoint decisions every 30 seconds against a physics-accurate thermal simulation</li>
+          <li>Built a FastMCP server exposing 10 sensor/actuator tools — the building becomes a standard MCP-controllable device</li>
+          <li>Live telemetry streamed to a React dashboard over WebSockets — Temperature, Energy, PMV/PPD comfort</li>
+        </ul>
+        <div class="stack" style="margin-top: auto;">
+          <span class="chip">Python / FastAPI</span><span class="chip">Ollama + Qwen2.5</span><span class="chip">FastMCP</span>
+          <span class="chip">EnergyPlus</span><span class="chip">React + WebSockets</span><span class="chip">Docker</span>
+          <div style="margin-left: auto; display: flex; gap: 8px;">
+            <a href="https://github.com/Arnavshukla09/Eco_Loop_Building_Agents" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
+            </a>
+          </div>
         </div>
       </div>
-      <p class="project-desc">A closed-loop AI agent that runs a commercial building's HVAC in real
-        time — a local Qwen2.5 model reasoning over live sensor data from an EnergyPlus physics
-        simulation, exposed to any MCP client as a set of controllable tools.</p>
-      <ul class="project-bullets">
-        <li>Locally-hosted Qwen2.5 (via Ollama) makes setpoint decisions every 30 seconds against a physics-accurate thermal simulation</li>
-        <li>Built a FastMCP server exposing 10 sensor/actuator tools — the building becomes a standard MCP-controllable device</li>
-        <li>Live telemetry streamed to a React dashboard over WebSockets — Temperature, Energy, PMV/PPD comfort</li>
-      </ul>
-      <div class="stack">
-        <span class="chip">Python / FastAPI</span><span class="chip">Ollama + Qwen2.5</span><span class="chip">FastMCP</span>
-        <span class="chip">EnergyPlus</span><span class="chip">React + WebSockets</span><span class="chip">Docker</span>
-        <div style="margin-left: auto; display: flex; gap: 8px;">
-          <a href="https://github.com/Arnavshukla09/Eco_Loop_Building_Agents" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
-          </a>
+      <div class="project-image-wrapper">
+        <div class="project-image-inner">
+          <img src="assets/eco-loop.jpg" class="project-split-img" alt="">
         </div>
       </div>
     </article>
 
     <article class="hud-card project" style="--card-accent: #0EA5E9; --card-glow: rgba(14, 165, 233, 0.35); --card-bg-glow: rgba(14, 165, 233, 0.08);">
-      <img src="assets/talentmatch.jpg" class="project-bg" alt="" aria-hidden="true">
-      <div class="project-top">
-        <div>
-          <div class="project-title">TalentMatch AI</div>
-          <div class="project-role">2024 · ATS scoring engine · hybrid ML + LLM pipeline</div>
+      <div class="project-content">
+        <div class="project-top">
+          <div>
+            <div class="project-title">TalentMatch AI</div>
+            <div class="project-role">2024 · ATS scoring engine · hybrid ML + LLM pipeline</div>
+          </div>
+          <div class="project-score">
+            <span class="stat-chip teal">&lt;21ms ranking</span>
+            <span class="stat-chip amber">240MB container</span>
+            <span class="stat-chip blue">~24.6 req/s</span>
+          </div>
         </div>
-        <div class="project-score">
-          <span class="stat-chip teal">&lt;21ms ranking</span>
-          <span class="stat-chip amber">240MB container</span>
-          <span class="stat-chip blue">~24.6 req/s</span>
+        <p class="project-desc">Opens up the resume-screening black box: scores a resume against a job
+          description and explains exactly why, using cheap deterministic math where possible and an
+          LLM only where reasoning is actually needed.</p>
+        <ul class="project-bullets">
+          <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
+          <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
+          <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
+        </ul>
+        <div class="stack" style="margin-top: auto;">
+          <span class="chip">Python / FastAPI</span><span class="chip">scikit-learn</span><span class="chip">Groq API</span>
+          <span class="chip">PyMuPDF</span><span class="chip">Docker</span><span class="chip">Vite</span>
+          <div style="margin-left: auto; display: flex; gap: 8px;">
+            <a href="https://talentmatch-ai-orpin.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
+            </a>
+            <a href="https://github.com/Arnavshukla09/talentmatch-ai" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
+            </a>
+          </div>
         </div>
       </div>
-      <p class="project-desc">Opens up the resume-screening black box: scores a resume against a job
-        description and explains exactly why, using cheap deterministic math where possible and an
-        LLM only where reasoning is actually needed.</p>
-      <ul class="project-bullets">
-        <li>TF-IDF + Logistic Regression (scikit-learn) handles fast semantic ranking; Groq LLMs handle parsing and explainability</li>
-        <li>Replaced deep-learning dependencies with scikit-learn to fit inside a 512MB-RAM cloud instance</li>
-        <li>Fully Dockerized, with a companion Chrome extension for scoring directly from job boards</li>
-      </ul>
-      <div class="stack">
-        <span class="chip">Python / FastAPI</span><span class="chip">scikit-learn</span><span class="chip">Groq API</span>
-        <span class="chip">PyMuPDF</span><span class="chip">Docker</span><span class="chip">Vite</span>
-        <div style="margin-left: auto; display: flex; gap: 8px;">
-          <a href="https://talentmatch-ai-orpin.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
-          </a>
-          <a href="https://github.com/Arnavshukla09/talentmatch-ai" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
-          </a>
+      <div class="project-image-wrapper">
+        <div class="project-image-inner">
+          <img src="assets/talentmatch.jpg" class="project-split-img" alt="">
         </div>
       </div>
     </article>
 
     <article class="hud-card project" style="--card-accent: #10B981; --card-glow: rgba(16, 185, 129, 0.35); --card-bg-glow: rgba(16, 185, 129, 0.08);">
-      <img src="assets/campuscart.jpg" class="project-bg" alt="" aria-hidden="true">
-      <div class="project-top">
-        <div>
-          <div class="project-title">CampusCart</div>
-          <div class="project-role">2023 · Multi-vendor campus marketplace · backend developer</div>
+      <div class="project-content">
+        <div class="project-top">
+          <div>
+            <div class="project-title">CampusCart</div>
+            <div class="project-role">2023 · Multi-vendor campus marketplace · backend developer</div>
+          </div>
+          <div class="project-score">
+            <span class="stat-chip teal">&lt;1ms catalog queries</span>
+            <span class="stat-chip amber">0% error rate</span>
+            <span class="stat-chip blue">&lt;85MB RAM</span>
+          </div>
         </div>
-        <div class="project-score">
-          <span class="stat-chip teal">&lt;1ms catalog queries</span>
-          <span class="stat-chip amber">0% error rate</span>
-          <span class="stat-chip blue">&lt;85MB RAM</span>
+        <p class="project-desc">A localized marketplace that replaces cash and queues for on-campus
+          groceries, stationery, and document printing — with distinct role-based experiences for
+          students, vendors, and administrators.</p>
+        <ul class="project-bullets">
+          <li>Flask Blueprints cleanly isolate Student, Vendor, and Admin logic and routing</li>
+          <li>Relational schema in SQLAlchemy with strict foreign keys and role-based access decorators</li>
+          <li>Secure multipart uploads for print-shop orders, a simulated campus wallet, and in-app notifications</li>
+        </ul>
+        <div class="stack" style="margin-top: auto;">
+          <span class="chip">Flask</span><span class="chip">SQLAlchemy</span><span class="chip">Flask-Login / Bcrypt</span>
+          <span class="chip">SQLite</span><span class="chip">Render + Gunicorn</span>
+          <div style="margin-left: auto; display: flex; gap: 8px;">
+            <a href="https://campuscart-bq5r.onrender.com/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
+            </a>
+            <a href="https://github.com/Arnavshukla09/Student-Service-Portal---CampusCart" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
+            </a>
+          </div>
         </div>
       </div>
-      <p class="project-desc">A localized marketplace that replaces cash and queues for on-campus
-        groceries, stationery, and document printing — with distinct role-based experiences for
-        students, vendors, and administrators.</p>
-      <ul class="project-bullets">
-        <li>Flask Blueprints cleanly isolate Student, Vendor, and Admin logic and routing</li>
-        <li>Relational schema in SQLAlchemy with strict foreign keys and role-based access decorators</li>
-        <li>Secure multipart uploads for print-shop orders, a simulated campus wallet, and in-app notifications</li>
-      </ul>
-      <div class="stack">
-        <span class="chip">Flask</span><span class="chip">SQLAlchemy</span><span class="chip">Flask-Login / Bcrypt</span>
-        <span class="chip">SQLite</span><span class="chip">Render + Gunicorn</span>
-        <div style="margin-left: auto; display: flex; gap: 8px;">
-          <a href="https://campuscart-bq5r.onrender.com/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
-          </a>
-          <a href="https://github.com/Arnavshukla09/Student-Service-Portal---CampusCart" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
-          </a>
+      <div class="project-image-wrapper">
+        <div class="project-image-inner">
+          <img src="assets/campuscart.jpg" class="project-split-img" alt="">
         </div>
       </div>
     </article>
@@ -1098,30 +1347,123 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       const p4 = new THREE.PointLight(0x001133, 0.3, 10); p4.position.set(0, -0.5, -1.2); orbGroup.add(p4);
       const p5 = new THREE.PointLight(0x110033, 0.4, 10); p5.position.set(-1.2, 0.5, -0.5); orbGroup.add(p5);
       
-      // Glowing smooth geometric core
-      const matCore = new THREE.MeshStandardMaterial({
-        color: 0xffffff, emissive: 0x3B82F6, emissiveIntensity: 2.0, roughness: 0.1, transparent: true, opacity: 0.95
+      // Glowing smooth geometric rings inside
+      const branchMat1 = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xd4af37, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        transparent: true, opacity: 0.9
       });
-      const meshCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.6, 0), matCore);
-      orbGroup.add(meshCore);
+      const branches1 = new THREE.Mesh(new THREE.TorusKnotGeometry(0.9, 0.05, 100, 16, 2, 7), branchMat1);
+      orbGroup.add(branches1);
 
-      // Accent point light exactly at the core
-      const coreLight = new THREE.PointLight(0x3B82F6, 2.0, 15);
-      orbGroup.add(coreLight);
+      const branchMat2 = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0x9b111e, emissiveIntensity: 1.5, roughness: 0.2, metalness: 0.5,
+        transparent: true, opacity: 0.9
+      });
+      const branches2 = new THREE.Mesh(new THREE.TorusKnotGeometry(1.0, 0.04, 100, 16, 3, 5), branchMat2);
+      branches2.rotation.x = Math.PI / 2;
+      orbGroup.add(branches2);
+
+      // Replace the 3rd knot with a 4D Tesseract simulation (nested hypercubes) and a bright accent red core
+      const branches3 = new THREE.Group();
+      
+      const mat4DOuter = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xff0022, emissiveIntensity: 1.5, wireframe: true, transparent: true, opacity: 0.5
+      });
+      const meshOuter = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.95, 0.95), mat4DOuter);
+      
+      const mat4DMid = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xff0033, emissiveIntensity: 2.0, wireframe: true, transparent: true, opacity: 0.8
+      });
+      const meshMid = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.65), mat4DMid);
+      
+      const mat4DCore = new THREE.MeshStandardMaterial({
+        color: 0xffffff, emissive: 0xffd700, emissiveIntensity: 5.0, roughness: 0.1, transparent: true, opacity: 0.95
+      });
+      const meshCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.3, 0), mat4DCore);
+
+      branches3.add(meshOuter);
+      branches3.add(meshMid);
+      branches3.add(meshCore);
+      
+      // Accent golden point light exactly at the core
+      const coreLight = new THREE.PointLight(0xffd700, 2.0, 15);
+      branches3.add(coreLight);
+      
+      orbGroup.add(branches3);
 
       window.update3DTheme = function(theme) {
         if (theme === 'dark') {
-          partMat.color.setHex(0x0B0F19);
-          partMat.transmission = 0.95;
+          partMat.color.setHex(0x0F172A);
+          partMat.transmission = 0.9;
           
-          matCore.emissive.setHex(0x60A5FA);
-          coreLight.color.setHex(0x60A5FA);
+          branchMat1.color.setHex(0x888888);
+          branchMat1.emissive.setHex(0x000000);
+          branchMat1.emissiveIntensity = 0;
+          branchMat1.metalness = 0.9;
+          branchMat1.roughness = 0.1;
+          
+          branchMat2.color.setHex(0x888888);
+          branchMat2.emissive.setHex(0x000000);
+          branchMat2.emissiveIntensity = 0;
+          branchMat2.metalness = 0.9;
+          branchMat2.roughness = 0.1;
+          
+          mat4DOuter.color.setHex(0x888888);
+          mat4DOuter.emissive.setHex(0x000000);
+          mat4DOuter.emissiveIntensity = 0;
+          mat4DOuter.metalness = 0.9;
+          mat4DOuter.roughness = 0.1;
+          
+          mat4DMid.color.setHex(0x888888);
+          mat4DMid.emissive.setHex(0x000000);
+          mat4DMid.emissiveIntensity = 0;
+          mat4DMid.metalness = 0.9;
+          mat4DMid.roughness = 0.1;
+          
+          mat4DCore.color.setHex(0x888888);
+          mat4DCore.emissive.setHex(0x000000);
+          mat4DCore.emissiveIntensity = 0;
+          mat4DCore.metalness = 0.9;
+          mat4DCore.roughness = 0.1;
+          
+          coreLight.color.setHex(0xC5A059);
+          coreLight.intensity = 4.0;
         } else {
-          partMat.color.setHex(0xffffff);
+          partMat.color.setHex(0xffebd6);
           partMat.transmission = 0.95;
           
-          matCore.emissive.setHex(0x3B82F6);
-          coreLight.color.setHex(0x3B82F6);
+          branchMat1.color.setHex(0xffffff);
+          branchMat1.emissive.setHex(0xd4af37);
+          branchMat1.emissiveIntensity = 1.5;
+          branchMat1.metalness = 0.5;
+          branchMat1.roughness = 0.2;
+          
+          branchMat2.color.setHex(0xffffff);
+          branchMat2.emissive.setHex(0x9b111e);
+          branchMat2.emissiveIntensity = 1.5;
+          branchMat2.metalness = 0.5;
+          branchMat2.roughness = 0.2;
+          
+          mat4DOuter.color.setHex(0xffffff);
+          mat4DOuter.emissive.setHex(0xff0022);
+          mat4DOuter.emissiveIntensity = 1.5;
+          mat4DOuter.metalness = 0.0;
+          mat4DOuter.roughness = 1.0;
+          
+          mat4DMid.color.setHex(0xffffff);
+          mat4DMid.emissive.setHex(0xff0033);
+          mat4DMid.emissiveIntensity = 2.0;
+          mat4DMid.metalness = 0.0;
+          mat4DMid.roughness = 1.0;
+          
+          mat4DCore.color.setHex(0xaaaaaa);
+          mat4DCore.emissive.setHex(0xff0022);
+          mat4DCore.emissiveIntensity = 5.0;
+          mat4DCore.metalness = 0.0;
+          mat4DCore.roughness = 0.1;
+          
+          coreLight.color.setHex(0xff0022);
+          coreLight.intensity = 2.0;
         }
       };
 
@@ -1274,9 +1616,18 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         }
         orbGroup.rotation.z = scrollTilt;
 
-        // Animate internal core against the outer shell
-        meshCore.rotation.y = -t2 * 0.3;
-        meshCore.rotation.z = t2 * 0.2;
+        // Animate internal branches against the outer shell
+        branches1.rotation.y = -t2 * 0.3;
+        branches1.rotation.z = t2 * 0.2;
+        branches2.rotation.x = -t2 * 0.4;
+        branches2.rotation.y = -t2 * 0.1;
+        
+        // 4D Tesseract counter-rotation folding effect
+        branches3.children[0].rotation.x = t2 * 0.3; // Outer
+        branches3.children[0].rotation.y = t2 * 0.4;
+        branches3.children[1].rotation.x = -t2 * 0.5; // Mid
+        branches3.children[1].rotation.z = -t2 * 0.6;
+        branches3.children[2].rotation.y = t2 * 0.8; // Core
 
         renderer2.render(scene2, camera2);
       }
