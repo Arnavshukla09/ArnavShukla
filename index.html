@@ -297,16 +297,16 @@
   }
   .cert-preview-tooltip {
     position: absolute;
-    bottom: calc(100% + 8px);
-    right: 0;
-    width: 300px;
+    top: 50%;
+    right: calc(100% + 12px);
+    width: 320px;
     border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px) scale(0.95);
-    transform-origin: bottom right;
+    transform: translateY(-50%) scale(0.95);
+    transform-origin: right center;
     transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
     z-index: 100;
     pointer-events: none;
@@ -316,7 +316,7 @@
   .cert-link-wrapper:hover .cert-preview-tooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0) scale(1);
+    transform: translateY(-50%) scale(1);
   }
 
   .orb-label {
@@ -1318,7 +1318,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       </div>
       <div class="cert-row">
         <div><span class="name">Machine Learning</span><span class="issuer">NPTEL / IIT Madras</span></div>
-        <div class="date">2025—2026</div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <span class="date">JAN—APR 2025</span>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_ml.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_ml.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
+        </div>
       </div>
       <div class="cert-row">
         <div><span class="name">Marketing Analytics</span><span class="issuer">NPTEL / IIT Kharagpur</span></div>
@@ -1346,6 +1354,18 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
           </div>
         </div>
         <div style="font-size: 13px; color: var(--text-dim); margin-top: -2px;">First participant to score 100% on the final quiz across all six Generative AI courses</div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">Front End Development Libraries</span><span class="issuer">freeCodeCamp</span></div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <span class="date">SEP 2025</span>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_fcc.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_fcc.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
+        </div>
       </div>
       <div class="cert-row">
         <div><span class="name">Computer Networking</span><span class="issuer">Coursera / Google</span></div>
