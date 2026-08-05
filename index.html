@@ -1682,6 +1682,9 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         const stlGroup = new THREE.Group();
         loadedMeshes.forEach(m => {
           m.geometry.translate(-center.x, -center.y, -center.z);
+          m.geometry.computeBoundingBox();
+          m.geometry.computeBoundingSphere();
+          m.frustumCulled = false; // Prevent accidental culling
           m.scale.setScalar(scale);
           stlGroup.add(m);
         });
