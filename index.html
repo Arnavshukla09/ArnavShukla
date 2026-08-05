@@ -1521,13 +1521,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       // Noticeable, thick refractive glass shell
       const partMat = new THREE.MeshPhysicalMaterial({
         color: 0xffebd6, // Slight warm tint to the reflections
-        metalness: 0.3,
-        roughness: 0.25, // Frosted/smudged glass
-        transmission: 0.95, // Highly transparent but catches light
+        metalness: 0.1,
+        roughness: 0.1, // Smoother for sharper reflections
+        transmission: 0.9, // Slightly lowered for better visibility without HDRI
         thickness: 2.0, // Creates noticeable refractive distortion around the edges
         ior: 1.5,
         transparent: true,
-        side: THREE.DoubleSide
+        opacity: 1.0,
+        side: THREE.DoubleSide,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
       });
 
       // Dark void interior: dim purple/blue point lights
@@ -1664,7 +1667,10 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 
       function onAllPartsLoaded() {
         const box = new THREE.Box3();
-        loadedMeshes.forEach(m => box.expandByObject(m));
+        loadedMeshes.forEach(m => {
+          m.geometry.computeBoundingBox();
+          box.union(m.geometry.boundingBox);
+        });
         const size = new THREE.Vector3();
         box.getSize(size);
         const center = new THREE.Vector3();
@@ -1673,10 +1679,13 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         const targetDiameter = 3.2;
         const scale = targetDiameter / maxDim;
 
-        orbGroup.position.sub(center.multiplyScalar(scale));
-        loadedMeshes.forEach(m => m.scale.setScalar(scale));
-        orbGroup.scale.setScalar(1);
-        loadedMeshes.forEach(m => orbGroup.add(m));
+        const stlGroup = new THREE.Group();
+        loadedMeshes.forEach(m => {
+          m.geometry.translate(-center.x, -center.y, -center.z);
+          m.scale.setScalar(scale);
+          stlGroup.add(m);
+        });
+        orbGroup.add(stlGroup);
 
         const loaderEl = document.getElementById('orb-loader');
         if (loaderEl) {
@@ -1719,8 +1728,8 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       key2.position.set(4, 6, 5);
       scene2.add(key2);
       
-      const fill2 = new THREE.DirectionalLight(0x9b111e, 3.0); // Deep Ruby/Crimson
-      fill2.position.set(-5, -2, -4);
+      const fill2 = new THREE.DirectionalLight(0x9b111e, 4.0); // Deep Ruby/Crimson
+      fill2.position.set(-5, 2, 5);
       scene2.add(fill2);
       
       const rim2 = new THREE.DirectionalLight(0x2a9d8f, 2.5); // Oxidized Copper/Teal
