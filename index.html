@@ -121,8 +121,11 @@
   .bg-animus {
     position: fixed; inset: 0; z-index: -1;
     overflow: hidden;
+    pointer-events: none;
     mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
+    transform: translateZ(0);
+    will-change: transform;
   }
   .bg-animus::before {
     content: ""; position: absolute; inset: -200%;
@@ -130,7 +133,8 @@
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 140px 140px;
-    transform: perspective(600px) rotateX(70deg) translateZ(-100px);
+    transform: perspective(600px) rotateX(70deg) translateZ(-100px) translateY(var(--bg-parallax-1, 0px));
+    will-change: transform;
   }
   .bg-animus::after {
     content: ""; position: absolute; inset: -200%;
@@ -139,7 +143,8 @@
       linear-gradient(90deg, var(--amber) 1px, transparent 1px);
     background-size: 400px 400px;
     opacity: 0.6;
-    transform: perspective(600px) rotateX(70deg) translateZ(50px);
+    transform: perspective(600px) rotateX(70deg) translateZ(50px) translateY(var(--bg-parallax-2, 0px));
+    will-change: transform;
   }
 
   /* ---------- sidebar ---------- */
@@ -260,8 +265,17 @@
   #agent-orb {
     position: relative;
     z-index: 20;
-    width: 100%; height: 100%; display: block; touch-action: none;
-    filter: saturate(1.2) drop-shadow(0px 0px 70px rgba(255, 215, 0, 0.55));
+    width: 100%; height: 100%; display: block;
+    touch-action: pan-y;
+    filter: saturate(1.2) drop-shadow(0px 0px 35px rgba(255, 215, 0, 0.45));
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  @media (max-width: 768px) {
+    #agent-orb {
+      filter: saturate(1.1) drop-shadow(0px 0px 16px rgba(255, 215, 0, 0.35));
+    }
   }
   .orb-loader {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -1461,32 +1475,42 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <script>
-  try {
-    if (typeof Lenis !== 'undefined') {
-      const lenis = new Lenis({
-        duration: 1.8,
-        easing: (t) => 1 - Math.pow(1 - t, 4), // Heavy Quartic ease-out for vintage analog feel
-        smoothWheel: true,
-        wheelMultiplier: 0.75, // Adds weight to the scroll
-      });
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth < 860);
 
-      const bgAnimus = document.querySelector('.bg-animus');
+  // Subtle background scroll parallax (hardware accelerated)
+  let bgTicking = false;
+  window.addEventListener('scroll', () => {
+    if (!bgTicking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const p1 = (y * 0.18) % 140;
+        const p2 = (y * 0.09) % 400;
+        document.documentElement.style.setProperty('--bg-parallax-1', `${p1}px`);
+        document.documentElement.style.setProperty('--bg-parallax-2', `${p2}px`);
+        bgTicking = false;
+      });
+      bgTicking = true;
+    }
+  }, { passive: true });
+
+  try {
+    // Only initialize Lenis smooth scroll on non-touch desktop to ensure 100% butter-smooth native mobile scroll
+    if (!isTouchDevice && typeof Lenis !== 'undefined') {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+      });
 
       function raf(time) {
         lenis.raf(time);
-        
-        if (bgAnimus) {
-          const scrollY = window.scrollY;
-          bgAnimus.style.setProperty('--scroll-y-1', (scrollY * 0.4) + 'px');
-          bgAnimus.style.setProperty('--scroll-y-2', (scrollY * 0.8) + 'px');
-        }
-        
         requestAnimationFrame(raf);
       }
       requestAnimationFrame(raf);
     }
   } catch (e) {
-    console.log('Lenis failed to init, falling back to native scroll.', e);
+    console.log('Smooth scroll skipped, using native scroll.', e);
   }
 
   try {
@@ -1523,8 +1547,9 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     if (orbCanvas) {
       const wrap = orbCanvas.parentElement;
 
-      const renderer2 = new THREE.WebGLRenderer({ canvas: orbCanvas, alpha: true, antialias: true });
-      renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const isMobile = window.innerWidth < 768 || isTouchDevice;
+      const renderer2 = new THREE.WebGLRenderer({ canvas: orbCanvas, alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
+      renderer2.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
 
       const scene2 = new THREE.Scene();
       
@@ -1673,6 +1698,9 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         }
       };
 
+      partMat.transparent = true;
+      partMat.opacity = 0; // Starts transparent so it fades in gracefully without pop-in
+
       const dracoLoader = new THREE.DRACOLoader();
       dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
       const loader = new THREE.GLTFLoader();
@@ -1681,27 +1709,44 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       let partsLoaded = 0;
       const TOTAL_PARTS = 2;
       const loadedMeshes = [];
+      let partsLoadedProcessed = false;
 
       function onAllPartsLoaded() {
-        const box = new THREE.Box3();
-        loadedMeshes.forEach(m => box.expandByObject(m));
-        const size = new THREE.Vector3();
-        box.getSize(size);
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-        const maxDim = Math.max(size.x, size.y, size.z) || 1;
-        const targetDiameter = 3.2;
-        const scale = targetDiameter / maxDim;
+        if (partsLoadedProcessed) return;
+        partsLoadedProcessed = true;
 
-        orbGroup.position.sub(center.multiplyScalar(scale));
-        loadedMeshes.forEach(m => m.scale.setScalar(scale));
-        orbGroup.scale.setScalar(1);
-        loadedMeshes.forEach(m => orbGroup.add(m));
+        if (loadedMeshes.length > 0) {
+          const box = new THREE.Box3();
+          loadedMeshes.forEach(m => box.expandByObject(m));
+          const size = new THREE.Vector3();
+          box.getSize(size);
+          const center = new THREE.Vector3();
+          box.getCenter(center);
+          const maxDim = Math.max(size.x, size.y, size.z) || 1;
+          const targetDiameter = 3.2;
+          const scale = targetDiameter / maxDim;
+
+          // Center each mesh individually so orbGroup coordinates remain at (0,0,0) without snapping!
+          loadedMeshes.forEach(m => {
+            m.position.sub(center.clone().multiplyScalar(scale));
+            m.scale.setScalar(scale);
+            orbGroup.add(m);
+          });
+
+          // Smooth ethereal fade-in
+          let op = 0;
+          const fadeIn = () => {
+            op += 0.05;
+            partMat.opacity = Math.min(0.95, op);
+            if (op < 0.95) requestAnimationFrame(fadeIn);
+          };
+          fadeIn();
+        }
 
         const loaderEl = document.getElementById('orb-loader');
         if (loaderEl) {
           loaderEl.style.opacity = '0';
-          setTimeout(() => loaderEl.remove(), 500);
+          setTimeout(() => loaderEl.remove(), 400);
         }
         
         // Hide global preloader
@@ -1726,17 +1771,29 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
           },
           undefined,
           (err) => {
-            console.log('GLB part failed to load:', url, err);
+            console.log('GLB part load issue, using native core fallback:', url);
             partsLoaded++;
-            if (partsLoaded === TOTAL_PARTS && loadedMeshes.length) onAllPartsLoaded();
+            if (partsLoaded === TOTAL_PARTS) onAllPartsLoaded();
           }
         );
       }
       loadPart('assets/anomalycorea.glb');
       loadPart('assets/anomalycoreb.glb');
 
-      // Fallback: if STLs take too long or fail entirely, hide preloader after 4.5 seconds
-      setTimeout(() => document.body.classList.add('loaded'), 4500);
+      // Low-internet & mobile fallback: dismiss preloader after 2.8s max so user isn't trapped
+      const isSlowNet = navigator.connection && (
+        navigator.connection.saveData ||
+        navigator.connection.effectiveType === '2g' ||
+        navigator.connection.effectiveType === 'slow-2g'
+      );
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+        const loaderEl = document.getElementById('orb-loader');
+        if (loaderEl) {
+          loaderEl.style.opacity = '0';
+          setTimeout(() => loaderEl.remove(), 300);
+        }
+      }, isSlowNet ? 1600 : 2800);
 
       // ---- retro medieval rim lighting ----
       scene2.add(new THREE.AmbientLight(0xffffff, 0.4));
@@ -1820,10 +1877,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         fill2.position.x = -5 + targetX * 5;
         fill2.position.y = -2 + targetY * 5;
 
-        // Shift CSS drop-shadow to create a responsive optical flare effect
-        const shadowX = -targetX * 40;
-        const shadowY = targetY * 40;
-        orbCanvas.style.filter = `saturate(1.1) drop-shadow(${shadowX}px ${shadowY}px 25px rgba(255, 140, 50, 0.4))`;
+        // Shift CSS drop-shadow on desktop only; mutating filter on canvas every frame ruins mobile GPU compositor
+        if (!isMobile) {
+          const shadowX = -targetX * 30;
+          const shadowY = targetY * 30;
+          orbCanvas.style.filter = `saturate(1.1) drop-shadow(${shadowX}px ${shadowY}px 30px rgba(255, 140, 50, 0.4))`;
+        }
 
         if (!dragging) {
           orbGroup.rotation.y += autoSpinY + velY;
@@ -1918,32 +1977,32 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     window.addEventListener('load', () => clearInterval(gInt));
   }
 
-  // Binary & Flare Animation next to Orb
+  // Binary & Flare Animation next to Orb (desktop only & when in viewport)
   const relicContainer = document.querySelector('.hero-relic-container');
-  if (relicContainer) {
+  if (relicContainer && !isTouchDevice) {
     setInterval(() => {
+      if (typeof orbVisible !== 'undefined' && !orbVisible) return;
       // Spawn binary
-      if (Math.random() > 0.7) {
+      if (Math.random() > 0.75) {
         const bin = document.createElement('div');
         bin.className = 'binary-particle';
         bin.innerText = Math.random() > 0.5 ? '1' : '0';
-        // Random position within 80% center
-        bin.style.left = (10 + Math.random() * 80) + '%';
-        bin.style.top = (10 + Math.random() * 80) + '%';
+        bin.style.left = (12 + Math.random() * 76) + '%';
+        bin.style.top = (12 + Math.random() * 76) + '%';
         relicContainer.appendChild(bin);
         setTimeout(() => bin.remove(), 2000);
       }
       // Spawn flare
-      if (Math.random() > 0.9) {
+      if (Math.random() > 0.92) {
         const flare = document.createElement('div');
         flare.className = 'flare-particle';
-        flare.style.left = (10 + Math.random() * 80) + '%';
-        flare.style.top = (10 + Math.random() * 80) + '%';
+        flare.style.left = (12 + Math.random() * 76) + '%';
+        flare.style.top = (12 + Math.random() * 76) + '%';
         flare.style.transform = `rotate(${Math.random() * 360}deg)`;
         relicContainer.appendChild(flare);
         setTimeout(() => flare.remove(), 1500);
       }
-    }, 200);
+    }, 250);
   }
 </script>
 </body>
