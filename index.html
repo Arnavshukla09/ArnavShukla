@@ -1094,13 +1094,11 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
           </div>
           <div class="project-score">
             <span class="stat-chip teal">274ms avg query</span>
-            <span class="stat-chip amber">6,616 facilities indexed</span>
-            <span class="stat-chip blue">100% security audit pass</span>
+            <span class="stat-chip amber">10,742 facilities</span>
+            <span class="stat-chip blue">15 locked RLS tables</span>
           </div>
         </div>
-        <p class="project-desc">A Next.js telehealth platform built for rural India: AI symptom triage in
-          Hindi and English, PostGIS-powered facility mapping, and Jitsi teleconsultation — secured end
-          to end with PostgreSQL row-level security.</p>
+        <p class="project-desc">A bilingual (Hindi/English) telehealth PWA built for rural India: locked Row-Level Security across 15 PostgreSQL tables, sub-300ms PostGIS proximity search over 10,742 facilities, and Gemini 1.5 symptom triage.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1108,16 +1106,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Row-Level Security policies guarantee a patient's queries can only ever return their own records, even if the API layer is compromised</li>
-              <li>Gemini-powered triage returns structured, urgency-ranked JSON with a deterministic rule-based fallback</li>
-              <li>PostGIS <span class="data">ST_DWithin</span> queries return the nearest facilities without shipping thousands of rows to the client</li>
-              <li>Upstash Redis rate-limiting on AI endpoints, Playwright E2E coverage on critical flows</li>
+              <li>Enforced strict Row-Level Security across 15 PostgreSQL tables with single-authoritative role derivation (no client metadata trust) and SHA-256 cryptographically locked migrations</li>
+              <li>Scaled PostGIS spatial search (<span class="data">ST_DWithin</span> with GiST index) over 10,742 geocoded facilities across 725 districts, sustaining 274ms average query latency (P95: 558ms) with automated offline IndexedDB synchronization</li>
+              <li>Architected 22 rate-limited REST API routes (&lt;150 LOC) backed by 8 domain services and 19 feature modules (all components &le;400 LOC), integrating Jitsi teleconsultation and Gemini 1.5 medical triage</li>
+              <li>Engineered an 8-stage pre-commit and CI/CD verification engine enforcing 176 passing unit/integration tests (Vitest), Knip dead-code elimination, and zero-leakage patient data isolation</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
-          <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">Supabase / PostgreSQL</span>
-          <span class="chip">PostGIS</span><span class="chip">Google Gemini</span><span class="chip">Playwright</span>
+          <span class="chip">Next.js 14</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL / Supabase</span>
+          <span class="chip">PostGIS</span><span class="chip">Gemini 1.5</span><span class="chip">WebRTC</span><span class="chip">Vitest</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://rural-healthcare-platform.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
