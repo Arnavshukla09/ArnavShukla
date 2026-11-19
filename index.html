@@ -125,33 +125,36 @@
     padding:0 28px;
   }
 
-  /* ---------- background grid & orbs ---------- */
+  /* ---------- background curved backdrop & grid ---------- */
   .bg-animus {
     position: fixed; inset: 0; z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%, black 100%);
+    mask-image: radial-gradient(ellipse 140% 120% at 50% 25%, black 60%, rgba(0, 0, 0, 0.45) 85%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 140% 120% at 50% 25%, black 60%, rgba(0, 0, 0, 0.45) 85%, transparent 100%);
+    perspective: 1100px;
     transform: translateZ(0);
     will-change: transform;
   }
   .bg-animus::before {
-    content: ""; position: absolute; inset: -200%;
+    content: ""; position: absolute; inset: -80%;
     background-image: 
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 140px 140px;
-    transform: perspective(600px) rotateX(70deg) translateZ(-100px) translateY(var(--bg-parallax-1, 0px));
+    transform-origin: 50% 95%;
+    transform: rotateX(-12deg) translateY(var(--bg-parallax-1, 0px));
     will-change: transform;
   }
   .bg-animus::after {
-    content: ""; position: absolute; inset: -200%;
+    content: ""; position: absolute; inset: -80%;
     background-image: 
       linear-gradient(var(--amber) 1px, transparent 1px),
       linear-gradient(90deg, var(--amber) 1px, transparent 1px);
-    background-size: 400px 400px;
-    opacity: 0.6;
-    transform: perspective(600px) rotateX(70deg) translateZ(50px) translateY(var(--bg-parallax-2, 0px));
+    background-size: 420px 420px;
+    opacity: 0.55;
+    transform-origin: 50% 95%;
+    transform: rotateX(-12deg) translateY(var(--bg-parallax-2, 0px));
     will-change: transform;
   }
 
@@ -1579,8 +1582,8 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     if (!bgTicking) {
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        const p1 = (y * 0.18) % 140;
-        const p2 = (y * 0.09) % 400;
+        const p1 = (y * 0.15) % 140;
+        const p2 = (y * 0.08) % 420;
         document.documentElement.style.setProperty('--bg-parallax-1', `${p1}px`);
         document.documentElement.style.setProperty('--bg-parallax-2', `${p2}px`);
         bgTicking = false;
