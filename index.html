@@ -2156,26 +2156,35 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       const ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, 1024, 1024);
 
-      const minorColor = isDark ? 'rgba(255, 255, 255, 0.13)' : 'rgba(15, 23, 42, 0.11)';
-      const majorColor = isDark ? '#DC2626' : '#C5A059';
+      // Grey lines for vertical checks
+      const greyLineColor = isDark ? 'rgba(255, 255, 255, 0.16)' : 'rgba(15, 23, 42, 0.15)';
+      // Accent color for horizontal lines (Gold for light mode, Red for dark mode)
+      const accentColor = isDark ? '#DC2626' : '#C5A059';
 
-      // 1. Minor grid (16x16)
-      ctx.strokeStyle = minorColor;
-      ctx.lineWidth = 1.5;
-      const step = 1024 / 16;
-      for (let i = 0; i <= 1024; i += step) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
+      const step = 1024 / 16; // checks spacing
+
+      // 1. VERTICAL LINES: Subtle grey lines as in original checks
+      ctx.strokeStyle = greyLineColor;
+      ctx.lineWidth = 1.4;
+      for (let x = 0; x <= 1024; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 1024);
+        ctx.stroke();
       }
 
-      // 2. Major grid (4x4)
-      ctx.strokeStyle = majorColor;
-      ctx.lineWidth = 2.5;
-      const majorStep = 1024 / 4;
-      for (let i = 0; i <= 1024; i += majorStep) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
+      // 2. HORIZONTAL LINES: Accent color (Gold in light, Red in dark)
+      ctx.strokeStyle = accentColor;
+      for (let y = 0; y <= 1024; y += step) {
+        const isMajor = (y % (step * 4) === 0);
+        ctx.globalAlpha = isMajor ? 0.95 : 0.65;
+        ctx.lineWidth = isMajor ? 2.5 : 1.6;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(1024, y);
+        ctx.stroke();
       }
+      ctx.globalAlpha = 1.0;
 
       const tex = new THREE.CanvasTexture(cv);
       tex.wrapS = THREE.RepeatWrapping;
