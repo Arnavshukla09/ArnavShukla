@@ -127,87 +127,12 @@
     padding:0 28px;
   }
 
-  /* ---------- CYCLORAMA / INFINITY COVE (WALL + SOFT CURL + FLOOR) ---------- */
-  .bg-animus {
-    position: fixed; inset: 0; z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-    perspective: 850px;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  /* Shared mesh pattern with soft antialiased lines */
-  .bg-mesh {
-    background-image: 
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(var(--amber) 1px, transparent 1.5px),
-      linear-gradient(90deg, var(--amber) 1px, transparent 1.5px);
-    background-size: 
-      140px 140px, 
-      140px 140px, 
-      420px 420px, 
-      420px 420px;
-    will-change: background-position;
-  }
-  /* 1. WALL: Vertical upright plane softly feathering into the horizon bend */
-  .bg-animus-wall {
-    position: absolute;
-    top: -40px; left: -100px; right: -100px;
-    height: calc(62vh + 40px);
-    background-position: 
-      center calc(100% + var(--bg-parallax-1, 0px)),
-      center calc(100% + var(--bg-parallax-1, 0px)),
-      center calc(100% + var(--bg-parallax-2, 0px)),
-      center calc(100% + var(--bg-parallax-2, 0px));
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, black 15%, black 75%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, black 15%, black 75%, transparent 100%);
-    z-index: 1;
-  }
-  /* 2. THE CURL: Smooth arced transition at the horizon with softened lines */
-  .bg-animus-curl {
-    position: absolute;
-    top: 57vh;
-    left: -120%; right: -120%;
-    height: 16vh;
-    background-position: 
-      center calc(0% + var(--bg-parallax-1, 0px)),
-      center calc(0% + var(--bg-parallax-1, 0px)),
-      center calc(0% + var(--bg-parallax-2, 0px)),
-      center calc(0% + var(--bg-parallax-2, 0px));
-    transform-origin: 50% 0%;
-    transform: perspective(700px) rotateX(38deg);
-    opacity: 0.72;
-    filter: blur(0.35px);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-    z-index: 2;
-  }
-  /* 3. COVE AMBIENCE: Soft diffused light bloom across the curve */
-  .bg-animus-cove {
-    position: absolute;
-    top: calc(61vh - 45px); left: 0; right: 0; height: 90px;
-    background: radial-gradient(ellipse 90% 100% at 50% 50%, var(--cove-glow), transparent 75%);
-    pointer-events: none;
-    z-index: 3;
-  }
-  /* 4. FLOOR: Horizontal perspective mesh extending forward with soft entry */
-  .bg-animus-floor {
-    position: absolute;
-    top: 61vh;
-    left: -150%; right: -150%;
-    height: 120vh;
-    background-position: 
-      center calc(0% + var(--bg-parallax-1, 0px)),
-      center calc(0% + var(--bg-parallax-1, 0px)),
-      center calc(0% + var(--bg-parallax-2, 0px)),
-      center calc(0% + var(--bg-parallax-2, 0px));
-    transform-origin: 50% 0%;
-    transform: perspective(600px) rotateX(72deg);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 12%, black 28%, black 50%, transparent 85%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 12%, black 28%, black 50%, transparent 85%);
-    z-index: 1;
-    will-change: transform, background-position;
+  /* ---------- CONTINUOUS SEAMLESS CYC BACKDROP CANVAS ---------- */
+  #bg-canvas {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    z-index: -1; pointer-events: none; display: block;
+    mask-image: radial-gradient(ellipse 135% 120% at 50% 25%, black 65%, rgba(0,0,0,0.4) 88%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 135% 120% at 50% 25%, black 65%, rgba(0,0,0,0.4) 88%, transparent 100%);
   }
 
   /* ---------- sidebar ---------- */
@@ -1006,12 +931,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   <div class="preloader-spinner"></div>
 </div>
 
-<div class="bg-animus">
-  <div class="bg-animus-wall bg-mesh"></div>
-  <div class="bg-animus-curl bg-mesh"></div>
-  <div class="bg-animus-cove"></div>
-  <div class="bg-animus-floor bg-mesh"></div>
-</div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <aside class="sidebar">
   <div class="brand">
@@ -2102,6 +2022,9 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     if (typeof window.update3DTheme === 'function') {
       window.update3DTheme(theme);
     }
+    if (typeof window.updateBgTheme === 'function') {
+      window.updateBgTheme(theme);
+    }
   }
 
   const currentTheme = localStorage.getItem('theme');
@@ -2160,6 +2083,138 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       }
     }, 250);
   }
+
+  // ==========================================
+  // CONTINUOUS SEAMLESS CYC BACKDROP (ONE MESH)
+  // ==========================================
+  (function initCycBackdrop() {
+    const bgCanvas = document.getElementById('bg-canvas');
+    if (!bgCanvas || typeof THREE === 'undefined') return;
+
+    const bgRenderer = new THREE.WebGLRenderer({
+      canvas: bgCanvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    bgRenderer.setSize(window.innerWidth, window.innerHeight);
+
+    const bgScene = new THREE.Scene();
+    const bgCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    bgCamera.position.set(0, 0.6, 9.2);
+
+    // Continuous single-mesh geometry (100% unbroken lines)
+    const W = 24;
+    const H = 22;
+    const cols = 90;
+    const rows = 150;
+    const geom = new THREE.PlaneGeometry(W, H, cols, rows);
+    const pos = geom.attributes.position;
+
+    // Smooth cylindrical curl parameters
+    const R = 2.6; // curve radius
+    const yBend = 0.4; // horizon line position in world units
+    const arcLength = (Math.PI / 2) * R;
+
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i);
+      const origY = pos.getY(i);
+      const v = (H / 2) - origY; // distance from top along surface
+      const vBend = (H / 2) - yBend; // wall length
+
+      if (v <= vBend) {
+        // Vertical wall
+        pos.setXYZ(i, x, yBend + (vBend - v), 0);
+      } else if (v <= vBend + arcLength) {
+        // Continuous Cylindrical Curve (smooth bend connecting wall to floor)
+        const theta = (v - vBend) / R;
+        const y = yBend - R * Math.sin(theta);
+        const z = R * (1 - Math.cos(theta));
+        pos.setXYZ(i, x, y, z);
+      } else {
+        // Horizontal floor extending forward
+        const s = v - (vBend + arcLength);
+        const y = yBend - R;
+        const z = R + s * 1.15;
+        pos.setXYZ(i, x, y, z);
+      }
+    }
+    geom.computeVertexNormals();
+
+    function generateGridTexture(isDark) {
+      const cv = document.createElement('canvas');
+      cv.width = 1024;
+      cv.height = 1024;
+      const ctx = cv.getContext('2d');
+      ctx.clearRect(0, 0, 1024, 1024);
+
+      const minorColor = isDark ? 'rgba(255, 255, 255, 0.13)' : 'rgba(15, 23, 42, 0.11)';
+      const majorColor = isDark ? '#DC2626' : '#C5A059';
+
+      // 1. Minor grid (16x16)
+      ctx.strokeStyle = minorColor;
+      ctx.lineWidth = 1.5;
+      const step = 1024 / 16;
+      for (let i = 0; i <= 1024; i += step) {
+        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
+      }
+
+      // 2. Major grid (4x4)
+      ctx.strokeStyle = majorColor;
+      ctx.lineWidth = 2.5;
+      const majorStep = 1024 / 4;
+      for (let i = 0; i <= 1024; i += majorStep) {
+        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
+      }
+
+      const tex = new THREE.CanvasTexture(cv);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(6, 5);
+      return tex;
+    }
+
+    let isDarkTheme = document.documentElement.getAttribute('data-theme') !== 'light';
+    let gridTexture = generateGridTexture(isDarkTheme);
+
+    const bgMat = new THREE.MeshBasicMaterial({
+      map: gridTexture,
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide
+    });
+
+    const bgMesh = new THREE.Mesh(geom, bgMat);
+    bgScene.add(bgMesh);
+
+    window.updateBgTheme = function(theme) {
+      isDarkTheme = theme === 'dark';
+      gridTexture.dispose();
+      gridTexture = generateGridTexture(isDarkTheme);
+      bgMat.map = gridTexture;
+      bgMat.needsUpdate = true;
+    };
+
+    // Parallax translation along surface on scroll
+    window.addEventListener('scroll', () => {
+      gridTexture.offset.y = -(window.scrollY * 0.00035);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      bgCamera.aspect = window.innerWidth / window.innerHeight;
+      bgCamera.updateProjectionMatrix();
+      bgRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function bgLoop() {
+      requestAnimationFrame(bgLoop);
+      bgRenderer.render(bgScene, bgCamera);
+    }
+    bgLoop();
+  })();
 </script>
 </body>
 </html>
