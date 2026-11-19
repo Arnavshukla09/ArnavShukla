@@ -187,7 +187,7 @@
   .sidebar:hover .brand .brand-text { opacity: 1; transform: translateX(0); position: relative; }
   
   nav.sidebar-links { 
-    display: flex; flex-direction: column; gap: 40px; font-family: 'JetBrains Mono', monospace; font-size: 13px; 
+    display: flex; flex-direction: column; gap: 30px; font-family: 'JetBrains Mono', monospace; font-size: 13px; 
     width: 100%; align-items: center;
   }
   .sidebar:hover nav.sidebar-links { align-items: flex-start; }
@@ -218,7 +218,7 @@
     .sidebar .brand .brand-logo { position: relative; width: 24px; height: 24px; }
     .sidebar:hover .brand .brand-logo { opacity: 1; transform: none; }
     .sidebar .brand .brand-text { display: none; }
-    nav.sidebar-links { flex-direction: row; gap: 16px; font-size: 11px; width: auto; align-items: center; }
+    nav.sidebar-links { flex-direction: row; gap: 14px; font-size: 11px; width: auto; align-items: center; }
     .sidebar:hover nav.sidebar-links { align-items: center; }
     nav.sidebar-links a span, #theme-toggle span { display: none !important; }
     nav.sidebar-links a:hover, #theme-toggle:hover { transform: none; }
@@ -959,6 +959,10 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z"/></svg>
       <span>Projects</span>
     </a>
+    <a href="#experience" aria-label="Experience Section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      <span>Experience</span>
+    </a>
     <a href="#skills" aria-label="Skills Section">
       <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 5 10-5M2 17l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       <span>Stack</span>
@@ -1104,15 +1108,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-top">
           <div>
             <div class="project-title">Rural Healthcare Platform</div>
-            <div class="project-role">2024–2026 · Offline-first Telehealth PWA · Systems &amp; Healthcare Lead</div>
+            <div class="project-role">2024–2026 · Offline-first Telehealth PWA · Next.js 15, PostGIS, Gemini</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">&lt;300ms spatial lookup</span>
-            <span class="stat-chip amber">42,000+ facilities</span>
-            <span class="stat-chip blue">200+ automated tests</span>
+            <span class="stat-chip teal">13-language PWA</span>
+            <span class="stat-chip amber">10,742 facilities</span>
+            <span class="stat-chip blue">237 quality tests</span>
           </div>
         </div>
-        <p class="project-desc">An offline-first, multilingual telehealth PWA engineered for resource-constrained rural clinics: Serwist service worker with IndexedDB outbox queue, 15 locked PostgreSQL 17 RLS tables, PostGIS proximity search over 42,000+ facilities, and ABDM/HL7 FHIR R4 clinical summaries.</p>
+        <p class="project-desc">An offline-first, multilingual healthcare PWA with 13-language localization, strict PostgreSQL Row-Level Security across 15 tables, PostGIS ST_DWithin spatial queries over 10,742 facilities, deterministic screening with patient-context-aware Gemini triage, and NRCES-aligned HL7 FHIR R4 clinical bundles.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1120,16 +1124,17 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Enforced strict Row-Level Security across 15 PostgreSQL 17 tables with single-authoritative role derivation (<span class="data">public.patients.role</span>) and cryptographically locked migrations via SHA-256 manifests</li>
-              <li>Scaled PostGIS spatial search (<span class="data">ST_DWithin</span> with GiST index) over 42,000+ verified national facilities across 725 LGD districts, sustaining 274ms average query latency (P95: 558ms) with automated offline IndexedDB synchronization</li>
-              <li>Engineered an offline-first outbox queue with exponential backoff (1s–32s) and server-side idempotency tracking (<span class="data">processed_client_ops</span>) paired with atomic slot concurrency locks (<span class="data">uq_provider_slot_scheduled</span>) handling 20 parallel transactions without race conditions</li>
-              <li>Built ABDM-compliant HL7 FHIR R4 clinical document export (NRCES DocumentBundle with LOINC &amp; UCUM codes) and an automated verification suite of 200+ tests (180 unit in 25 suites + 22 DB/RLS integration tests via Vitest)</li>
+              <li>Engineered an offline-first healthcare PWA with 13-language localization, device-language detection, and GPS/LGD-based regional recommendations for patient, clinician, and administrator workflows</li>
+              <li>Enforced strict PostgreSQL Row-Level Security and server-side role / care-relationship authorization; introduced a partial unique index (<span class="data">uq_provider_slot_scheduled</span>) to prevent concurrent appointment double-bookings</li>
+              <li>Optimized facility discovery through GiST-indexed PostGIS <span class="data">ST_DWithin</span> searches across 10,742 indexed facilities; added an IndexedDB offline outbox with UUID-based idempotency and batch synchronization</li>
+              <li>Integrated deterministic clinical screening for hypertension, diabetes, and high-risk antenatal cases, alongside a patient-context-aware Gemini assistant with PII sanitization and emergency-first routing</li>
+              <li>Generated and locally validated NRCES-aligned HL7 FHIR R4 bundles; project quality checks include 210 unit tests, 22 integration contract tests, and 5 Playwright end-to-end journeys</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
-          <span class="chip">Next.js 15.5</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL 17 / PostGIS</span>
-          <span class="chip">Supabase RLS</span><span class="chip">HL7 FHIR R4</span><span class="chip">Serwist PWA</span><span class="chip">WebRTC</span><span class="chip">Vitest</span>
+          <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL 17 / PostGIS</span>
+          <span class="chip">Supabase RLS</span><span class="chip">HL7 FHIR R4</span><span class="chip">Gemini AI</span><span class="chip">Serwist PWA</span><span class="chip">Vitest</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://rural-healthcare-platform.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
@@ -1151,16 +1156,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       <div class="project-content">
         <div class="project-top">
           <div>
-            <div class="project-title">Eco-Loop — Autonomous Building AI</div>
-            <div class="project-role">2024–2026 · Honeywell Hackathon Shortlist · Autonomous Physical AI</div>
+            <div class="project-title">Eco-Loop: Autonomous Building AI</div>
+            <div class="project-role">2024–2026 · Autonomous Physical AI · Python, FastAPI, Qwen2.5, FastMCP</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">-45.6% energy reduction</span>
-            <span class="stat-chip amber">10 FastMCP tools</span>
-            <span class="stat-chip blue">100% fault recovery</span>
+            <span class="stat-chip teal">-45.6% simulated energy</span>
+            <span class="stat-chip amber">10-tool MCP server</span>
+            <span class="stat-chip blue">Zero crashes (100% fallback)</span>
           </div>
         </div>
-        <p class="project-desc">An autonomous closed-loop HVAC supervisory control system coupling a 5-zone commercial building physics simulation with local LLM reasoning (Qwen 2.5 via Ollama) and deterministic control theory, exposed via Model Context Protocol (FastMCP 2.0).</p>
+        <p class="project-desc">An autonomous closed-loop HVAC supervisory control system coupling a 5-zone commercial building physics simulation with a local Qwen2.5 agent via Ollama, connected through a 10-tool FastMCP server with deterministic fallback, achieving 45.6% lower simulated energy use.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1168,16 +1173,16 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Empirically verified 45.62% &plusmn; 0.45% energy reduction (142.39 &rarr; 77.43 kWh), -8.87% peak electrical demand, and +25.08 kg avoided CO&sub2;/day across a multi-seed 24-hr benchmark against an identical fixed-setpoint baseline</li>
-              <li>Architected a dual-path control engine: local Qwen 2.5 (1.5B/7B via Ollama, 4.53s CPU inference) backed by a 0.03ms deterministic rule-based controller ensuring instantaneous fallback on timeouts or syntax errors</li>
-              <li>Embedded a FastMCP 2.0 server exposing 10 standardized inspection &amp; actuation tools (function latency benchmarked at N=50 repetitions) over Server-Sent Events (SSE) for external agents (Claude Desktop, Cursor)</li>
-              <li>Enforced physical safety envelopes with 1.5&deg;C mandatory deadbands, &plusmn;2.0&deg;C slew-rate limiting, simulation step locks, and async SQLAlchemy 2.0 telemetry streaming to a reactive React 18 dashboard</li>
+              <li>Created a five-zone HVAC simulation with a local Qwen2.5 agent via Ollama to interpret building telemetry and generate structured setpoint recommendations</li>
+              <li>Connected building sensors and actuators through a 10-tool MCP server, streaming temperature, energy, and comfort telemetry from FastAPI to a React dashboard over WebSockets</li>
+              <li>Added deterministic fallback control for LLM disconnects, timeouts, and malformed responses; fault-injection tests covered sensor dropout and extreme-cold conditions, with zero crashes recorded</li>
+              <li>Across three 24-hour simulation seeds, the rule-based controller achieved 45.6% &plusmn; 0.45% lower simulated energy use and improved ASHRAE 55 comfort-band adherence by 11.7 percentage points versus fixed 22&deg;C / 21&deg;C reference setpoints</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
           <span class="chip">Python / FastAPI</span><span class="chip">FastMCP 2.0</span><span class="chip">Ollama + Qwen2.5</span>
-          <span class="chip">React 18 + WebSockets</span><span class="chip">SQLAlchemy 2.0 Async</span><span class="chip">Fanger PMV/PPD</span>
+          <span class="chip">React + WebSockets</span><span class="chip">SQLAlchemy 2.0 Async</span><span class="chip">Fanger PMV/PPD</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://github.com/Arnavshukla09/Eco_Loop_Building_Agents" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
@@ -1197,15 +1202,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-top">
           <div>
             <div class="project-title">TalentMatch AI v2</div>
-            <div class="project-role">2024–2026 · Native C++ ML Engine · Deterministic Scoring Core</div>
+            <div class="project-role">2024–2026 · Native C++ ML Scoring Engine · Team Project</div>
           </div>
           <div class="project-score">
             <span class="stat-chip teal">~85 C++ features</span>
-            <span class="stat-chip amber">4.7s inference</span>
-            <span class="stat-chip blue">21.8KB extension</span>
+            <span class="stat-chip amber">15k char JD parser</span>
+            <span class="stat-chip blue">Zero cold-start</span>
           </div>
         </div>
-        <p class="project-desc">A local-first, deterministic resume ranking engine combining a native C++ ML scorer (Aho-Corasick trie matching, BM25 retrieval, XGBoost ranking) with sentence-transformer embeddings — zero LLM hallucination and no API key required.</p>
+        <p class="project-desc">A local-first resume ranking engine combining a native C++ ML scorer (Aho-Corasick trie matching, BM25 retrieval, XGBoost ranking) with local sentence-transformers, browser extension support up to 15,000 chars, and unified FastAPI/Vite serving.</p>
         <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1213,16 +1218,15 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Engineered a native C++ ML scoring core computing ~85 deterministic features via Aho-Corasick trie multi-pattern matching, BM25 text retrieval, and an XGBoost ranker with linear fallback</li>
-              <li>Coupled native engine to FastAPI via a zero-overhead ctypes FFI JSON bridge with local sentence-transformers (<span class="data">all-MiniLM-L6-v2</span>), achieving 4.7s end-to-end inference under load</li>
-              <li>Built a multi-stage Docker pipeline compiling the native C++ engine and pre-baking model weights at build time, eliminating cold-start downloads with graceful HTTP 400 error handling</li>
-              <li>Shipped a 21.8KB vanilla-JS browser extension (Chrome &amp; Edge) that parses live job descriptions directly from job boards into the scoring pipeline with explainable rule-based factor scoring</li>
+              <li>Integrated the Vite frontend into the FastAPI application, allowing the deployed service to serve both the web interface and resume-scoring API</li>
+              <li>Hardened API error handling with HTTP 400 responses for invalid requests and PDF parsing failures; developed a browser extension (Chrome &amp; Edge) supporting job-description extraction up to 15,000 characters with ATS red flags and candidate highlights</li>
+              <li>Engineered a native C++ ML scoring core computing ~85 deterministic features via Aho-Corasick trie multi-pattern matching, BM25 text retrieval, and an XGBoost ranker (ctypes FFI bridge, 4.7s inference, zero cold-start Docker build)</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
           <span class="chip">C++</span><span class="chip">Python / FastAPI</span><span class="chip">sentence-transformers</span>
-          <span class="chip">XGBoost</span><span class="chip">BM25</span><span class="chip">Docker</span><span class="chip">Vanilla JS</span>
+          <span class="chip">XGBoost</span><span class="chip">BM25</span><span class="chip">Docker</span><span class="chip">Vanilla JS Extension</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://talentmatch-ai-jwqd.onrender.com/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
@@ -1290,10 +1294,54 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     </div>
   </section>
 
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-num">02.</span>
+      <h2 class="section-title">Experience</h2>
+      <span class="section-note">Industry &amp; practical engineering</span>
+    </div>
+
+    <div class="hud-grid" style="grid-template-columns: 1fr;">
+      <article class="hud-card" style="--card-accent: #3B82F6; --card-glow: rgba(59, 130, 246, 0.35); --card-bg-glow: rgba(59, 130, 246, 0.08);">
+        <div class="project-top">
+          <div>
+            <div class="project-title" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span>MPOnline Limited</span>
+              <span style="font-size: 13px; font-weight: normal; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace;">(Government of Madhya Pradesh – TCS Joint Venture)</span>
+            </div>
+            <div class="project-role">May–Jul 2026 · Software Engineering &amp; AI Foundation Intern (Virtual)</div>
+          </div>
+          <div class="project-score">
+            <span class="stat-chip teal">3-Tier MVC Architecture</span>
+            <span class="stat-chip amber">REST API &amp; RDBMS</span>
+            <span class="stat-chip blue">Applied AI / ML</span>
+          </div>
+        </div>
+        <p class="project-desc" style="margin-top: 14px;">Completed comprehensive software engineering and applied AI/ML training under MPOnline Limited (Govt. of MP &amp; Tata Consultancy Services joint venture), architecting full-stack enterprise applications and applied ML pipelines.</p>
+        <ul class="project-bullets" style="margin-top: 14px;">
+          <li>Built a full-stack application as part of practical training, applying classic MVC architecture, REST API design, and relational database management systems (RDBMS)</li>
+          <li>Engineered an enterprise-grade 3-Tier Library Management System (LMS) with ASP.NET Core 8.0 C# backend, Entity Framework Core ORM, and SQL Server LocalDB</li>
+          <li>Implemented secure REST controllers with dynamic OpenLibrary ISBN API cover fetching and defensive security measures (<span class="data">[BindNever]</span> model binding protection &amp; CSRF anti-forgery tokens) paired with a responsive React 18 + Vite client</li>
+          <li>Completed applied AI/ML assignments covering end-to-end feature engineering, model evaluation metrics, and natural language processing (NLP) text processing workflows</li>
+        </ul>
+        <div class="stack" style="margin-top: 20px;">
+          <span class="chip">ASP.NET Core 8</span><span class="chip">C#</span><span class="chip">Entity Framework Core</span>
+          <span class="chip">SQL Server</span><span class="chip">REST APIs</span><span class="chip">React 18</span><span class="chip">Applied AI/ML</span>
+          <div style="margin-left: auto; display: flex; gap: 8px;">
+            <a href="https://github.com/Arnavshukla09/Library_Management_System-" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Capstone Repo
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- SKILLS -->
   <section id="skills">
     <div class="section-head">
-      <span class="section-num">02</span>
+      <span class="section-num">03.</span>
       <span class="section-title">Stack</span>
     </div>
     <div class="skills-grid">
@@ -1338,7 +1386,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   <!-- CERTS -->
   <section id="certs">
     <div class="section-head">
-      <span class="section-num">03</span>
+      <span class="section-num">04.</span>
       <span class="section-title">Certifications</span>
     </div>
     <div class="cert-list">
@@ -1351,6 +1399,18 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </a>
             <img src="assets/cert_oracle_agentic_ai.png" class="cert-preview-tooltip" alt="Certificate Preview">
+          </div>
+        </div>
+      </div>
+      <div class="cert-row">
+        <div><span class="name">Software Engineering &amp; AI Foundation Internship</span><span class="issuer">MPOnline Limited (Govt. of MP – TCS Joint Venture)</span></div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <span class="date">JUL 2026</span>
+          <div class="cert-link-wrapper">
+            <a href="assets/cert_mponline.png" target="_blank" class="cert-icon-link" aria-label="View Credential">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </a>
+            <img src="assets/cert_mponline.png" class="cert-preview-tooltip" alt="Certificate Preview">
           </div>
         </div>
       </div>
