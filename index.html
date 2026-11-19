@@ -2101,11 +2101,13 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     bgRenderer.setSize(window.innerWidth, window.innerHeight);
 
     const bgScene = new THREE.Scene();
-    const bgCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    bgCamera.position.set(0, 0.6, 9.2);
+    // Wide-angle perspective camera (FOV 56) looking down at the curve to create dramatic point-perspective
+    const bgCamera = new THREE.PerspectiveCamera(56, window.innerWidth / window.innerHeight, 0.1, 100);
+    bgCamera.position.set(0, 1.1, 7.0);
+    bgCamera.lookAt(0, -0.3, 0);
 
-    // Continuous single-mesh geometry (100% unbroken lines)
-    const W = 24;
+    // Continuous single-mesh geometry with point-perspective flaring
+    const W = 26;
     const H = 22;
     const cols = 90;
     const rows = 150;
@@ -2113,31 +2115,36 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
     const pos = geom.attributes.position;
 
     // Smooth cylindrical curl parameters
-    const R = 2.6; // curve radius
-    const yBend = 0.4; // horizon line position in world units
+    const R = 2.4; // curve radius
+    const yBend = 0.5; // horizon line position in world units
     const arcLength = (Math.PI / 2) * R;
+    const vBend = (H / 2) - yBend;
+    const floorLength = H - (vBend + arcLength);
 
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i);
       const origY = pos.getY(i);
       const v = (H / 2) - origY; // distance from top along surface
-      const vBend = (H / 2) - yBend; // wall length
 
       if (v <= vBend) {
-        // Vertical wall
+        // 1. Vertical wall: straight compact grid squares
         pos.setXYZ(i, x, yBend + (vBend - v), 0);
       } else if (v <= vBend + arcLength) {
-        // Continuous Cylindrical Curve (smooth bend connecting wall to floor)
-        const theta = (v - vBend) / R;
+        // 2. Continuous Cylindrical Curve: smoothly arcing & fanning outward
+        const prog = (v - vBend) / arcLength; // 0 to 1
+        const theta = prog * (Math.PI / 2);
         const y = yBend - R * Math.sin(theta);
         const z = R * (1 - Math.cos(theta));
-        pos.setXYZ(i, x, y, z);
+        const flare = 1.0 + prog * 0.25; // lines fan out gently through the curl
+        pos.setXYZ(i, x * flare, y, z);
       } else {
-        // Horizontal floor extending forward
+        // 3. Horizontal floor: sweeping forward toward camera so squares expand in size
         const s = v - (vBend + arcLength);
+        const progFloor = s / floorLength; // 0 to 1
         const y = yBend - R;
-        const z = R + s * 1.15;
-        pos.setXYZ(i, x, y, z);
+        const z = R + s * 1.35; // comes close to camera for pronounced perspective depth
+        const flare = 1.25 + progFloor * 0.45; // widens toward ends of the screen
+        pos.setXYZ(i, x * flare, y, z);
       }
     }
     geom.computeVertexNormals();
