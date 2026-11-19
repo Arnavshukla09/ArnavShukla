@@ -48,6 +48,7 @@
     --sidebar-btn: #C5A059;
     --sidebar-btn-hover: #DC2626;
     --sidebar-btn-glow: rgba(220, 38, 38, 0.6);
+    --cove-glow: rgba(197, 160, 89, 0.18);
     
     --radius: 12px;
   }
@@ -82,6 +83,7 @@
     --sidebar-btn: #DC2626;
     --sidebar-btn-hover: #C5A059;
     --sidebar-btn-glow: rgba(197, 160, 89, 0.6);
+    --cove-glow: rgba(220, 38, 38, 0.22);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -125,37 +127,77 @@
     padding:0 28px;
   }
 
-  /* ---------- background curved backdrop & grid ---------- */
+  /* ---------- CYCLORAMA / INFINITY COVE (WALL + FLOOR) ---------- */
   .bg-animus {
     position: fixed; inset: 0; z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    mask-image: radial-gradient(ellipse 140% 120% at 50% 25%, black 60%, rgba(0, 0, 0, 0.45) 85%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 140% 120% at 50% 25%, black 60%, rgba(0, 0, 0, 0.45) 85%, transparent 100%);
-    perspective: 1100px;
+    perspective: 800px;
     transform: translateZ(0);
     will-change: transform;
   }
+  /* Cove curve blend at the 64vh horizon */
+  .bg-animus-cove {
+    position: absolute;
+    top: calc(64vh - 35px); left: 0; right: 0; height: 70px;
+    background: radial-gradient(ellipse 90% 100% at 50% 50%, var(--cove-glow), transparent 75%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* 1. THE WALL: Upright vertical backdrop plane from top (0) down to horizon (64vh) */
   .bg-animus::before {
-    content: ""; position: absolute; inset: -80%;
+    content: "";
+    position: absolute;
+    top: -40px; left: -100px; right: -100px;
+    height: calc(64vh + 40px);
     background-image: 
       linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 140px 140px;
-    transform-origin: 50% 95%;
-    transform: rotateX(-12deg) translateY(var(--bg-parallax-1, 0px));
-    will-change: transform;
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(var(--amber) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, var(--amber) 1.5px, transparent 1.5px);
+    background-size: 
+      140px 140px, 
+      140px 140px, 
+      420px 420px, 
+      420px 420px;
+    background-position: 
+      center calc(100% + var(--bg-parallax-1, 0px)),
+      center calc(100% + var(--bg-parallax-1, 0px)),
+      center calc(100% + var(--bg-parallax-2, 0px)),
+      center calc(100% + var(--bg-parallax-2, 0px));
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, black 20%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, black 20%, black 100%);
+    z-index: 1;
+    will-change: background-position;
   }
+  /* 2. THE FLOOR: Horizontal mesh plane curling forward from horizon (64vh) */
   .bg-animus::after {
-    content: ""; position: absolute; inset: -80%;
+    content: "";
+    position: absolute;
+    top: 64vh;
+    left: -150%; right: -150%;
+    height: 120vh;
     background-image: 
-      linear-gradient(var(--amber) 1px, transparent 1px),
-      linear-gradient(90deg, var(--amber) 1px, transparent 1px);
-    background-size: 420px 420px;
-    opacity: 0.55;
-    transform-origin: 50% 95%;
-    transform: rotateX(-12deg) translateY(var(--bg-parallax-2, 0px));
-    will-change: transform;
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(var(--amber) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, var(--amber) 1.5px, transparent 1.5px);
+    background-size: 
+      140px 140px, 
+      140px 140px, 
+      420px 420px, 
+      420px 420px;
+    background-position: 
+      center calc(0% + var(--bg-parallax-1, 0px)),
+      center calc(0% + var(--bg-parallax-1, 0px)),
+      center calc(0% + var(--bg-parallax-2, 0px)),
+      center calc(0% + var(--bg-parallax-2, 0px));
+    transform-origin: 50% 0%;
+    transform: perspective(600px) rotateX(72deg);
+    mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 85%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 85%);
+    z-index: 1;
+    will-change: transform, background-position;
   }
 
   /* ---------- sidebar ---------- */
@@ -954,7 +996,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
   <div class="preloader-spinner"></div>
 </div>
 
-<div class="bg-animus"></div>
+<div class="bg-animus"><div class="bg-animus-cove"></div></div>
 
 <aside class="sidebar">
   <div class="brand">
