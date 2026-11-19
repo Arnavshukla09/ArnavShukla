@@ -2156,16 +2156,17 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       const ctx = cv.getContext('2d');
       ctx.clearRect(0, 0, 1024, 1024);
 
-      // Grey lines for vertical checks
-      const greyLineColor = isDark ? 'rgba(255, 255, 255, 0.16)' : 'rgba(15, 23, 42, 0.15)';
+      // Grey lines for vertical checks - ultra-thin & delicate, especially in light mode
+      const greyLineColor = isDark ? 'rgba(255, 255, 255, 0.11)' : 'rgba(15, 23, 42, 0.08)';
       // Accent color for horizontal lines (Gold for light mode, Red for dark mode)
       const accentColor = isDark ? '#DC2626' : '#C5A059';
 
-      const step = 1024 / 16; // checks spacing
+      // More spacious check spacing (128px per subdivision instead of dense 64px)
+      const step = 1024 / 8;
 
-      // 1. VERTICAL LINES: Subtle grey lines as in original checks
+      // 1. VERTICAL LINES: Ultra-thin, airy grey lines (0.75px in light, 0.85px in dark)
       ctx.strokeStyle = greyLineColor;
-      ctx.lineWidth = 1.4;
+      ctx.lineWidth = isDark ? 0.85 : 0.75;
       for (let x = 0; x <= 1024; x += step) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -2173,12 +2174,12 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
         ctx.stroke();
       }
 
-      // 2. HORIZONTAL LINES: Accent color (Gold in light, Red in dark)
+      // 2. HORIZONTAL LINES: Significantly bolder and prominent accent lines
       ctx.strokeStyle = accentColor;
       for (let y = 0; y <= 1024; y += step) {
-        const isMajor = (y % (step * 4) === 0);
+        const isMajor = (y % (step * 2) === 0);
         ctx.globalAlpha = isMajor ? 0.95 : 0.65;
-        ctx.lineWidth = isMajor ? 2.5 : 1.6;
+        ctx.lineWidth = isMajor ? 2.8 : 1.8;
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(1024, y);
@@ -2189,7 +2190,7 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
       const tex = new THREE.CanvasTexture(cv);
       tex.wrapS = THREE.RepeatWrapping;
       tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(6, 5);
+      tex.repeat.set(5, 5);
       return tex;
     }
 
