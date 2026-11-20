@@ -50,6 +50,17 @@
     --sidebar-btn-glow: rgba(220, 38, 38, 0.6);
     --cove-glow: rgba(197, 160, 89, 0.18);
     
+    /* Spatial Floating Card Shadows & Rim Highlights */
+    --card-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 16px 36px -6px rgba(15, 23, 42, 0.14), 0 30px 65px -12px rgba(15, 23, 42, 0.18);
+    --card-shadow-hover: 0 8px 16px -2px rgba(15, 23, 42, 0.08), 0 24px 50px -6px rgba(15, 23, 42, 0.22), 0 45px 90px -16px rgba(15, 23, 42, 0.3);
+    --card-border-elevated: rgba(15, 23, 42, 0.14);
+    --card-rim: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(15, 23, 42, 0.03);
+    
+    /* Floating Spatial Text Shadows */
+    --text-shadow-heading: 0 2px 8px rgba(15, 23, 42, 0.14), 0 1px 2px rgba(15, 23, 42, 0.08);
+    --text-shadow-accent: 0 0 1px currentColor, 0 2px 10px rgba(197, 160, 89, 0.3);
+    --text-shadow-subtle: 0 1px 3px rgba(15, 23, 42, 0.09);
+    
     --radius: 12px;
   }
   
@@ -84,6 +95,17 @@
     --sidebar-btn-hover: #C5A059;
     --sidebar-btn-glow: rgba(197, 160, 89, 0.6);
     --cove-glow: rgba(220, 38, 38, 0.22);
+    
+    /* Spatial Floating Card Shadows & Rim Highlights */
+    --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 22px 50px -8px rgba(0, 0, 0, 0.8), 0 40px 80px -15px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --card-shadow-hover: 0 8px 18px rgba(0, 0, 0, 0.6), 0 32px 65px -8px rgba(0, 0, 0, 0.9), 0 55px 110px -20px rgba(0, 0, 0, 1), 0 0 30px var(--card-glow, rgba(220, 38, 38, 0.35));
+    --card-border-elevated: rgba(255, 255, 255, 0.15);
+    --card-rim: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    
+    /* Floating Spatial Text Shadows */
+    --text-shadow-heading: 0 3px 12px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.25);
+    --text-shadow-accent: 0 0 1px currentColor, 0 2px 14px rgba(220, 38, 38, 0.45);
+    --text-shadow-subtle: 0 2px 6px rgba(0, 0, 0, 0.75);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -431,6 +453,7 @@
     text-transform:uppercase;
     display:flex; align-items:center; justify-content:flex-start; gap:10px;
     margin-bottom:22px;
+    text-shadow: var(--text-shadow-subtle);
   }
   .eyebrow::before{ content:'//'; color:var(--text-dim); }
 
@@ -441,8 +464,9 @@
     line-height:1.08;
     letter-spacing:-0.01em;
     color:var(--text);
+    text-shadow: var(--text-shadow-heading);
   }
-  h1 .accent{ color:var(--amber); }
+  h1 .accent{ color:var(--amber); text-shadow: var(--text-shadow-accent); }
 
   .hero-sub{
     margin-top:22px;
@@ -489,26 +513,49 @@
 
   .status-row{ display:flex; gap:22px; margin-top:40px; flex-wrap:wrap; justify-content:flex-start; }
   .status-item{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); }
-  .status-item b{ color:var(--text); display:block; font-size:18px; font-family:'JetBrains Mono',monospace; }
+  .status-item b{ color:var(--text); display:block; font-size:18px; font-family:'JetBrains Mono',monospace; text-shadow: var(--text-shadow-heading); }
 
   /* ---------- signature: control loop diagram ---------- */
   .loop-card{
     background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
     backdrop-filter: blur(24px) saturate(150%);
     -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(15,23,42,0.1);
-    border-radius:16px;
-    padding:26px;
+    border: 1px solid var(--card-border-elevated);
+    box-shadow: var(--card-rim), var(--card-shadow);
+    border-radius:18px;
+    padding:28px;
     position:relative;
     overflow:hidden;
     transform-style: preserve-3d;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.2, 1, 0.2, 1);
   }
   .loop-card:hover {
     background: var(--card-hover);
     border-color: var(--teal);
-    box-shadow: 0 0 35px var(--teal), inset 0 0 15px var(--teal), 0 15px 50px rgba(15,23,42,0.15);
+    transform: translateY(-6px) translateZ(15px);
+    box-shadow: var(--card-rim), var(--card-shadow-hover), 0 0 35px var(--teal);
+  }
+  .flow-step {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--card-gradient-1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius);
+    border: 1px solid var(--card-border-elevated);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .flow-step:hover {
+    transform: translateY(-3px) translateZ(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: var(--amber);
+  }
+  .flow-step-tag {
+    font-family: 'JetBrains Mono', monospace; 
+    font-weight: bold; 
+    margin-bottom: 6px;
+    text-shadow: 0 0 1px currentColor, 0 2px 8px rgba(0, 0, 0, 0.25);
   }
   .loop-card::before{
     content:'AGENT_LOOP.SVC';
@@ -579,9 +626,9 @@
   /* ---------- section shell ---------- */
   section{ padding:64px 0; border-top:1px solid var(--line); }
   .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
-  .section-num{ font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px; }
-  .section-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:22px; color:var(--text); }
-  .section-note{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-left:auto; }
+  .section-num{ font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px; text-shadow: var(--text-shadow-accent); }
+  .section-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:22px; color:var(--text); text-shadow: var(--text-shadow-heading); }
+  .section-note{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); margin-left:auto; text-shadow: var(--text-shadow-subtle); }
   @media (max-width:640px){ .section-note{ display:none; } }
 
   /* ---------- projects, plates & hud ---------- */
@@ -624,16 +671,17 @@
   }
   .hud-card {
     background: linear-gradient(135deg, var(--card-gradient-1), var(--card-gradient-2));
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 16px; padding: 32px;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 10px 30px rgba(15,23,42,0.05);
+    border: 1px solid var(--card-border-elevated);
+    border-radius: 18px; padding: 32px;
+    transition: transform 0.35s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.35s cubic-bezier(0.2, 1, 0.2, 1), border-color 0.3s;
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    box-shadow: var(--card-rim), var(--card-shadow);
     position: relative; overflow: hidden;
   }
   .hud-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px var(--card-glow, rgba(15,23,42,0.1));
+    transform: translateY(-8px) translateZ(15px);
+    box-shadow: var(--card-rim), var(--card-shadow-hover);
     border-color: var(--card-accent, var(--amber));
   }
   
@@ -731,7 +779,7 @@
   .project:hover .project-top {
     background: linear-gradient(to bottom, var(--card-bg-glow, rgba(220, 38, 38, 0.05)) 0%, transparent 100%);
   }
-  .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--text); transition: color 0.3s; }
+  .project-title{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:18px; color:var(--text); text-shadow: var(--text-shadow-heading); transition: color 0.3s, text-shadow 0.3s; }
   .project-score { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; }
   .stat-chip {
     font-family:'IBM Plex Mono',monospace; font-size:11px;
@@ -776,17 +824,18 @@
     background: linear-gradient(135deg, var(--card-gradient-3), var(--card-gradient-4));
     backdrop-filter: blur(24px) saturate(150%);
     -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(15, 23, 42, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 10px 40px rgba(15,23,42,0.1);
-    border-radius:16px; padding:20px 22px;
+    border: 1px solid var(--card-border-elevated);
+    box-shadow: var(--card-rim), var(--card-shadow);
+    border-radius:18px; padding:22px 24px;
     transform-style: preserve-3d;
     position: relative;
     overflow: hidden;
-    transition: border-color .3s, box-shadow .3s;
+    transition: all .35s cubic-bezier(0.2, 1, 0.2, 1);
   }
   .skill-block:hover { 
+    transform: translateY(-6px) translateZ(15px);
     border-color: var(--teal); 
-    box-shadow: 0 0 25px var(--teal), inset 0 0 10px var(--teal), 0 10px 40px rgba(15,23,42,0.15); 
+    box-shadow: var(--card-rim), var(--card-shadow-hover), 0 0 25px var(--teal); 
   }
   .skill-block h4{ 
     font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-dim); 
@@ -821,8 +870,8 @@
   }
 
   /* ---------- certifications ---------- */
-  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid var(--cert-border); 
-border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
+  .cert-list{ display:flex; flex-direction:column; gap:0; border:1px solid var(--card-border-elevated); 
+border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-shadow); transition: border-color 0.3s, box-shadow 0.3s; }
   .cert-row{
     display:flex; justify-content:space-between; align-items:center;
     padding:16px 20px;
@@ -1058,29 +1107,29 @@ border-radius:16px; overflow:hidden; transition: border-color 0.3s; }
 
   <!-- ARCHITECTURE (Agent Loop Flowchart) -->
   <section id="architecture" style="padding-top: 0; display: flex; justify-content: center;">
-    <div class="loop-card" style="padding: 30px; width: 100%; max-width: 600px;">
+    <div class="loop-card" style="padding: 32px; width: 100%; max-width: 620px;">
       <div class="loop-status"><span class="loop-status-dot"></span> STATUS: ACTIVE</div>
-      <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 10px; font-weight: bold; letter-spacing: 0.1em;">AGENT_LOOP.SVC</div>
+      <div style="font-family: 'JetBrains Mono', monospace; color: var(--amber); margin-bottom: 12px; font-weight: bold; letter-spacing: 0.1em; text-shadow: var(--text-shadow-accent);">AGENT_LOOP.SVC</div>
       
-      <div class="flow-container" style="display: flex; flex-direction: column; gap: 10px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
-        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #FF2D78; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[01] SENSE</div>
-          <p style="font-size: 12px; color: var(--text-dim); margin:0;">Ingest telemetry, parse natural language, and index vectors.</p>
+      <div class="flow-container" style="display: flex; flex-direction: column; gap: 12px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
+        <div class="flow-step">
+          <div class="flow-step-tag" style="color: #FF2D78;">[01] SENSE</div>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Ingest 5-zone IoT building telemetry, 13-language patient screening vitals, and dense vector embeddings.</p>
         </div>
-        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
-        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #FFD23F; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[02] DECIDE</div>
-          <p style="font-size: 12px; color: var(--text-dim); margin:0;">LLM reasoning with deterministic rule-based fallbacks.</p>
+        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg); text-shadow: var(--text-shadow-subtle);">➔</div>
+        <div class="flow-step">
+          <div class="flow-step-tag" style="color: #FFD23F;">[02] DECIDE</div>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Dual-engine LLM reasoning (Ollama/Qwen2.5, Gemini 1.5) bounded by deterministic safety protocols and 100% rule-based fallbacks.</p>
         </div>
-        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg);">➔</div>
-        <div class="flow-step" style="width: 100%; padding: 15px; background: var(--panel-2); border-radius: var(--radius); border: 1px solid var(--line);">
-          <div style="color: #22E5FF; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-bottom: 5px;">[03] ACT</div>
-          <p style="font-size: 12px; color: var(--text-dim); margin:0;">Execute MCP tools, fire webhooks, update databases.</p>
+        <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg); text-shadow: var(--text-shadow-subtle);">➔</div>
+        <div class="flow-step">
+          <div class="flow-step-tag" style="color: #22E5FF;">[03] ACT</div>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Execute 10-tool FastMCP servers, compile NRCES HL7 FHIR R4 clinical bundles, and commit to locked RLS databases with offline outbox sync.</p>
         </div>
       </div>
 
-      <div class="loop-desc" style="font-size: 11px;">
-        The robust architectural pattern behind Eco-Loop, the triage engine, and TalentMatch ensuring fault tolerance.
+      <div class="loop-desc" style="font-size: 11.5px; line-height: 1.5; color: var(--text-dim); margin-top: 14px; text-shadow: var(--text-shadow-subtle);">
+        The production-grade architectural pattern powering Eco-Loop, Rural Healthcare Platform, and TalentMatch AI.
       </div>
     </div>
   </section>
