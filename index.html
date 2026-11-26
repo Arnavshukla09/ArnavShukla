@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arnav Shukla — Systems &amp; AI Engineer</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C5A059' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
-<meta name="description" content="Portfolio of Arnav Shukla, a Systems & AI Engineer building full-stack platforms and autonomous AI agents.">
+<meta name="description" content="Arnav Shukla's portfolio: offline-first healthcare, HVAC control simulation, resume matching, and full-stack applications. B.Tech CSE student at VIT Bhopal.">
 <meta property="og:title" content="Arnav Shukla — Systems & AI Engineer">
-<meta property="og:description" content="Portfolio of Arnav Shukla, a Systems & AI Engineer building full-stack platforms and autonomous AI agents.">
-<meta property="og:image" content="https://arnavshukla09-portfolio.vercel.app/og-image.jpg">
-<meta property="og:url" content="https://arnavshukla09-portfolio.vercel.app/">
+<meta property="og:description" content="Explore Arnav Shukla's work in accessible healthcare, HVAC control simulation, resume matching, and full-stack engineering.">
+<meta property="og:image" content="https://arnav-shukla.vercel.app/og-image.jpg">
+<meta property="og:image:alt" content="Arnav Shukla — Systems and AI Engineer portfolio">
+<meta property="og:url" content="https://arnav-shukla.vercel.app/">
 <meta property="og:type" content="website">
+<link rel="canonical" href="https://arnav-shukla.vercel.app/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -731,13 +733,15 @@
     display: flex; align-items: center; gap: 6px; cursor: pointer; transition: color 0.3s; outline: none;
   }
   .project-expand-btn:hover { color: var(--text); }
+  .project-expand-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
   .project-expand-btn svg { width: 14px; height: 14px; transition: transform 0.4s cubic-bezier(0.2,1,0.2,1); }
   .project-content.text-expanded .project-expand-btn svg { transform: rotate(180deg); }
   
   .project-text-accordion {
     display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.2,1,0.2,1);
   }
-  .project-content.text-expanded .project-text-accordion { grid-template-rows: 1fr; margin-bottom: 16px; }
+  .project-text-accordion[inert] { visibility: hidden; }
+  .project-content.text-expanded .project-text-accordion { grid-template-rows: 1fr; margin-bottom: 16px; visibility: visible; }
   .project-text-inner { overflow: hidden; padding-top: 8px; }
 
   .project:hover .project-title,
@@ -971,6 +975,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
     100% { transform: scaleY(0) translateY(-20px); opacity: 0; }
   }
 </style>
+<noscript><style>#global-preloader, #orb-loader { display: none; } .project-expand-btn { display: none; } .project-text-accordion { grid-template-rows: 1fr; visibility: visible; }</style></noscript>
 </head>
 <body>
 
@@ -979,6 +984,11 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
   <div id="greeting-text" class="preloader-text" style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--amber); letter-spacing: 1px; font-family: 'Cinzel', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 40px; display: flex; align-items: center; justify-content: center;">Hello</div>
   <div class="preloader-spinner"></div>
 </div>
+
+<script>
+  // Content stays accessible even if optional CDN scripts or WebGL never initialize.
+  window.setTimeout(() => document.body.classList.add('loaded'), 3200);
+</script>
 
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
@@ -1039,7 +1049,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
       <h1>Orchestrating <br/><span class="accent">Intelligent Systems</span></h1>
       <h2 style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--text); margin-top: 15px; letter-spacing: 0.05em;">ARNAV SHUKLA</h2>
       <p class="hero-sub">
-        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student at <strong style="color: var(--text);">VIT Bhopal University</strong>, passionate about building robust AI architectures. Currently, I'm developing fault-tolerant agentic systems and scalable backend infrastructure. I am actively seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can contribute to mission-critical deployments and complex data synthesis pipelines.
+        I am a <strong style="color: var(--text);">B.Tech Computer Science</strong> student at <strong style="color: var(--text);">VIT Bhopal University</strong>. I build accessible healthcare workflows, simulation-based control systems, and practical AI applications. My current work focuses on offline synchronization, reliable backend APIs, and browser-based tools. I am seeking <strong style="color: var(--amber);">Full Stack &amp; AI Engineering roles</strong> where I can bring these systems from implementation through testing and deployment.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -1047,7 +1057,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <a href="assets/Arnav_Shukla_Resume.pdf" class="btn btn-ghost" style="border-color: var(--amber); color: var(--amber);" target="_blank" download>Resume</a>
       </div>
       <div class="status-row">
-        <div class="status-item"><b>10</b>total projects</div>
+        <div class="status-item"><b>4</b>featured projects</div>
         <div class="status-item"><b>B.Tech</b>Computer Science</div>
         <div class="status-item"><b>VIT</b>Bhopal</div>
       </div>
@@ -1114,22 +1124,22 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
       <div class="flow-container" style="display: flex; flex-direction: column; gap: 12px; justify-content: center; margin: 20px 0; align-items: center; text-align: left;">
         <div class="flow-step">
           <div class="flow-step-tag" style="color: #FF2D78;">[01] SENSE</div>
-          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Ingest 5-zone IoT building telemetry, 13-language patient screening vitals, and dense vector embeddings.</p>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Collect simulated building telemetry, guided patient inputs, or resume and job-description text.</p>
         </div>
         <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg); text-shadow: var(--text-shadow-subtle);">➔</div>
         <div class="flow-step">
           <div class="flow-step-tag" style="color: #FFD23F;">[02] DECIDE</div>
-          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Dual-engine LLM reasoning (Ollama/Qwen2.5, Gemini 1.5) bounded by deterministic safety protocols and 100% rule-based fallbacks.</p>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Apply task-specific rules, semantic matching, or optional model assistance with validated inputs and explicit fallback paths.</p>
         </div>
         <div style="color: var(--text-dim); font-size: 16px; transform: rotate(90deg); text-shadow: var(--text-shadow-subtle);">➔</div>
         <div class="flow-step">
           <div class="flow-step-tag" style="color: #22E5FF;">[03] ACT</div>
-          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Execute 10-tool FastMCP servers, compile NRCES HL7 FHIR R4 clinical bundles, and commit to locked RLS databases with offline outbox sync.</p>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin:0; line-height: 1.5;">Acknowledge simulated setpoints, synchronize authorized appointment requests, or return a matching report through each project's own API.</p>
         </div>
       </div>
 
       <div class="loop-desc" style="font-size: 11.5px; line-height: 1.5; color: var(--text-dim); margin-top: 14px; text-shadow: var(--text-shadow-subtle);">
-        The production-grade architectural pattern powering Eco-Loop, Rural Healthcare Platform, and TalentMatch AI.
+        A shared way to explain three distinct projects: observe inputs, validate decisions, and make outcomes inspectable.
       </div>
     </div>
   </section>
@@ -1149,33 +1159,33 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <div class="project-top">
           <div>
             <div class="project-title">Rural Healthcare Platform</div>
-            <div class="project-role">2024–2026 · Offline-first Telehealth PWA · Next.js 15, PostGIS, Gemini</div>
+            <div class="project-role">2024–2026 · Accessible Healthcare PWA · Next.js 15, Supabase, PostGIS</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">13-language PWA</span>
-            <span class="stat-chip amber">10,742 facilities</span>
-            <span class="stat-chip blue">237 quality tests</span>
+            <span class="stat-chip teal">13-language workflows</span>
+            <span class="stat-chip amber">Atomic offline replay</span>
+            <span class="stat-chip blue">326 unit tests</span>
           </div>
         </div>
-        <p class="project-desc">An offline-first, multilingual healthcare PWA with 13-language localization, strict PostgreSQL Row-Level Security across 15 tables, PostGIS ST_DWithin spatial queries over 10,742 facilities, deterministic screening with patient-context-aware Gemini triage, and NRCES-aligned HL7 FHIR R4 clinical bundles.</p>
-        <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
+        <p class="project-desc">An offline-first healthcare PWA with guided workflows in 13 languages, accessible voice and pictorial controls, PostGIS facility discovery, and owner-scoped appointment synchronization. Built with Next.js and Supabase, with emergency-first guidance and local HL7 FHIR R4 document export.</p>
+        <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Engineered an offline-first healthcare PWA with 13-language localization, device-language detection, and GPS/LGD-based regional recommendations for patient, clinician, and administrator workflows</li>
-              <li>Enforced strict PostgreSQL Row-Level Security and server-side role / care-relationship authorization; introduced a partial unique index (<span class="data">uq_provider_slot_scheduled</span>) to prevent concurrent appointment double-bookings</li>
-              <li>Optimized facility discovery through GiST-indexed PostGIS <span class="data">ST_DWithin</span> searches across 10,742 indexed facilities; added an IndexedDB offline outbox with UUID-based idempotency and batch synchronization</li>
-              <li>Integrated deterministic clinical screening for hypertension, diabetes, and high-risk antenatal cases, alongside a patient-context-aware Gemini assistant with PII sanitization and emergency-first routing</li>
-              <li>Generated and locally validated NRCES-aligned HL7 FHIR R4 bundles; project quality checks include 210 unit tests, 22 integration contract tests, and 5 Playwright end-to-end journeys</li>
+              <li>Built a persistent assistant with native language catalogs, guided symptom intake, pictorial page controls, and server-confirmed appointment actions; speech availability depends on device engines or an owned speech service</li>
+              <li>Implemented owner-scoped IndexedDB request capture and atomic replay with acknowledgments, duplicate protection, and expired-booking guards</li>
+              <li>Enforced server-authoritative role and care-relationship access with PostgreSQL RLS; protected scheduled provider slots against concurrent double-booking</li>
+              <li>Added GiST-indexed PostGIS proximity search, deterministic emergency guidance, and locally modeled NRCES/HL7 FHIR R4 exports; clinical deployment requires separate validation</li>
+              <li>Repository verification recorded 326 Vitest cases across 49 files and 20 Python service contracts passing locally on 24 November 2026; database, browser, speech-inference, and clinical checks have separate validation scopes</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
-          <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL 17 / PostGIS</span>
-          <span class="chip">Supabase RLS</span><span class="chip">HL7 FHIR R4</span><span class="chip">Gemini AI</span><span class="chip">Serwist PWA</span><span class="chip">Vitest</span>
+          <span class="chip">Next.js 15</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL / PostGIS</span>
+          <span class="chip">Supabase RLS</span><span class="chip">HL7 FHIR R4</span><span class="chip">IndexedDB</span><span class="chip">Serwist PWA</span><span class="chip">Vitest</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://rural-healthcare-platform.vercel.app/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
@@ -1197,33 +1207,33 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
       <div class="project-content">
         <div class="project-top">
           <div>
-            <div class="project-title">Eco-Loop: Autonomous Building AI</div>
-            <div class="project-role">2024–2026 · Autonomous Physical AI · Python, FastAPI, Qwen2.5, FastMCP</div>
+            <div class="project-title">Eco-Loop: Building Control Research</div>
+            <div class="project-role">2024–2026 · HVAC Supervisory Control Prototype · FastAPI, React, FastMCP</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">-45.6% simulated energy</span>
+            <span class="stat-chip teal">5-zone simulation</span>
             <span class="stat-chip amber">10-tool MCP server</span>
-            <span class="stat-chip blue">Zero crashes (100% fallback)</span>
+            <span class="stat-chip blue">Deterministic fallback</span>
           </div>
         </div>
-        <p class="project-desc">An autonomous closed-loop HVAC supervisory control system coupling a 5-zone commercial building physics simulation with a local Qwen2.5 agent via Ollama, connected through a 10-tool FastMCP server with deterministic fallback, achieving 45.6% lower simulated energy use.</p>
-        <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
+        <p class="project-desc">A research prototype for five-zone HVAC supervisory control, combining a seeded building simulator, optional local Ollama decisions, and deterministic fallback. A FastAPI service, ten-tool MCP interface, and React dashboard support telemetry, constrained setpoint changes, and saved-run replay.</p>
+        <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Created a five-zone HVAC simulation with a local Qwen2.5 agent via Ollama to interpret building telemetry and generate structured setpoint recommendations</li>
-              <li>Connected building sensors and actuators through a 10-tool MCP server, streaming temperature, energy, and comfort telemetry from FastAPI to a React dashboard over WebSockets</li>
-              <li>Added deterministic fallback control for LLM disconnects, timeouts, and malformed responses; fault-injection tests covered sensor dropout and extreme-cold conditions, with zero crashes recorded</li>
-              <li>Across three 24-hour simulation seeds, the rule-based controller achieved 45.6% &plusmn; 0.45% lower simulated energy use and improved ASHRAE 55 comfort-band adherence by 11.7 percentage points versus fixed 22&deg;C / 21&deg;C reference setpoints</li>
+              <li>Built asynchronous simulation and decision loops with validated setpoints, slew limits, timed manual holds, and requested-versus-applied decision audits</li>
+              <li>Exposed REST controls and ten external FastMCP tools, with API-key and browser-origin checks and dashboard telemetry over WebSockets; the controller calls decision providers directly</li>
+              <li>Added saved-run replay, comparisons, CSV export, fault injection, and an optional EnergyPlus adapter; physical-building commissioning remains future work</li>
+              <li>The current three-seed, 24-hour rule-controller evaluation records 36.34% &plusmn; 0.92% lower modeled energy and 7.98% higher peak demand versus a fixed-setpoint reference. These are synthetic simulation results, not field savings or LLM benchmarks</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
-          <span class="chip">Python / FastAPI</span><span class="chip">FastMCP 2.0</span><span class="chip">Ollama + Qwen2.5</span>
-          <span class="chip">React + WebSockets</span><span class="chip">SQLAlchemy 2.0 Async</span><span class="chip">Fanger PMV/PPD</span>
+          <span class="chip">Python / FastAPI</span><span class="chip">FastMCP 3.x</span><span class="chip">Ollama + Qwen2.5</span>
+          <span class="chip">React + WebSockets</span><span class="chip">SQLAlchemy / SQLite</span><span class="chip">EnergyPlus adapter</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://github.com/Arnavshukla09/Eco_Loop_Building_Agents" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Repo
@@ -1243,31 +1253,32 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <div class="project-top">
           <div>
             <div class="project-title">TalentMatch AI v2</div>
-            <div class="project-role">2024–2026 · Native C++ ML Scoring Engine · Team Project</div>
+            <div class="project-role">2024–2026 · Team Project · Web, Deployment &amp; Browser Extension</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">~85 C++ features</span>
+            <span class="stat-chip teal">Chrome / Edge extension</span>
             <span class="stat-chip amber">15k char JD parser</span>
-            <span class="stat-chip blue">Zero cold-start</span>
+            <span class="stat-chip blue">Optional AI coaching</span>
           </div>
         </div>
-        <p class="project-desc">A local-first resume ranking engine combining a native C++ ML scorer (Aho-Corasick trie matching, BM25 retrieval, XGBoost ranking) with local sentence-transformers, browser extension support up to 15,000 chars, and unified FastAPI/Vite serving.</p>
-        <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
+        <p class="project-desc">A team-built resume-to-job matching application with a native C++ scoring backend, local semantic embeddings, and a Chrome/Edge extension. My contributions cover the web experience, deployment, browser workflows, ATS warnings, and optional AI coaching integration.</p>
+        <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Integrated the Vite frontend into the FastAPI application, allowing the deployed service to serve both the web interface and resume-scoring API</li>
-              <li>Hardened API error handling with HTTP 400 responses for invalid requests and PDF parsing failures; developed a browser extension (Chrome &amp; Edge) supporting job-description extraction up to 15,000 characters with ATS red flags and candidate highlights</li>
-              <li>Engineered a native C++ ML scoring core computing ~85 deterministic features via Aho-Corasick trie multi-pattern matching, BM25 text retrieval, and an XGBoost ranker (ctypes FFI bridge, 4.7s inference, zero cold-start Docker build)</li>
+              <li>Built and deployed the web interface and Chrome/Edge extension, including job-description extraction up to 15,000 characters, saved resume profiles, and matching light/dark themes</li>
+              <li>Integrated scoring reports, ATS warnings, and optional Groq coaching with the FastAPI service; numerical matching does not require an external coaching API</li>
+              <li>Connected the interface to the team's C++ matching pipeline and local sentence-transformer embeddings. The default Docker build uses deterministic linear scoring; XGBoost is optional</li>
+              <li>Native engine architecture and ML pipeline are credited to Anshuman Pandey. Hosted requests still reach the API, and an idle Render service can take time to start</li>
             </ul>
           </div>
         </div>
         <div class="stack" style="margin-top: auto;">
           <span class="chip">C++</span><span class="chip">Python / FastAPI</span><span class="chip">sentence-transformers</span>
-          <span class="chip">XGBoost</span><span class="chip">BM25</span><span class="chip">Docker</span><span class="chip">Vanilla JS Extension</span>
+          <span class="chip">Optional XGBoost</span><span class="chip">BM25</span><span class="chip">Docker</span><span class="chip">Vanilla JS Extension</span>
           <div style="margin-left: auto; display: flex; gap: 8px;">
             <a href="https://talentmatch-ai-jwqd.onrender.com/" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
               <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; margin-right:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo
@@ -1293,22 +1304,22 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
             <div class="project-role">2024–2025 · Multi-Vendor Campus Marketplace · Backend Lead (VIT Bhopal)</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">&lt;1ms catalog queries</span>
-            <span class="stat-chip amber">3 isolated roles</span>
-            <span class="stat-chip blue">&lt;85MB RAM footprint</span>
+            <span class="stat-chip teal">Flask Blueprints</span>
+            <span class="stat-chip amber">3 role dashboards</span>
+            <span class="stat-chip blue">SQLAlchemy / SQLite</span>
           </div>
         </div>
-        <p class="project-desc">A localized multi-vendor campus marketplace designed for VIT Bhopal to eliminate queues for groceries, stationery, and document printing — complete with campus wallet checkout, automated print-order uploads, and real-time order lifecycle tracking.</p>
-        <button type="button" class="project-expand-btn" onclick="this.closest('.project-content').classList.toggle('text-expanded'); this.querySelector('span').innerText = this.closest('.project-content').classList.contains('text-expanded') ? 'Show Less' : 'Read More';">
+        <p class="project-desc">A team-built campus service marketplace for groceries, stationery, and document printing at VIT Bhopal, with student ordering, vendor catalog and order tools, and administrator workflows. Includes print attachments, COD/demo-wallet checkout, and order status tracking.</p>
+        <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Architected modular Flask Blueprints cleanly separating Student, Service Provider (vendor-scoped catalog &amp; order queues), and Admin moderation/audit portals</li>
-              <li>Designed relational SQLAlchemy schema with role-based decorators, multi-vendor request isolation, and automated print document storage and validation</li>
-              <li>Implemented multi-step checkout with Campus Wallet / COD transactions, self-service password reset flows, in-app notifications, and per-vendor analytics dashboards</li>
+              <li>Structured student, service-provider, and administrator workflows with modular Flask Blueprints</li>
+              <li>Modeled catalogs, carts, orders, ratings, and notifications using SQLAlchemy and SQLite</li>
+              <li>Added print-order attachments, COD/demo-wallet checkout, order status tracking, and vendor reporting; the demo wallet is separate from a payment gateway</li>
             </ul>
           </div>
         </div>
@@ -1397,7 +1408,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
   <section id="skills">
     <div class="section-head">
       <span class="section-num">03.</span>
-      <span class="section-title">Stack</span>
+      <h2 class="section-title">Stack</h2>
     </div>
     <div class="skills-grid">
       <div class="skill-block">
@@ -1406,7 +1417,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <div class="skill-tags">
           <span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">C++ (Native DLLs)</span>
           <span class="chip">Node.js</span><span class="chip">ASP.NET Core</span><span class="chip">WebSockets</span>
-          <span class="chip">FastMCP 2.0</span><span class="chip">REST APIs</span>
+          <span class="chip">FastMCP 3.x</span><span class="chip">REST APIs</span>
         </div>
       </div>
       <div class="skill-block">
@@ -1414,14 +1425,14 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <h4>Frontend &amp; PWA</h4>
         <div class="skill-tags">
           <span class="chip">Next.js 15</span><span class="chip">React 18</span><span class="chip">TypeScript</span>
-          <span class="chip">Serwist (PWA)</span><span class="chip">TailwindCSS</span><span class="chip">WebRTC</span>
+          <span class="chip">Serwist (PWA)</span><span class="chip">IndexedDB</span><span class="chip">TailwindCSS</span><span class="chip">WebRTC</span>
         </div>
       </div>
       <div class="skill-block">
         <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
         <h4>Data, Cloud &amp; Security</h4>
         <div class="skill-tags">
-          <span class="chip">PostgreSQL 17</span><span class="chip">PostGIS</span><span class="chip">Supabase RLS</span>
+          <span class="chip">PostgreSQL</span><span class="chip">PostGIS</span><span class="chip">Supabase RLS</span>
           <span class="chip">SQLAlchemy 2.0</span><span class="chip">Redis</span><span class="chip">HL7 FHIR R4</span>
           <span class="chip">Docker</span><span class="chip">Vitest</span>
         </div>
@@ -1430,9 +1441,9 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4M3 5h4"/></svg>
         <h4>Agentic AI &amp; ML</h4>
         <div class="skill-tags">
-          <span class="chip">Model Context Protocol</span><span class="chip">Ollama / Qwen2.5</span><span class="chip">Gemini 1.5</span>
+          <span class="chip">Model Context Protocol</span><span class="chip">Ollama / Qwen2.5</span><span class="chip">Gemini API</span>
           <span class="chip">XGBoost</span><span class="chip">BM25 Retrieval</span><span class="chip">Aho-Corasick</span>
-          <span class="chip">sentence-transformers</span><span class="chip">RAG Pipelines</span>
+          <span class="chip">sentence-transformers</span><span class="chip">Semantic Embeddings</span>
         </div>
       </div>
     </div>
@@ -1442,7 +1453,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
   <section id="certs">
     <div class="section-head">
       <span class="section-num">04.</span>
-      <span class="section-title">Certifications</span>
+      <h2 class="section-title">Certifications</h2>
     </div>
     <div class="cert-list">
       <div class="cert-row">
@@ -1601,6 +1612,23 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 <script>
   const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth < 860);
+
+  // Keep project details readable without JavaScript and expose their state when enhanced.
+  document.querySelectorAll('.project-expand-btn').forEach((button, index) => {
+    const content = button.closest('.project-content');
+    const panel = content.querySelector('.project-text-accordion');
+    panel.id = `project-details-${index + 1}`;
+    button.setAttribute('aria-controls', panel.id);
+    button.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('inert', '');
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') !== 'true';
+      content.classList.toggle('text-expanded', expanded);
+      button.setAttribute('aria-expanded', String(expanded));
+      panel.toggleAttribute('inert', !expanded);
+      button.querySelector('span').textContent = expanded ? 'Show Less' : 'Read More';
+    });
+  });
 
   // Subtle background scroll parallax (hardware accelerated)
   let bgTicking = false;
@@ -2035,6 +2063,8 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
     }
   } catch (e) {
     console.log('Anomaly Core STL loader failed.', e);
+    document.body.classList.add('loaded');
+    document.getElementById('orb-loader')?.remove();
   }
 
   // 4. Vanilla Tilt
