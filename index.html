@@ -31,6 +31,10 @@
     --text: #0F172A;
     --text-dim: #64748B;
     --grid-line: rgba(15, 23, 42, 0.25);
+    --grid-white: #FFFFFF;
+    --grid-crimson: #B94750;
+    --grid-gold: #A17D3D;
+    --grid-shadow: #475569;
     
     --amber: #C5A059;
     --teal: #DC2626;
@@ -76,6 +80,10 @@
     --text: #F8F9FA;
     --text-dim: #94A3B8;
     --grid-line: rgba(255, 255, 255, 0.25);
+    --grid-white: #F8FAFC;
+    --grid-crimson: #E3656D;
+    --grid-gold: #D4AE69;
+    --grid-shadow: #020617;
     
     /* Inverted Accents (Red <-> Gold) */
     --amber: #DC2626;
@@ -152,7 +160,7 @@
   }
 
   /* ---------- CONTINUOUS SEAMLESS CYC BACKDROP CANVAS ---------- */
-  #bg-canvas {
+  #bg-canvas, #grid-telemetry {
     position: fixed; inset: 0; width: 100vw; height: 100vh;
     z-index: -1; pointer-events: none; display: block;
     mask-image: radial-gradient(ellipse 135% 120% at 50% 25%, black 65%, rgba(0,0,0,0.4) 88%, transparent 100%);
@@ -991,6 +999,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
 </script>
 
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
+<canvas id="grid-telemetry" aria-hidden="true"></canvas>
 
 <aside class="sidebar">
   <div class="brand">
@@ -1603,6 +1612,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
   </div>
 </footer>
 
+<script src="assets/grid-telemetry.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
@@ -2164,9 +2174,9 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
   }
 
   // ==========================================
-  // CONTINUOUS SEAMLESS CYC BACKDROP (ONE MESH)
+  // THREE-TONE PERSPECTIVE GRID WITH LOCAL SIGNAL INTERRUPTIONS
   // ==========================================
-  (function initCycBackdrop() {
+  (function initHorizonBackdrop() {
     const bgCanvas = document.getElementById('bg-canvas');
     if (!bgCanvas || typeof THREE === 'undefined') return;
 
@@ -2174,134 +2184,220 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
       canvas: bgCanvas,
       alpha: true,
       antialias: true,
-      powerPreference: 'high-performance'
+      powerPreference: 'low-power'
     });
     bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     bgRenderer.setSize(window.innerWidth, window.innerHeight);
 
     const bgScene = new THREE.Scene();
-    // Elevated perspective camera (FOV 52) angled downward to clearly showcase the horizon curve in the first viewport
-    const bgCamera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 100);
-    bgCamera.position.set(0, 1.6, 7.2);
-    bgCamera.lookAt(0, -0.2, 0);
-
-    // Continuous single-mesh geometry with point-perspective flaring
-    const W = 28;
-    const H = 22;
-    const cols = 90;
-    const rows = 150;
-    const geom = new THREE.PlaneGeometry(W, H, cols, rows);
-    const pos = geom.attributes.position;
-
-    // Smooth cylindrical curl parameters (positioned prominent in hero view)
-    const R = 2.2; // curve radius
-    const yBend = 1.0; // horizon line position in world units
-    const arcLength = (Math.PI / 2) * R;
-    const vBend = (H / 2) - yBend;
-    const floorLength = H - (vBend + arcLength);
-
-    for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i);
-      const origY = pos.getY(i);
-      const v = (H / 2) - origY; // distance from top along surface
-
-      if (v <= vBend) {
-        // 1. Vertical wall: straight compact grid squares
-        pos.setXYZ(i, x, yBend + (vBend - v), 0);
-      } else if (v <= vBend + arcLength) {
-        // 2. Continuous Cylindrical Curve: smoothly arcing & fanning outward
-        const prog = (v - vBend) / arcLength; // 0 to 1
-        const theta = prog * (Math.PI / 2);
-        const y = yBend - R * Math.sin(theta);
-        const z = R * (1 - Math.cos(theta));
-        const flare = 1.0 + prog * 0.25; // lines fan out gently through the curl
-        pos.setXYZ(i, x * flare, y, z);
-      } else {
-        // 3. Horizontal floor: sweeping forward toward camera so squares expand in size
-        const s = v - (vBend + arcLength);
-        const progFloor = s / floorLength; // 0 to 1
-        const y = yBend - R;
-        const z = R + s * 1.35; // comes close to camera for pronounced perspective depth
-        const flare = 1.25 + progFloor * 0.50; // widens toward ends of the screen
-        pos.setXYZ(i, x * flare, y, z);
-      }
-    }
-    geom.computeVertexNormals();
-
-    // Procedural grid texture: True squares with both vertical and horizontal lines clearly rendered
-    function generateGridTexture(isDark) {
-      const cv = document.createElement('canvas');
-      cv.width = 1024;
-      cv.height = 1024;
-      const ctx = cv.getContext('2d');
-      ctx.clearRect(0, 0, 1024, 1024);
-
-      const minorColor = isDark ? 'rgba(255, 255, 255, 0.16)' : 'rgba(15, 23, 42, 0.16)';
-      const majorColor = isDark ? '#DC2626' : '#C5A059';
-
-      // 1. Minor grid: Crisp clean squares (both vertical & horizontal checks)
-      ctx.strokeStyle = minorColor;
-      ctx.lineWidth = 1.2;
-      const step = 1024 / 16; // 64px subdivisions
-      for (let i = 0; i <= 1024; i += step) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
-      }
-
-      // 2. Major accent grid: Accent colored divisions (both vertical & horizontal)
-      ctx.strokeStyle = majorColor;
-      ctx.lineWidth = 2.2;
-      const majorStep = 1024 / 4; // 256px major divisions
-      for (let i = 0; i <= 1024; i += majorStep) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1024); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1024, i); ctx.stroke();
-      }
-
-      const tex = new THREE.CanvasTexture(cv);
-      tex.wrapS = THREE.RepeatWrapping;
-      tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(6, 5);
-      return tex;
-    }
-
-    let isDarkTheme = document.documentElement.getAttribute('data-theme') !== 'light';
-    let gridTexture = generateGridTexture(isDarkTheme);
-
-    const bgMat = new THREE.MeshBasicMaterial({
-      map: gridTexture,
-      transparent: true,
-      opacity: 0.85,
-      side: THREE.DoubleSide
-    });
-
-    const bgMesh = new THREE.Mesh(geom, bgMat);
-    bgScene.add(bgMesh);
-
-    window.updateBgTheme = function(theme) {
-      isDarkTheme = theme === 'dark';
-      gridTexture.dispose();
-      gridTexture = generateGridTexture(isDarkTheme);
-      bgMat.map = gridTexture;
-      bgMat.needsUpdate = true;
+    const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+    const gridStyles = getComputedStyle(document.documentElement);
+    const gridColor = name => new THREE.Color(gridStyles.getPropertyValue(name).trim());
+    const gridPerspective = { cameraHeight: 3.2, horizon: 0.37, focalLength: 0.85, cellSize: 0.82 };
+    const uniforms = {
+      uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      uCameraHeight: { value: gridPerspective.cameraHeight },
+      uHorizon: { value: gridPerspective.horizon },
+      uFocalLength: { value: gridPerspective.focalLength },
+      uCellSize: { value: gridPerspective.cellSize },
+      uTravel: { value: 0 },
+      uTime: { value: 0 },
+      uMotion: { value: 1 },
+      uDark: { value: isDarkTheme ? 1 : 0 },
+      uBackground: { value: new THREE.Color(isDarkTheme ? 0x0F172A : 0xF8F9FA) },
+      uMinor: { value: gridColor('--grid-white') },
+      uAccent: { value: gridColor('--grid-crimson') },
+      uGold: { value: gridColor('--grid-gold') },
+      uShadow: { value: gridColor('--grid-shadow') }
     };
 
-    // Parallax translation along surface on scroll
+    // One analytical surface has no mesh joins, texture tiles, or finite far edge.
+    const bgMat = new THREE.ShaderMaterial({
+      uniforms,
+      depthTest: false,
+      depthWrite: false,
+      extensions: { derivatives: true },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = vec4(position.xy, 0.0, 1.0);
+        }
+      `,
+      fragmentShader: `
+        precision highp float;
+        uniform vec2 uResolution;
+        uniform float uCameraHeight;
+        uniform float uHorizon;
+        uniform float uFocalLength;
+        uniform float uCellSize;
+        uniform float uTravel;
+        uniform float uTime;
+        uniform float uMotion;
+        uniform float uDark;
+        uniform vec3 uBackground;
+        uniform vec3 uMinor;
+        uniform vec3 uAccent;
+        uniform vec3 uGold;
+        uniform vec3 uShadow;
+        varying vec2 vUv;
+
+        float hash(vec2 value) {
+          return fract(sin(dot(value, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        // Resolve each axis separately so distant lines fade without aliasing.
+        vec2 gridAxes(vec2 coordinate, float width) {
+          vec2 footprint = max(fwidth(coordinate), vec2(0.0001));
+          vec2 distanceToLine = abs(fract(coordinate - 0.5) - 0.5) / footprint;
+          vec2 line = 1.0 - smoothstep(vec2(width), vec2(width + 1.0), distanceToLine);
+          vec2 resolved = 1.0 - smoothstep(vec2(0.35), vec2(0.9), footprint);
+          return line * resolved;
+        }
+
+        void main() {
+          vec2 screen = vUv - vec2(0.5, 1.0 - uHorizon);
+          screen.x *= uResolution.x / uResolution.y;
+
+          // A level, shifted lens gives every depth line one shared vanishing point.
+          float belowHorizon = -screen.y;
+          float rayDistance = uCameraHeight / max(belowHorizon, 0.002);
+          float depth = rayDistance * uFocalLength;
+          vec2 ground = vec2(screen.x * rayDistance, depth + uTravel);
+          // Patch-local interruptions never flash the entire floor at once.
+          vec2 signalCell = floor(ground / 6.0);
+          float seed = hash(signalCell);
+          float phase = mod(uTime + seed * 4.2, 3.4 + seed * 0.8);
+          float burst = (1.0 - smoothstep(0.09, 0.24, phase)) * uMotion;
+          float patchEdge = smoothstep(0.0, 0.15, fract(ground.x / 6.0))
+            * (1.0 - smoothstep(0.85, 1.0, fract(ground.x / 6.0)));
+          burst *= patchEdge;
+          float tick = floor(uTime * 12.0);
+          ground.x += (hash(signalCell + tick) - 0.5) * 0.085 * burst;
+          vec2 lattice = ground / uCellSize;
+          vec2 minorAxes = gridAxes(lattice, mix(0.18, 0.28, uDark));
+          vec2 majorAxes = gridAxes(lattice / 4.0, 0.45);
+          vec2 bloomAxes = gridAxes(lattice / 4.0, 2.1);
+          // Every fourth major line is colored; white carries the lattice.
+          float crimsonLine = 1.0 - step(0.5, mod(floor(lattice.x / 4.0 + 0.5), 4.0));
+          float goldLine = 1.0 - step(0.5, mod(floor(lattice.y / 4.0 + 0.5), 4.0));
+          float crimson = majorAxes.x * crimsonLine;
+          float gold = majorAxes.y * goldLine;
+          // Carry the converging rays farther than the quieter cross-grid lines.
+          float rayFade = 1.0 - smoothstep(55.0, 220.0, depth);
+          float crossFade = 1.0 - smoothstep(22.0, 72.0, depth);
+          float white = max(minorAxes.x * rayFade, minorAxes.y * crossFade * 0.62);
+          vec2 shadowGround = lattice + fwidth(lattice) * mix(vec2(0.2, 0.3), vec2(1.0, 1.4), uDark);
+          vec2 shadowAxes = gridAxes(shadowGround, 1.4);
+          float shadow = max(shadowAxes.x * rayFade, shadowAxes.y * crossFade * 0.62);
+          float floorMask = smoothstep(0.004, 0.085, belowHorizon);
+          float majorFade = 1.0 - smoothstep(50.0, 180.0, depth);
+          float haze = exp(-depth * 0.007);
+          float visibility = floorMask * haze;
+          float compact = 1.0 - smoothstep(0.85, 1.15, uResolution.x / uResolution.y);
+          float copyMask = smoothstep(0.12, 0.22, vUv.x)
+            * (1.0 - smoothstep(0.50, 0.62, vUv.x))
+            * (1.0 - smoothstep(0.22, 0.40, -screen.y));
+          float mobileCopyMask = smoothstep(0.0, 0.16, vUv.x)
+            * (1.0 - smoothstep(0.84, 1.0, vUv.x));
+          copyMask = mix(copyMask, mobileCopyMask, compact);
+          visibility *= 1.0 - copyMask * mix(0.42, 0.68, compact);
+          float flicker = 1.0 - burst * (0.18 + seed * 0.24);
+
+          vec3 color = uBackground;
+          // Soft atmospheric depth keeps the light grid from reading as bevelled tiles.
+          float floorDepth = smoothstep(0.0, 0.4, belowHorizon);
+          float centerShade = exp(-pow(screen.x / 0.85, 2.0));
+          color = mix(color, uShadow, floorDepth * mix(0.042, 0.18, uDark));
+          color = mix(color, uShadow, shadow * visibility * mix(0.025, 0.30, uDark));
+          color = mix(color, uShadow, centerShade * floorDepth * mix(0.008, 0.10, uDark));
+          color = mix(color, uMinor, white * visibility * flicker * mix(0.60, 0.42, uDark));
+          color = mix(color, uAccent, bloomAxes.x * crimsonLine * majorFade * visibility * 0.055);
+          color = mix(color, uGold, bloomAxes.y * goldLine * majorFade * visibility * 0.055);
+          color = mix(color, uAccent, crimson * majorFade * visibility * flicker * mix(0.32, 0.50, uDark));
+          color = mix(color, uGold, gold * majorFade * visibility * flicker * mix(0.24, 0.36, uDark));
+          // Small broken signal segments catch the same three light colors.
+          float packet = burst * step(0.63, hash(floor(ground * 2.0) + tick));
+          color = mix(color, mix(uGold, uMinor, seed), packet * white * visibility * 0.34);
+
+          // Broad atmospheric falloff replaces the former hard horizon stroke.
+          float horizonGlow = exp(-pow(belowHorizon / 0.065, 2.0));
+          float centralGlow = exp(-pow(screen.x / 1.15, 2.0));
+          color = mix(color, mix(uAccent, uGold, 0.45), horizonGlow * centralGlow * mix(0.012, 0.025, uDark));
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `
+    });
+    const bgMesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bgMat);
+    bgMesh.frustumCulled = false;
+    bgScene.add(bgMesh);
+
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const telemetry = window.createGridTelemetry?.(document.getElementById('grid-telemetry'), gridPerspective);
+    let frameId = 0;
+    let previousTime = 0;
+    let elapsed = 0;
+    let scrollTarget = window.scrollY * 0.0015;
+    let scrollOffset = scrollTarget;
+    uniforms.uTravel.value = scrollOffset;
+
+    function renderBackdrop() {
+      uniforms.uTime.value = elapsed;
+      uniforms.uMotion.value = motionPreference.matches ? 0 : 1;
+      bgRenderer.render(bgScene, bgCamera);
+      telemetry?.render(elapsed, elapsed * 0.18 + scrollOffset, motionPreference.matches);
+    }
+
+    window.updateBgTheme = function(theme) {
+      const dark = theme === 'dark';
+      uniforms.uDark.value = dark ? 1 : 0;
+      uniforms.uBackground.value.setHex(dark ? 0x0F172A : 0xF8F9FA);
+      const styles = getComputedStyle(document.documentElement);
+      for (const [uniform, property] of [['uMinor', '--grid-white'], ['uAccent', '--grid-crimson'],
+        ['uGold', '--grid-gold'], ['uShadow', '--grid-shadow']]) {
+        uniforms[uniform].value.set(styles.getPropertyValue(property).trim());
+      }
+      telemetry?.setTheme(dark);
+      renderBackdrop();
+    };
+
     window.addEventListener('scroll', () => {
-      gridTexture.offset.y = -(window.scrollY * 0.00035);
+      scrollTarget = window.scrollY * 0.0015;
     }, { passive: true });
 
     window.addEventListener('resize', () => {
-      bgCamera.aspect = window.innerWidth / window.innerHeight;
-      bgCamera.updateProjectionMatrix();
       bgRenderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+      telemetry?.resize();
+      renderBackdrop();
     });
 
-    function bgLoop() {
-      requestAnimationFrame(bgLoop);
-      bgRenderer.render(bgScene, bgCamera);
+    function bgLoop(time) {
+      const delta = previousTime ? Math.min((time - previousTime) / 1000, 0.05) : 0;
+      previousTime = time;
+      elapsed += delta;
+      scrollOffset += (scrollTarget - scrollOffset) * (1 - Math.exp(-delta * 4));
+      // Keep the unwrapped clock shared with floor-anchored telemetry and patches.
+      uniforms.uTravel.value = elapsed * 0.18 + scrollOffset;
+      renderBackdrop();
+      frameId = requestAnimationFrame(bgLoop);
     }
-    bgLoop();
-  })();
-</script>
+
+    function updateMotion() {
+      cancelAnimationFrame(frameId);
+      previousTime = 0;
+      if (document.hidden) return;
+      if (motionPreference.matches) {
+        renderBackdrop();
+        return;
+      }
+      frameId = requestAnimationFrame(bgLoop);
+    }
+    document.addEventListener('visibilitychange', updateMotion);
+    motionPreference.addEventListener('change', updateMotion);
+    renderBackdrop();
+    updateMotion();
+  })();</script>
 </body>
 </html>
