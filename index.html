@@ -169,83 +169,136 @@
 
   /* ---------- sidebar ---------- */
   .sidebar {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
-    width: 80px;
-    background: var(--nav-bg);
-    box-shadow: 10px 0 30px rgba(15,23,42,0.3);
-    display: flex; flex-direction: column;
-    padding: 60px 0;
-    align-items: center;
-    transition: width 0.4s cubic-bezier(0.2, 1, 0.2, 1), padding 0.4s cubic-bezier(0.2, 1, 0.2, 1);
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .sidebar:hover {
-    width: 260px;
-    align-items: flex-start;
-    padding: 60px 30px;
+    position: fixed; top: 50%; left: 16px; z-index: 50;
+    width: 72px; padding: 12px 11px;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center;
+    background: linear-gradient(145deg, var(--card-gradient-1), var(--card-gradient-2));
+    border: 1px solid var(--card-border-elevated); border-radius: 24px;
+    box-shadow: var(--card-rim), var(--card-shadow);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    overflow: visible; white-space: nowrap;
   }
   .sidebar .brand {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 60px;
-    margin-bottom: 80px; position: relative;
+    width: 48px; height: 48px; flex-shrink: 0;
+    margin-bottom: 18px; position: relative;
   }
-  .sidebar:hover .brand { justify-content: flex-start; }
-  
   .sidebar .brand .brand-logo {
-    transition: opacity 0.3s, transform 0.3s;
-    position: absolute;
+    width: 32px; height: 32px;
   }
-  .sidebar .brand .brand-text {
-    font-family: 'Cinzel', serif; font-weight: 800; font-size: 18px; color: var(--amber);
-    opacity: 0; transform: translateX(-20px); transition: opacity 0.3s, transform 0.3s;
-    position: absolute;
-    letter-spacing: 0.1em;
+  .sidebar .brand .brand-text { display: none; }
+  nav.sidebar-links {
+    display: flex; flex-direction: column; gap: 8px;
+    width: 48px; align-items: flex-start;
+    font-family: 'JetBrains Mono', monospace;
   }
-  
-  .sidebar:hover .brand .brand-logo { opacity: 0; transform: scale(0.5); }
-  .sidebar:hover .brand .brand-text { opacity: 1; transform: translateX(0); position: relative; }
-  
-  nav.sidebar-links { 
-    display: flex; flex-direction: column; gap: 30px; font-family: 'JetBrains Mono', monospace; font-size: 13px; 
-    width: 100%; align-items: center;
+  nav.sidebar-links a, #theme-toggle {
+    position: relative; isolation: isolate;
+    display: flex; align-items: center; flex-shrink: 0; gap: 14px;
+    width: 48px; height: 48px; padding: 12px;
+    color: var(--sidebar-btn); text-decoration: none;
+    text-transform: uppercase; letter-spacing: 0.10em;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    background: transparent; border: 1px solid transparent; border-radius: 15px;
+    cursor: pointer; overflow: hidden;
+    transition: width 0.32s cubic-bezier(0.2, 1, 0.2, 1),
+      color 0.22s ease, background 0.22s ease, border-color 0.22s ease,
+      box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .sidebar:hover nav.sidebar-links { align-items: flex-start; }
-  
-  nav.sidebar-links a, #theme-toggle { 
-    color: var(--sidebar-btn); text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; 
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; display: flex; align-items: center; gap: 20px; font-weight: 600;
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; background: transparent; border: none; cursor: pointer; padding: 0;
+  nav.sidebar-links a svg, #theme-toggle svg {
+    width: 22px; height: 22px; fill: currentColor; flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.2, 1, 0.2, 1), filter 0.25s ease;
   }
-  nav.sidebar-links a svg, #theme-toggle svg { width: 24px; height: 24px; fill: currentColor; flex-shrink: 0; transition: fill 0.3s ease, stroke 0.3s ease; }
-  nav.sidebar-links a span, #theme-toggle span { opacity: 0; transition: opacity 0.3s ease; display: none; }
-  .sidebar:hover nav.sidebar-links a span, .sidebar:hover #theme-toggle span { opacity: 1; display: block; }
-  
-  nav.sidebar-links a:hover, #theme-toggle:hover { 
-    color: var(--sidebar-btn-hover); 
-    transform: translateX(8px); 
-    text-shadow: 0 0 1px currentColor, 0 0 15px var(--sidebar-btn-glow); 
+  nav.sidebar-links a svg[fill="none"] { fill: none; }
+  nav.sidebar-links a::before, #theme-toggle::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit; pointer-events: none; opacity: 0;
+    background: linear-gradient(105deg, transparent 30%, var(--cove-glow) 50%, transparent 70%);
+    background-size: 240% 100%;
+  }
+  nav.sidebar-links a span, #theme-toggle span {
+    opacity: 0; transform: translateX(-7px); pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.3s ease;
+  }
+  nav.sidebar-links a:is(:hover, :focus-visible), #theme-toggle:is(:hover, :focus-visible) {
+    width: 192px; color: var(--sidebar-btn-hover);
+    background: var(--card-hover); border-color: var(--card-border-elevated);
+    box-shadow: var(--card-rim), 0 8px 24px rgba(15, 23, 42, 0.18), 0 0 20px var(--cove-glow);
+    transform: translateX(3px); overflow: visible; z-index: 1;
+  }
+  nav.sidebar-links a:is(:hover, :focus-visible) span, #theme-toggle:is(:hover, :focus-visible) span {
+    opacity: 1; transform: translateX(0); transition-delay: 0.06s;
+  }
+  nav.sidebar-links a:is(:hover, :focus-visible)::before, #theme-toggle:is(:hover, :focus-visible)::before {
+    opacity: 1; animation: sidebar-light-sweep 0.65s ease-out both;
+  }
+  @keyframes sidebar-light-sweep {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+  }
+  nav.sidebar-links a:is(:hover, :focus-visible) svg, #theme-toggle:is(:hover, :focus-visible) svg {
+    transform: translateY(-1px) scale(1.08);
+    filter: drop-shadow(0 0 7px var(--sidebar-btn-glow));
   }
   nav.sidebar-links a:focus-visible, #theme-toggle:focus-visible {
-    outline: 2px solid var(--sidebar-btn-hover);
-    outline-offset: 4px;
+    outline: 2px solid var(--sidebar-btn-hover); outline-offset: 3px;
+  }
+  @media (min-width: 901px) and (max-height: 600px) {
+    .sidebar { padding-top: 10px; padding-bottom: 10px; }
+    .sidebar .brand { height: 38px; margin-bottom: 10px; }
+    nav.sidebar-links { gap: 4px; }
+    nav.sidebar-links a, #theme-toggle { height: 42px; }
+  }
+  @media (min-width: 901px) and (max-height: 420px) {
+    .sidebar { padding-top: 8px; padding-bottom: 8px; }
+    .sidebar .brand { display: none; }
+    nav.sidebar-links { gap: 2px; }
+    nav.sidebar-links a, #theme-toggle { height: min(42px, 11vh); padding-top: 5px; padding-bottom: 5px; }
   }
 
   @media (max-width: 900px) {
-    .sidebar { 
-      top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 70px; 
-      flex-direction: row; padding: 0 20px; align-items: center; justify-content: space-between;
-      border-right: none; border-top: 1px solid var(--amber);
+    .sidebar {
+      top: auto; bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      left: 10px; right: 10px; width: auto; max-width: 520px; height: 62px;
+      margin: 0 auto; padding: 7px 6px; transform: none;
+      flex-direction: row; border-radius: 21px;
     }
-    .sidebar:hover { width: 100%; padding: 0 20px; align-items: center; }
-    .sidebar .brand { margin-bottom: 0; font-size: 14px; width: auto; height: auto; }
-    .sidebar .brand .brand-logo { position: relative; width: 24px; height: 24px; }
-    .sidebar:hover .brand .brand-logo { opacity: 1; transform: none; }
-    .sidebar .brand .brand-text { display: none; }
-    nav.sidebar-links { flex-direction: row; gap: 14px; font-size: 11px; width: auto; align-items: center; }
-    .sidebar:hover nav.sidebar-links { align-items: center; }
-    nav.sidebar-links a span, #theme-toggle span { display: none !important; }
-    nav.sidebar-links a:hover, #theme-toggle:hover { transform: none; color: var(--sidebar-btn-hover); }
+    .sidebar .brand { display: none; }
+    nav.sidebar-links {
+      display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+      width: 100%; gap: 0; align-items: center;
+    }
+    nav.sidebar-links a, #theme-toggle {
+      width: 100%; height: 46px; padding: 0; justify-content: center;
+      overflow: visible; border-radius: 13px;
+    }
+    nav.sidebar-links a:is(:hover, :focus-visible), #theme-toggle:is(:hover, :focus-visible) {
+      width: 100%; transform: translateY(-3px);
+    }
+    nav.sidebar-links a span, #theme-toggle span {
+      position: absolute; bottom: calc(100% + 14px); left: 50%;
+      padding: 8px 11px; border-radius: 10px;
+      background: var(--card-hover); border: 1px solid var(--card-border-elevated);
+      color: var(--text); box-shadow: var(--card-rim), 0 6px 18px rgba(15, 23, 42, 0.16);
+      transform: translate(-50%, 5px); visibility: hidden; font-size: 10px;
+    }
+    nav.sidebar-links a:first-child span { left: 0; transform: translate(0, 5px); }
+    #theme-toggle span { left: auto; right: 0; transform: translate(0, 5px); }
+    nav.sidebar-links a:is(:hover, :focus-visible) span, #theme-toggle:is(:hover, :focus-visible) span {
+      transform: translate(-50%, 0); visibility: visible;
+    }
+    nav.sidebar-links a:first-child:is(:hover, :focus-visible) span,
+    #theme-toggle:is(:hover, :focus-visible) span { transform: translate(0, 0); }
+  }
+  @media (max-width: 360px) {
+    .sidebar { left: 4px; right: 4px; padding-left: 0; padding-right: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    nav.sidebar-links a, #theme-toggle,
+    nav.sidebar-links a svg, #theme-toggle svg,
+    nav.sidebar-links a span, #theme-toggle span { transition: none; }
+    nav.sidebar-links a::before, #theme-toggle::before { animation: none !important; }
   }
 
   .hero{
@@ -1171,12 +1224,12 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
             <div class="project-role">2024–2026 · Accessible Healthcare PWA · Next.js 15, Supabase, PostGIS</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">13-language workflows</span>
+            <span class="stat-chip teal">10+ language workflows</span>
             <span class="stat-chip amber">Atomic offline replay</span>
-            <span class="stat-chip blue">326 unit tests</span>
+            <span class="stat-chip blue">300+ unit tests</span>
           </div>
         </div>
-        <p class="project-desc">An offline-first healthcare PWA with guided workflows in 13 languages, accessible voice and pictorial controls, PostGIS facility discovery, and owner-scoped appointment synchronization. Built with Next.js and Supabase, with emergency-first guidance and local HL7 FHIR R4 document export.</p>
+        <p class="project-desc">An offline-first healthcare PWA with guided workflows in 10+ languages, accessible voice and pictorial controls, PostGIS facility discovery, and owner-scoped appointment synchronization. Built with Next.js and Supabase, with emergency-first guidance and local HL7 FHIR R4 document export.</p>
         <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1187,8 +1240,8 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
               <li>Built a persistent assistant with native language catalogs, guided symptom intake, pictorial page controls, and server-confirmed appointment actions; speech availability depends on device engines or an owned speech service</li>
               <li>Implemented owner-scoped IndexedDB request capture and atomic replay with acknowledgments, duplicate protection, and expired-booking guards</li>
               <li>Enforced server-authoritative role and care-relationship access with PostgreSQL RLS; protected scheduled provider slots against concurrent double-booking</li>
-              <li>Added GiST-indexed PostGIS proximity search, deterministic emergency guidance, and locally modeled NRCES/HL7 FHIR R4 exports; clinical deployment requires separate validation</li>
-              <li>Repository verification recorded 326 Vitest cases across 49 files and 20 Python service contracts passing locally on 24 November 2026; database, browser, speech-inference, and clinical checks have separate validation scopes</li>
+              <li>Added GiST-indexed PostGIS search over a documented dataset of 10,000+ facility records, deterministic emergency guidance, and locally modeled NRCES/HL7 FHIR R4 exports; clinical deployment requires separate validation</li>
+              <li>Maintained 300+ unit tests and service-contract checks covering offline isolation, access controls, screening rules and data safeguards, with local verification recorded on 24 November 2026; database, browser and speech-inference checks have separate validation scopes</li>
             </ul>
           </div>
         </div>
@@ -1220,12 +1273,12 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
             <div class="project-role">2024–2026 · HVAC Supervisory Control Prototype · FastAPI, React, FastMCP</div>
           </div>
           <div class="project-score">
-            <span class="stat-chip teal">5-zone simulation</span>
-            <span class="stat-chip amber">10-tool MCP server</span>
-            <span class="stat-chip blue">Deterministic fallback</span>
+            <span class="stat-chip teal">40+ simulation scenarios</span>
+            <span class="stat-chip amber">100+ backend tests</span>
+            <span class="stat-chip blue">30,000+ timesteps</span>
           </div>
         </div>
-        <p class="project-desc">A research prototype for five-zone HVAC supervisory control, combining a seeded building simulator, optional local Ollama decisions, and deterministic fallback. A FastAPI service, ten-tool MCP interface, and React dashboard support telemetry, constrained setpoint changes, and saved-run replay.</p>
+        <p class="project-desc">A research prototype for multi-zone HVAC supervisory control, combining a seeded building simulator, optional local Ollama decisions, and deterministic fallback. FastAPI, an MCP interface and a React dashboard support telemetry, constrained setpoint changes and saved-run replay.</p>
         <button type="button" class="project-expand-btn">
           <span>Read More</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1234,9 +1287,9 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
               <li>Built asynchronous simulation and decision loops with validated setpoints, slew limits, timed manual holds, and requested-versus-applied decision audits</li>
-              <li>Exposed REST controls and ten external FastMCP tools, with API-key and browser-origin checks and dashboard telemetry over WebSockets; the controller calls decision providers directly</li>
+              <li>Exposed REST controls and external FastMCP tools, with API-key and browser-origin checks and dashboard telemetry over WebSockets; the controller calls decision providers directly</li>
               <li>Added saved-run replay, comparisons, CSV export, fault injection, and an optional EnergyPlus adapter; physical-building commissioning remains future work</li>
-              <li>The current three-seed, 24-hour rule-controller evaluation records 36.34% &plusmn; 0.92% lower modeled energy and 7.98% higher peak demand versus a fixed-setpoint reference. These are synthetic simulation results, not field savings or LLM benchmarks</li>
+              <li>Maintained 100+ backend tests for control and API behavior; recorded a seeded study of 40+ seasonal simulation scenarios spanning 30,000+ timesteps, tracking modeled energy, peak demand and comfort across control strategies and fixed-setpoint references. These are synthetic study results</li>
             </ul>
           </div>
         </div>
@@ -1266,7 +1319,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
           </div>
           <div class="project-score">
             <span class="stat-chip teal">Chrome / Edge extension</span>
-            <span class="stat-chip amber">15k char JD parser</span>
+            <span class="stat-chip amber">10,000+ character JDs</span>
             <span class="stat-chip blue">Optional AI coaching</span>
           </div>
         </div>
@@ -1278,7 +1331,7 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
         <div class="project-text-accordion">
           <div class="project-text-inner">
             <ul class="project-bullets" style="margin-top: 0;">
-              <li>Built and deployed the web interface and Chrome/Edge extension, including job-description extraction up to 15,000 characters, saved resume profiles, and matching light/dark themes</li>
+              <li>Built and deployed the web interface and developed a Chrome/Edge extension supporting 10,000+ character job descriptions, saved resume profiles and matching light/dark themes</li>
               <li>Integrated scoring reports, ATS warnings, and optional Groq coaching with the FastAPI service; numerical matching does not require an external coaching API</li>
               <li>Connected the interface to the team's C++ matching pipeline and local sentence-transformer embeddings. The default Docker build uses deterministic linear scoring; XGBoost is optional</li>
               <li>Native engine architecture and ML pipeline are credited to Anshuman Pandey. Hosted requests still reach the API, and an idle Render service can take time to start</li>
@@ -1371,12 +1424,12 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
               <span>MPOnline Limited</span>
               <span style="font-size: 13px; font-weight: normal; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace;">(Government of Madhya Pradesh – TCS Joint Venture)</span>
             </div>
-            <div class="project-role">May–Jul 2026 · Software Engineering &amp; AI Foundation Intern (Virtual)</div>
+            <div class="project-role">20 May–31 Jul 2026 · Software Engineering &amp; AI/ML Intern (Virtual)</div>
           </div>
           <div class="project-score" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-            <span class="stat-chip teal">3-Tier MVC Architecture</span>
-            <span class="stat-chip amber">REST API &amp; RDBMS</span>
-            <span class="stat-chip blue">Applied AI / ML</span>
+            <span class="stat-chip teal">MVC &amp; Relational Data</span>
+            <span class="stat-chip amber">FastAPI &amp; Streamlit</span>
+            <span class="stat-chip blue">Classical ML &amp; NLP</span>
             <div class="cert-link-wrapper" style="margin-left: 4px;">
               <a href="assets/cert_mponline_se.png" target="_blank" class="cert-icon-link" aria-label="View Software Engineering Internship Certificate" title="Software Eng Internship Certificate">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1393,19 +1446,24 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
             </div>
           </div>
         </div>
-        <p class="project-desc" style="margin-top: 14px;">Completed comprehensive software engineering and applied AI/ML training under MPOnline Limited (Govt. of MP &amp; Tata Consultancy Services joint venture), architecting full-stack enterprise applications and applied ML pipelines.</p>
+        <p class="project-desc" style="margin-top: 14px;">Completed virtual software engineering and AI/ML internship training through library-management and retail AI capstones, alongside customer-churn modeling and programming assignments.</p>
         <ul class="project-bullets" style="margin-top: 14px;">
-          <li>Built a full-stack application as part of practical training, applying classic MVC architecture, REST API design, and relational database management systems (RDBMS)</li>
-          <li>Engineered an enterprise-grade 3-Tier Library Management System (LMS) with ASP.NET Core 8.0 C# backend, Entity Framework Core ORM, and SQL Server LocalDB</li>
-          <li>Implemented secure REST controllers with dynamic OpenLibrary ISBN API cover fetching and defensive security measures (<span class="data">[BindNever]</span> model binding protection &amp; CSRF anti-forgery tokens) paired with a responsive React 18 + Vite client</li>
-          <li>Completed applied AI/ML assignments covering end-to-end feature engineering, model evaluation metrics, and natural language processing (NLP) text processing workflows</li>
+          <li>Developed a library-management capstone with C#, ASP.NET Core MVC, Razor views, Entity Framework Core and SQL Server, including searchable, paginated catalogs and relational book and borrowing models</li>
+          <li>Added server-side validation, anti-forgery checks on MVC form submissions and ISBN-based OpenLibrary cover images; built a separate React/Vite prototype with mock-data catalog, student, staff and circulation screens</li>
+          <li>Built a FastAPI and Streamlit retail AI prototype with TF-IDF and logistic-regression pipelines for customer-review sentiment analysis and FAQ intent classification</li>
+          <li>Defined typed text and image APIs, dashboard interactions, endpoint smoke tests and Docker packaging; used simulated customer-recognition, product-classification and analytics outputs for demonstration</li>
+          <li>Completed a customer-churn modeling assignment comparing Random Forest and SVM, with preprocessing, feature selection, cross-validation and hyperparameter tuning</li>
         </ul>
         <div class="stack" style="margin-top: 20px;">
-          <span class="chip">ASP.NET Core 8</span><span class="chip">C#</span><span class="chip">Entity Framework Core</span>
-          <span class="chip">SQL Server</span><span class="chip">REST APIs</span><span class="chip">React 18</span><span class="chip">Applied AI/ML</span>
-          <div style="margin-left: auto; display: flex; gap: 8px;">
+          <span class="chip">C#</span><span class="chip">ASP.NET Core MVC</span><span class="chip">Entity Framework Core</span>
+          <span class="chip">SQL Server</span><span class="chip">React / Vite</span><span class="chip">FastAPI</span>
+          <span class="chip">Streamlit</span><span class="chip">scikit-learn</span><span class="chip">Docker</span>
+          <div style="margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap;">
             <a href="https://github.com/Arnavshukla09/Library_Management_System-" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
-              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Capstone Repo
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Library Capstone
+            </a>
+            <a href="https://github.com/Arnavshukla09/Smart-Retail-Customer-Intelligence-Platform" target="_blank" class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px; border-radius: 8px;">
+              <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor; margin-right:4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Retail AI Prototype
             </a>
           </div>
         </div>
@@ -2276,10 +2334,10 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
           float tick = floor(uTime * 12.0);
           ground.x += (hash(signalCell + tick) - 0.5) * 0.085 * burst;
           vec2 lattice = ground / uCellSize;
-          vec2 minorAxes = gridAxes(lattice, mix(0.18, 0.28, uDark));
+          vec2 minorAxes = gridAxes(lattice, mix(0.26, 0.28, uDark));
           vec2 majorAxes = gridAxes(lattice / 4.0, 0.45);
           vec2 bloomAxes = gridAxes(lattice / 4.0, 2.1);
-          // Every fourth major line is colored; white carries the lattice.
+          // Every fourth major line is colored; a neutral tone carries the lattice.
           float crimsonLine = 1.0 - step(0.5, mod(floor(lattice.x / 4.0 + 0.5), 4.0));
           float goldLine = 1.0 - step(0.5, mod(floor(lattice.y / 4.0 + 0.5), 4.0));
           float crimson = majorAxes.x * crimsonLine;
@@ -2312,7 +2370,9 @@ border-radius:18px; overflow:hidden; box-shadow: var(--card-rim), var(--card-sha
           color = mix(color, uShadow, floorDepth * mix(0.042, 0.18, uDark));
           color = mix(color, uShadow, shadow * visibility * mix(0.025, 0.30, uDark));
           color = mix(color, uShadow, centerShade * floorDepth * mix(0.008, 0.10, uDark));
-          color = mix(color, uMinor, white * visibility * flicker * mix(0.60, 0.42, uDark));
+          // Grey defines the lattice on white; dark mode retains its white lines.
+          vec3 minorColor = mix(mix(uShadow, uBackground, 0.28), uMinor, uDark);
+          color = mix(color, minorColor, white * visibility * flicker * mix(0.34, 0.42, uDark));
           color = mix(color, uAccent, bloomAxes.x * crimsonLine * majorFade * visibility * 0.055);
           color = mix(color, uGold, bloomAxes.y * goldLine * majorFade * visibility * 0.055);
           color = mix(color, uAccent, crimson * majorFade * visibility * flicker * mix(0.32, 0.50, uDark));

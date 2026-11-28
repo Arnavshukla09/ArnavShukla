@@ -1,0 +1,160 @@
+
+%-------------------------
+% Arnav Shukla - General Resume
+% One-page resume | Updated November 2026
+%-------------------------
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[left=0.48in,right=0.48in,top=0.36in,bottom=0.34in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{array}
+\ifdefined\pdfglyphtounicode\input{glyphtounicode}\fi
+
+\pagestyle{empty}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+\ifdefined\pdfgentounicode\pdfgentounicode=1\fi
+\setlength{\emergencystretch}{1.1em}
+\linespread{1.08}
+
+\titleformat{\section}
+  {\normalsize\bfseries}
+  {}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{4.2pt}{2.2pt}
+
+\setlist[itemize]{
+  leftmargin=1.2em,
+  label=\textbullet,
+  itemsep=1.6pt,
+  topsep=1.4pt,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0pt,label={},itemsep=2.5pt,topsep=0pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=1.2em,itemsep=1.65pt,topsep=1.3pt,parsep=0pt,partopsep=0pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \small #1 & \small #2
+  \end{tabularx}
+}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+  {\LARGE\textbf{Arnav Shukla}}\\
+  \small
+  +91 917-989-2005 \;|\;
+  \href{mailto:arnavshukla0925@gmail.com}{arnavshukla0925@gmail.com} \;|\;
+  Indore, Madhya Pradesh\\[1pt]
+  \href{https://www.linkedin.com/in/arnavshukla09}{LinkedIn} \;|\;
+  \href{https://github.com/Arnavshukla09}{GitHub} \;|\;
+  \href{https://arnav-shukla.vercel.app/}{Portfolio}
+\end{center}
+\vspace{-10pt}
+
+%-----------PROFILE-----------
+\section{Profile}
+Computer Science undergraduate, focused on backend and full-stack engineering with experience building secure, data-driven applications and AI-integrated systems. Hands-on with REST APIs, PostgreSQL, geospatial databases, offline synchronization and containerized deployments.
+
+%-----------SKILLS-----------
+\section{Technical Skills}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{2.22cm}@{\hspace{0.45em}} X@{}}
+Languages & Java, Python, C++, JavaScript, TypeScript, SQL\\
+Backend & FastAPI, Flask, REST APIs, WebSockets, Python--C++ FFI\\
+Frontend & React, Next.js, HTML5, CSS3, Tailwind CSS\\
+Data & PostgreSQL, SQLite, Supabase, PostGIS, SQLAlchemy, Redis, Row-Level Security\\
+AI / ML & Gemini API, Ollama, Qwen2.5, Sentence Transformers, MCP / FastMCP\\
+Tools & Docker, Git, GitHub Actions, pytest, Playwright, Postman, AWS, Vercel, Render\\
+Core CS & Data Structures and Algorithms, OOP, DBMS, Operating Systems, Computer Networks
+\end{tabularx}
+
+%-----------INTERNSHIP EXPERIENCE-----------
+\section{Internship Experience}
+\textbf{MPOnline Limited (Government of Madhya Pradesh--TCS Joint Venture)} \hfill May--Jul 2026\\
+\textit{Software Engineering \& AI/ML Intern (Virtual)}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=0pt,parsep=0pt,partopsep=0pt]
+  \resumeItem{Developed a \href{https://github.com/Arnavshukla09/Library_Management_System-}{library-management capstone} with C\#, ASP.NET Core MVC, Entity Framework Core and SQL Server, adding catalog search and validation alongside a separate React/Vite prototype.}
+  \resumeItem{Built a \href{https://github.com/Arnavshukla09/Smart-Retail-Customer-Intelligence-Platform}{FastAPI/Streamlit prototype} for sentiment analysis and FAQ intents using TF-IDF and logistic regression; compared Random Forest/SVM for customer churn with cross-validation and hyperparameter tuning.}
+\end{itemize}
+
+%-----------PROJECTS-----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Rural Healthcare Platform} $|$ \emph{Next.js, TypeScript, Supabase, PostgreSQL, PostGIS, Gemini}
+$|$ \href{https://github.com/Arnavshukla09/RURAL-HEALTHCARE-PLATFORM}{GitHub} $\cdot$
+\href{https://rural-healthcare-platform.vercel.app/}{Live Demo}}{}
+\resumeItemListStart
+  \resumeItem{Engineered an offline-first healthcare PWA with guided workflows in \textbf{10+ languages}, device-language detection and GPS/LGD-based recommendations for patients, clinicians and administrators.}
+  \resumeItem{Enforced PostgreSQL Row-Level Security and server-side role / care-relationship authorization; added a partial unique index to prevent concurrent appointment double-bookings.}
+  \resumeItem{Built GiST-indexed PostGIS discovery over a documented dataset of \textbf{10,000+ facility records}; implemented an account-owned IndexedDB outbox with idempotent, individually atomic replay and retry backoff.}
+  \resumeItem{Integrated deterministic hypertension, diabetes and antenatal screening rules, emergency-first guidance and optional Gemini dialogue with patient-context safeguards and PII masking; clinical use requires separate validation.}
+  \resumeItem{Built local HL7 FHIR R4 exports modeled on NRCES profiles and maintained \textbf{300+ unit tests}, service-contract checks and browser tests; national gateway integration and certification remain separate work.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Eco-Loop: HVAC Control Research} $|$ \emph{Python, FastAPI, Ollama, FastMCP, WebSockets}
+$|$ \href{https://github.com/Arnavshukla09/Eco_Loop_Building_Agents}{GitHub}}{}
+\resumeItemListStart
+  \resumeItem{Developed a multi-zone HVAC supervisory-control simulator with optional local Ollama inference, structured recommendations and validated setpoint updates.}
+  \resumeItem{Exposed simulated telemetry and constrained controls through FastAPI and MCP; streamed energy, temperature and comfort metrics to a React dashboard over WebSockets, with persisted run replay.}
+  \resumeItem{Implemented deterministic fallback for unavailable inference, timeouts and malformed outputs, with sensor-dropout and extreme-cold fault injection; maintained \textbf{100+ backend tests} covering control and API behavior.}
+  \resumeItem{Evaluated \textbf{40+ seasonal simulation scenarios} spanning \textbf{30,000+ timesteps}, comparing control strategies with fixed-setpoint references and tracking modeled energy, peak demand and PMV target adherence.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{TalentMatch AI (Team Project)} $|$ \emph{Python, FastAPI, C++, Sentence Transformers, Docker}
+$|$ \href{https://github.com/Arnavshukla09/talentmatch-ai}{GitHub} $\cdot$
+\href{https://talentmatch-ai-jwqd.onrender.com/}{Live Demo}}{}
+\resumeItemListStart
+  \resumeItem{Integrated the Vite frontend with FastAPI, enabling one service to expose the web interface and the team's resume-scoring API.}
+  \resumeItem{Developed a Chrome/Edge extension supporting \textbf{10,000+ character} job descriptions and saved resume profiles; added upload validation, structured errors, ATS warnings, skill-gap feedback and opt-in AI coaching.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------
+\section{Education}
+\textbf{Vellore Institute of Technology, Bhopal} \hfill  May 2027\\
+B.Tech. in Computer Science and Engineering $|$ CGPA: \textbf{8.66}\\
+\small{\textbf{Higher Secondary (M.P. Board)}: 83.4\% \hfill May 2023}\\
+\small{\textbf{Secondary (CBSE)}: 94.33\% \hfill May 2021}
+
+%-----------CERTIFICATIONS -----------
+\section{Certifications}
+\small
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt,parsep=0pt]
+  \item \small{\textbf{Oracle Certified Foundations Associate -- Agentic AI} \hfill Aug 2026}
+  \item \small{\textbf{AWS Academy Graduate -- Cloud Architecting} \hfill Jun 2026}
+  \item \small{\textbf{ServiceNow Virtual Internship Program} -- ServiceNow University, AICTE, SmartBridge \hfill Jul 2026}
+  \item \small{\textbf{Machine Learning} -- NPTEL / IIT Madras \hfill Apr 2025}
+\end{itemize}
+
+%-----------EXTRACURRICULAR ACTIVITIES & ACHIEVEMENTS-----------
+\section{Extracurricular Activities \& Achievements}
+\small
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1.8pt,parsep=0pt]
+  \item \small{\textbf{IBM Call for Code AI Knowledge Challenge Winner} -- Completed 6 AI courses; received a \textbf{\$1,000 USD award} \hfill 2024}
+  \item \small{Smart India Hackathon 2025 -- HealthSeva AI, college-round pitch}
+\end{itemize}
+\end{document}
